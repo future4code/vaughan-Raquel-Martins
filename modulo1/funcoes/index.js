@@ -65,13 +65,13 @@
             console.log(`Eu sou ${pessoa}, tenho ${idade}, moro em ${cidade} e sou ${profissao}`)
         }
 
-        // const nomeUser = prompt("Qual o seu nome?")
-        // const idadeUser = prompt("Qual a sua idade?")
-        // const cidadeUser = prompt("Qual cidade você mora?")
-        // const jobUser = prompt("Qual a sua profissão?")
+         const nomeUser = prompt("Qual o seu nome?")
+         const idadeUser = prompt("Qual a sua idade?")
+         const cidadeUser = prompt("Qual cidade você mora?")
+         const jobUser = prompt("Qual a sua profissão?")
 
-        // const respostaUser = informarDados(nomeUser, idadeUser, cidadeUser, jobUser)
-        // console.log(respostaUser)
+         const respostaUser = informarDados(nomeUser, idadeUser, cidadeUser, jobUser)
+         console.log(respostaUser)
 
 //         Eu sou [NOME], tenho [IDADE] anos, moro em [ENDEREÇO] e sou [PROFISSÃO].
 //         ```
