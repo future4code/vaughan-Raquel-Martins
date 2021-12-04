@@ -113,35 +113,60 @@ function checaIgualdadeDesconsiderandoCase(string1, string2) {
 }
 
 // EXERCÍCIO 13
-function checaRenovacaoRG() {
-  const anoAtual = Number(prompt("Insira o ano atual"))
-  const anoNascimento = Number(prompt("Insira o ano de nascimento"))
-  const anoEmissaoRG = Number(prompt("Insira o ano de emissão da sua carteira de RG"))
+function checaRenovacaoRG(atual, nascimento, carteira) {
+  atual = Number(prompt("Insira o ano atual"))
+  nascimento = Number(prompt("Insira o ano de nascimento"))
+  carteira = Number(prompt("Insira o ano de emissão da sua carteira de RG"))
 
-  const idade = anoAtual - anoNascimento
-  const diferencaAnoEmissaoRG = anoAtual - anoEmissaoRG
-  //  if((idade <= 20 && diferencaAnoEmissaoRG === 5) ||
-  //   (idade <= 50 && diferencaAnoEmissaoRG === 10) ||
-  //   (idade > 50 && diferencaAnoEmissaoRG === 15)){
-  //     console.log(true)
-  //  }else {
-  //   console.log(false)
-  //  }
+  const idade = atual - nascimento
+  const diferencaAnoEmissaoRG = atual - carteira
+    if(idade <= 20 && diferencaAnoEmissaoRG === 5){
+      console.log(true)
+    } else if(idade > 20 && idade <= 50 && diferencaAnoEmissaoRG >= 10){
+      console.log(true)
+    }else if(idade > 50 && diferencaAnoEmissaoRG >= 15){
+      console.log(true)
+    }else {
+     console.log(false)
+    }
+  }
+    
+  
 
-  const renovacao = idade <= 20 && diferencaAnoEmissaoRG === 5  
-  const renovacao2 = idade <=50 && diferencaAnoEmissaoRG === 10 
-  const renovacao3 =idade > 50 && diferencaAnoEmissaoRG === 15
-  console.log(renovacao,renovacao2,renovacao3)
-}
+//   const renovacao = idade <= 20 && diferencaAnoEmissaoRG === 5  
+//   const renovacao2 = idade <=50 && diferencaAnoEmissaoRG === 10 
+//   const renovacao3 =idade > 50 && diferencaAnoEmissaoRG === 15
+//   console.log(renovacao,renovacao2,renovacao3)
+// }
 
 // EXERCÍCIO 14
 function checaAnoBissexto(ano) {
-  // implemente sua lógica aqui
-
+if(ano % 400 === 0){
+  console.log(true)
+}else if (ano % 4 === 0){
+  console.log(true)
+}else if(ano % 100 === 0  && ano % 400 !== 0){
+  console.log(true)
+}else {
+  console.log(false)
 }
+return 
+}
+
+
+  
+
+
 
 // EXERCÍCIO 15
 function checaValidadeInscricaoLabenu() {
-  // implemente sua lógica aqui
+  const isMaior = prompt("Você tem mais de 18 anos?")
+  const ensinoMedio = prompt("Você possui ensino médio completo?")
+  const horarioDisponivel = prompt("Você possui disponibilidade exclusiva durante os horários do curso?")
 
+  if(isMaior === "sim" && ensinoMedio === "sim" && horarioDisponivel === "sim"){
+    console.log(true)
+  }else {
+    console.log(false)
+  }
 }
