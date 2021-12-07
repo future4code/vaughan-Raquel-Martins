@@ -143,15 +143,16 @@ function checaRenovacaoRG(atual, nascimento, carteira) {
 function checaAnoBissexto(ano) {
 if(ano % 400 === 0){
   console.log(true)
-}else if (ano % 4 === 0){
+}else if(ano % 4 === 0 && ano % 100 !==0){
   console.log(true)
-}else if(ano % 100 === 0  && ano % 400 !== 0){
-  console.log(true)
-}else {
+}else{
   console.log(false)
-}
-return 
-}
+}}
+
+checaAnoBissexto(2000)
+checaAnoBissexto(2012)
+checaAnoBissexto(1900) 
+checaAnoBissexto(2001) 
 
 
   
