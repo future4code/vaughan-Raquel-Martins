@@ -74,7 +74,12 @@ return objetoValores
 
 // EXERCÍCIO 08
 function retornaNPrimeirosPares(n) {
-   
+    num = []
+
+   for(i = 0; i < n * 2; i = i +2){
+     num.push(i)  
+   }
+  return num
 }
 
 // EXERCÍCIO 09
