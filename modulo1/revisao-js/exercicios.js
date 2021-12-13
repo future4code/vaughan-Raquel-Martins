@@ -95,7 +95,38 @@ if(ladoA === ladoB && ladoA === ladoC){
 
 // EXERCÍCIO 10
 function retornaSegundoMaiorESegundoMenor(array) {
-  
+  let novoArr =[]
+  let max = Math.max(...array)
+  let min = Math.min(...array)
+let novoArr2 = []
+
+if(array.length === 2){
+    if(array[0] < array[1]){
+        novoArr2.push(array[0], array[1])
+    }else{
+        novoArr2.push(array[1], array[0]) 
+    }
+    return novoArr2
+}
+
+let posicaoMax = array.indexOf(max)
+let posicaoMin = array.indexOf(min)
+
+array.splice(posicaoMax,1)
+array.splice(posicaoMin,1)
+let segundoMenor = array[0]
+let segundoMaior = array[0]
+for(let i = 1; i < array.length; i++){
+
+    if(array[i] < segundoMenor){
+     segundoMenor = array[i]
+    }else if(array[i] > segundoMaior){
+    segundoMaior = array[i]
+    }
+}
+novoArr.push(segundoMaior, segundoMenor)
+
+return novoArr
 }
 
 // EXERCÍCIO 11
