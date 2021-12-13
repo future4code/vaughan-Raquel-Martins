@@ -20,7 +20,10 @@ function retornaArrayOrdenado(array) {
 
 // EXERCÍCIO 04
 function retornaNumerosPares(array) {
-  
+  const apenasNumPares = array.filter((num) =>{
+      return num % 2 === 0
+  })
+  return apenasNumPares
 }
 
 // EXERCÍCIO 05
