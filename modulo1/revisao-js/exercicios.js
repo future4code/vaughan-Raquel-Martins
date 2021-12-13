@@ -28,7 +28,15 @@ function retornaNumerosPares(array) {
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
- 
+    const apenasNumerosPares = array.filter((num) =>{
+        return num % 2 === 0
+    })
+    let numero =[]
+   for(num of apenasNumerosPares){
+       const calculo = num ** 2
+       numero.push(calculo)
+   }
+   return numero
 }
 
 // EXERCÍCIO 06
