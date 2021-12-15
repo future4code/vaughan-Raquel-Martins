@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincit Materiais Médicos | Produtos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <p>Vincit Materiais Médicos</p>
+    </div>
+    <div>
+
+        <ul class="menu-home">
+            <li class="menu-home"><a href="index.html">Página Inicial</a></li>
+            <li class="menu-home"><a href="ctrl-estoque.html">Controle de Estoque</a></li>
+            <li class="menu-home"><a href="add-produto.html">Adicionar Produto</a></li>
+            <li class="menu-home"><a href="funcionarios.html">Funcionários</a></li>
+            <li class="menu-home"><a href="produtos-venda.html">Página de Venda</a></li>
+            <li class="menu-home"><a href="historico-de-vendas.html">Histórico de vendas</a></li>
+        </ul>
+
+    </div>
+    <form action="#">
+        <h3>Selecionar Produtos</h2>
+            <div>
+                <label for="">Nome do Cliente</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">CNPJ Cliente</label>
+                <input type="number">
+            </div>
+
+            <div>
+                <label for="">Nome do Vendedor</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">Data da Compra</label>
+                <input type="date">
+            </div>
+            <input type="checkbox">Coletor perfurocortante descartável papelão 13 L <img
+                src="/img/coletor-perfurocortante-13l.png" alt="Coletor perfurocortante 13 litros de papelão"
+                class="produtos" />
+            <label for="">Quantidade</label>
+            <input type="number">
+            </div>
+            <div>
+                <input type="checkbox">Luva de procedimento de latex com pó não estéril média c/ 100 unidades <img
+                    src="./img/luva-latex-c100.png" alt="Luva de látex com cem unidades" class="produtos" />
+                <label for="">Quantidade</label>
+                <input type="number">
+            </div>
+            <div>
+                <input type="checkbox">Máscara cirúrgica tripla descartável c/ 50 unidades<img
+                    src="./img/mascara-cirurgica-tripla-desc.png"
+                    alt="Máscara cirúgica tripla descartável com cinquenta unidades" class="produtos" />
+                <label for="">Quantidade</label>
+                <input type="number">
+            </div>
+            <div>
+                <input type="checkbox">Propé sapatilha branco 20G pct c/ 100 unidades<img src="/img/prope-sapatilha.png"
+                    alt="Sapatilhas protetoras Pro-Pé descartáveis" class="produtos" />
+                <label for="">Quantidade</label>
+                <input type="number">
+            </div>
+            <div>
+                <select name="pagamento" id="">
+                    <option value="cartao-credito">Cartão de crédito</option>
+                    <option value="boleto">Boleto</option>
+                    <option value="deposito">Depósito Bancário</option>
+                    <option value="pix">Pix</option>
+                </select>
+            </div>
+            <div class="compra-produto">
+                <button type="submit" id="button-compra">Finalizar</button>
+            </div>
+
+    </form>
+
+</body>
+
+</html>

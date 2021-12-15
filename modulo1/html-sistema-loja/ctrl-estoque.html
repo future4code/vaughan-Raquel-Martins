@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Controle de Estoque</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div>
-        <p>Nome da lojinha</p>
+        <p>Vincit Materiais Médicos</p>
     </div>
     
     <div>
-        <a href="index.html">Página Inicial</a>
-        <a href="ctrl-estoque.html">Controle de Estoque</a>
-        <a href="add-produto.html">Adicionar Produto</a>
-        <a href="funcionarios.html">Funcionários</a>
+
+        <ul class="menu-home">
+            <li class="menu-home"><a href="index.html">Página Inicial</a></li>
+            <li class="menu-home"><a href="ctrl-estoque.html">Controle de Estoque</a></li>
+            <li class="menu-home"><a href="add-produto.html">Adicionar Produto</a></li>
+            <li class="menu-home"><a href="funcionarios.html">Funcionários</a></li>
+            <li class="menu-home"><a href="produtos-venda.html">Página de Venda</a></li>
+            <li class="menu-home"><a href="historico-de-vendas.html">Histórico de vendas</a></li>
+        </ul>
+
     </div>
 
     <h2>Controle de Estoque</h2>
-
-    <table>
+<div class="tabela">
+    <table class="tabela-produtos">
         <tr>
             <th>Foto</th>
             <th>Descrição</th>
@@ -29,21 +36,21 @@
         </tr>
 
         <tr>
-            <td><img src="./img/coletor-perfurocortante-13l.png" alt="Coletor perfurocortante de papelão com treze litros descartável" width="200px"/></td>
+            <td><img src="/img/coletor-perfurocortante-13l.png" alt="Coletor perfurocortante 13 litros de papelão" class="produtos"/></td>
             <td>Coletor perfurocortante descartável papelão 13 L</td>
             <td>9,70</td>
             <td>1000</td>
         </tr>
 
         <tr>
-            <td><img src="./img/luva-latex-c100.png" alt="Luva de látex com cem unidades" width="200px"/></td>
+            <td><img src="./img/luva-latex-c100.png" alt="Luva de látex com cem unidades" class="produtos"/></td>
             <td>Luva de procedimento de latex com pó não estéril média c/ 100 unidades</td>
             <td>36,99</td>
             <td>2000</td>
         </tr>
 
         <tr>
-            <td><img src="./img/mascara-cirurgica-tripla-desc.png" alt="Máscara cirúgica tripla descartável com cinquenta unidades" width="200px" /></td>
+            <td><img src="./img/mascara-cirurgica-tripla-desc.png" alt="Máscara cirúgica tripla descartável com cinquenta unidades" class="produtos" /></td>
             <td>Máscara cirúrgica tripla descartável c/ 50 unidades</td>
             <td>22,90</td>
             <td>5000</td>
@@ -58,13 +65,13 @@
         
         <!-- Crie mais uma linha desta tabela abaixo \/ -->
         <tr>
-            <td><img src="/img/prope-sapatilha.png" alt="Sapatilhas protetoras Pro-Pé descartáveis" width="200px" /></td>
+            <td><img src="/img/prope-sapatilha.png" alt="Sapatilhas protetoras Pro-Pé descartáveis" class="produtos" /></td>
             <td>Propé sapatilha branco 20G pct c/ 100 unidades</td>
             <td>27,31</td>
             <td>800</td>
         </tr>
 
     </table>
-
+</div class="tabela">
 </body>
 </html>
