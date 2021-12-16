@@ -35,9 +35,10 @@ div>p:first-child {
     display: inline;
 }
 
+/*
 div img {
     background: black;
-}
+}*/
 
 
 
@@ -69,6 +70,7 @@ text-decoration: none !important;
 }
 
 .icone {
+    width: 15px;
     height: 15px;
 }
 
@@ -154,3 +156,4 @@ td button {
 div.espaco{
     height: 100px;
 }
+
