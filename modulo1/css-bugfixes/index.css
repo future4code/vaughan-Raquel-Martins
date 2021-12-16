@@ -111,6 +111,7 @@ div:last-child {
 table {
   width: 60%;
   text-align: center;
+  margin: 0 auto;
 }
 
 table img {
@@ -138,6 +139,7 @@ td button {
   border-radius: 5px;
   font-size: 10px;
   color: black;
+  margin: 100px 920px;
 }
 
 #back-button:hover {
