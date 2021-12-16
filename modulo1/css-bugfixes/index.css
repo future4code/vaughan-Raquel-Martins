@@ -97,6 +97,11 @@ div.espaco {
     height: 100px;
   }
 
+ol li {
+     width: 300px;
+     margin: 0 auto;
+  }
+
 /**
   *
   *  ESTILOS COMPRAR 
