@@ -68,6 +68,14 @@ container a.link-comprar {
   height: 15px;
 }
 
+.icone:hover{
+    filter: opacity(25%);
+}
+
+.icone:active{
+    filter: opacity(100%);
+}
+
 /** 
   *
   *  ESTILOS HOME 
