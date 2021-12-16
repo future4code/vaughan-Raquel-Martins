@@ -9,6 +9,8 @@
     padding: 0;
 }
 
+
+
 h2 {
     background-color: #fe7e02;
     padding: 10px 5px 10px 5px;
@@ -37,6 +39,8 @@ div img {
     background: black;
 }
 
+
+
 .botao-amarelo {
     background-color: #ffaf43;
     width: 250px;
@@ -44,6 +48,13 @@ div img {
     border-radius: 5px;
     font-size: 20px;
     color: white;
+    margin: 100px 820px;
+    
+    
+}
+
+container a.link-comprar{
+text-decoration: none !important;
 }
 
 .botao-amarelo:hover {
@@ -53,6 +64,7 @@ div img {
 .container {
     height: 500px;
     text-align: center;
+    
 }
 
 .icone {
