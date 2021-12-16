@@ -148,9 +148,22 @@ td button {
 }
 
 #back-button:hover {
-    background-color: #635a3d;
+    background-color: #888787;
     cursor: pointer;
     
+}
+
+#back-button:active{
+    color:white;
+}
+
+td button:hover{
+    background-color: #94833a;
+    cursor:pointer;
+}
+
+td button:active{
+    color: white;
 }
 
 div.espaco{
