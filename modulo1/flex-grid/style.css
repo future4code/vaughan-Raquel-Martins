@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+#page-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: mediumvioletred;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+div#icone-nome {
+  display: flex;
+}
+
+#cake {
+  height: 25px;
+  padding-right: 15px;
+}
+#btn-login {
+  padding: 0 5px;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+}
+
+#menu {
+  background-color: #f2d0e0;
+  width: 400px;
+}
+
+.img-menu {
+  padding: 0 20px;
+}
+
+li {
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-items: flex-start;
+  padding: 10px 10px;
+  text-align: start;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.img-menu,
+.img-seta {
+  height: 25px;
+}
+
+.img-seta {
+  color: darkgray;
+  padding-left: 170px;
+}
+
+#conteudo {
+  flex-grow: 1;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.img-bolo {
+  width: 300px;
+}
+
+.bolo-chocolate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  width: 300px;
+  margin: 10px 10px;
+  box-shadow: 3px 3px 4px 0px darkgray;
+}
+
+footer {
+  background-color: mediumvioletred;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
