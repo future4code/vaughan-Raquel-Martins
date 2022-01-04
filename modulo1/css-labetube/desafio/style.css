@@ -1,0 +1,105 @@
+/*FLEXBOX*/
+
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+body {
+  width: 100%;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: fuchsia;
+
+  height: 80px;
+}
+header div {
+  background-color: #38ca49;
+  flex-grow: 1;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header nav {
+  background-color: #feda31;
+  flex-grow: 3;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  background-color: fuchsia;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.segundo-container {
+  display: flex;
+  width: 100vw;
+}
+
+.content2 {
+  background-color: blue;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+  justify-content: center;
+}
+
+.bloco-branco {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  flex-grow: 1;
+}
+
+.image-e-extra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.image {
+  background-color: red;
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.extra {
+  background-color: yellowgreen;
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: purple;
+  height: 80px;
+}
