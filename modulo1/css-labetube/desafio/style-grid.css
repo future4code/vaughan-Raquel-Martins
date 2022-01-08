@@ -1,0 +1,115 @@
+/*GRID*/
+
+*{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+body{
+    width: 100%;
+}
+header{
+    background-color: fuchsia;
+    height: 80px;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+
+    
+}
+
+header div{
+    background-color: #38ca49;
+    height: 100%;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+header nav{
+    background-color: #feda31;
+    height: 100%;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+section{
+    background-color: fuchsia;
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    
+}
+
+
+
+
+
+.segundo-container{
+    width: 100vw;
+
+    display: grid;
+    grid-template-columns: 4fr 1fr 1.2fr;
+    
+    
+}
+
+.content2{
+    background-color: blue;
+    height: 200px;
+    
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+}
+
+.bloco-branco{
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    
+}
+
+
+
+.image{
+    background-color: red;
+    width: 100%;
+    height: 100px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.extra{
+    background-color: yellowgreen;
+    width: 100%;
+    height: 100px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+   
+}
+
+footer{
+    width: 100%;
+   
+    
+    background-color: purple;
+    height: 80px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
