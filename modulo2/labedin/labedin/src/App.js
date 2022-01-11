@@ -3,6 +3,7 @@ import './App.css';
 import CardGrande from './components/CardGrande/CardGrande';
 import ImagemButton from './components/ImagemButton/ImagemButton';
 import CardPequeno from './components/CardPequeno/CardPequeno';
+import CardGrandePerfil from './components/CardGrande/CardGrandePerfil';
 
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components';
@@ -22,7 +23,7 @@ const ContainerApp = styled.div`
 `
 
 const PageSectionContainer = styled.div`
- width: 40vw;
+  width: 40vw;
   margin: 10px 0;
 
 `
@@ -42,7 +43,7 @@ function App() {
       <GlobalStyle/>
       <PageSectionContainer>
         <Titulo>Dados pessoais</Titulo>
-        <CardGrande 
+        <CardGrandePerfil 
           imagem="https://i.ibb.co/gv6JL8D/foto-perfil.png" 
           nome="Raquel Martins" 
           descricao="Olá, sou estudante de Web Full Stack na Labenu, estou em processo
@@ -79,31 +80,56 @@ descricao="raqueldemedeiros@gmail.com"
           nome="SHS Health Tech - Estágio" 
           descricao="Realizei padronização e cadastro de itens hospitalares para a modelo da empresa, participei do projeto de implementação do 
           sistema interno da SHS, onde pude contribuir com feedbacks de melhorias da usabilidade do usuário. " 
+          inicial="maio de 2021"
+          final="novembro de 2021"
         />
         
         <CardGrande 
           imagem="https://i.ibb.co/QjtZwm8/oswaldo-logo.png" 
           nome="Faculdades Oswaldo Cruz - Monitoria" 
           descricao="Atuei como monitora de Matemática, Físico-Química, Química Analítica Quantitativa e Qualitativa, auxiliando os alunos de farmácia da Faculdades Oswaldo Cruz nessas matérias." 
+          inicial="fevereiro de 2020"
+          final="novembro de 2021"
         />
 
 <CardGrande 
           imagem="https://pedidopago-v2-prod.s3.sa-east-1.amazonaws.com/01EQ12GY88WZQN7Q2FF8PWSZ5W/logo7704011227899585410.png" 
           nome="Laboratório Buenos Ayres - Estágio" 
           descricao="Atuei no setor de conferência de receitas médicas e na elaboração de rótulos para embalagens de medicamentos" 
+          inicial="março de 2021"
+          final="maio de 2021"
         />
       </PageSectionContainer>
+<PageSectionContainer>
+  <Titulo>Formação acadêmica</Titulo>
+  <CardGrande 
+    imagem="https://i.ibb.co/QcLkzqd/labenu-logo.png"
+    nome="Labenu"
+    descricao="Web Full Stack, Engenharia de Software"
+    inicial="novembro de 2021"
+    final="julho de 2022"
+  />
 
+<CardGrande 
+    imagem="https://i.ibb.co/QjtZwm8/oswaldo-logo.png"
+    nome="Faculdades Oswaldo Cruz"
+    descricao="Bacharelado em Farmácia, Farmácia"
+    inicial="2018"
+    final="2022"
+  />
+</PageSectionContainer>
       <PageSectionContainer>
         <Titulo>Minhas redes sociais</Titulo>
         <ImagemButton 
-          imagem="https://d2v9ipibika81v.cloudfront.net/uploads/sites/261/2017/01/facebook-logo-3.png" 
-          texto="Facebook" 
+          imagem="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
+          link="https://www.linkedin.com/in/raquel-martins-17b194171/"
+          texto="Linkedin" 
         />        
 
         <ImagemButton 
-          imagem="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" 
-          texto="Twitter" 
+          imagem="https://cdn-icons-png.flaticon.com/512/25/25231.png" 
+          link="https://github.com/Raquelmms"
+          texto="GitHub" 
         />        
       </PageSectionContainer>
 

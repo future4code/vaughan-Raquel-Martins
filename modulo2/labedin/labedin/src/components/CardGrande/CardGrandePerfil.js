@@ -1,5 +1,5 @@
 import React from 'react';
-import './CardGrande.css'
+
 import styled from 'styled-components'
 
 const BigContainer = styled.div`
@@ -31,17 +31,12 @@ const Nome = styled.h4`
  margin-bottom: 15px;
 `
 
-const TempoInicialEFinal = styled.p`
-color: gray;
-font-size: 0.8rem;
-`
-
 const ContainerColunm = styled.div`
 display: flex;
 flex-direction: column;
 `
 
-function CardGrande(props) {
+function CardGrandePerfil(props) {
     return (
         <BigContainer>
 
@@ -58,10 +53,10 @@ function CardGrande(props) {
                 <p>{ props.descricao }</p>
             </NomeEDescricao>
 
-            <TempoInicialEFinal>{props.inicial} - {props.final}</TempoInicialEFinal>
+        
              </ContainerColunm>
         </BigContainer>
     )
 }
 
-export default CardGrande;
+export default CardGrandePerfil;

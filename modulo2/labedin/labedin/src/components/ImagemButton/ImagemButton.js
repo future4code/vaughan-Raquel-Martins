@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const ImagemEBtnContainer = styled.div`
     display: flex;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     border-radius: 50px;
     width: 200px;
     padding: 15px 30px;
@@ -19,11 +19,17 @@ const ImagemBtn = styled.img`
     margin-right: 10px;
 `
 
+const Link = styled.a`
+color: black;
+text-decoration: none;
+`
+
+
 function ImagemButton(props) {
     return (
         <ImagemEBtnContainer>
             <ImagemBtn src={ props.imagem }/>
-            <p>{ props.texto }</p>
+            <Link target='_blank' href={props.link}><p>{ props.texto }</p></Link>
         </ImagemEBtnContainer>
 
     )

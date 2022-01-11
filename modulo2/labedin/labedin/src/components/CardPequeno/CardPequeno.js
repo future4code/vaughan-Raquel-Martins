@@ -7,9 +7,10 @@ const ContainerPequeno = styled.div`
     display: flex;
     
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     padding: 20px 10px;
     margin-bottom: 10px;
+    border-radius: 20px;
 `
 
 const ImagemContainePequeno = styled.img`
