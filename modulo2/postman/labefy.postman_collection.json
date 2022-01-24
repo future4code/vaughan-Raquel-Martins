@@ -9,9 +9,24 @@
 			"name": "createPlaylist",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists\n",
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
 					"protocol": "https",
 					"host": [
 						"us-central1-labenu-apis",
@@ -20,7 +35,14 @@
 					],
 					"path": [
 						"labefy",
-						"playlists\n"
+						"playlists"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -30,9 +52,24 @@
 			"name": "addTrackToPlaylist",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Need to Know\",\r\n\t\"artist\": \"Doja Cat\",\r\n\t\"url\": \"https://www.youtube.com/watch?v=dI3xkL7qUAc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/:playlistId/tracks\n",
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/bada6a6e-905b-49b7-975f-47f6d176817f/tracks",
 					"protocol": "https",
 					"host": [
 						"us-central1-labenu-apis",
@@ -42,14 +79,8 @@
 					"path": [
 						"labefy",
 						"playlists",
-						":playlistId",
-						"tracks\n"
-					],
-					"variable": [
-						{
-							"key": "playlistId",
-							"value": null
-						}
+						"bada6a6e-905b-49b7-975f-47f6d176817f",
+						"tracks"
 					]
 				}
 			},
@@ -57,9 +88,40 @@
 		},
 		{
 			"name": "getAllPlaylists",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
+					"protocol": "https",
+					"host": [
+						"us-central1-labenu-apis",
+						"cloudfunctions",
+						"net"
+					],
+					"path": [
+						"labefy",
+						"playlists"
+					]
+				}
 			},
 			"response": []
 		},
@@ -67,25 +129,15 @@
 			"name": "getPlaylistTracks",
 			"request": {
 				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "searchPlaylist",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "removeTrackFromPlaylist",
-			"request": {
-				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/:playlistId/tracks/:trackId",
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/f4c426ad-6de5-4483-b0d7-1cb6f32c0583/tracks",
 					"protocol": "https",
 					"host": [
 						"us-central1-labenu-apis",
@@ -95,19 +147,72 @@
 					"path": [
 						"labefy",
 						"playlists",
-						":playlistId",
-						"tracks",
-						":trackId"
+						"f4c426ad-6de5-4483-b0d7-1cb6f32c0583",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchPlaylist",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/search?name=bananinha",
+					"protocol": "https",
+					"host": [
+						"us-central1-labenu-apis",
+						"cloudfunctions",
+						"net"
 					],
-					"variable": [
+					"path": [
+						"labefy",
+						"playlists",
+						"search"
+					],
+					"query": [
 						{
-							"key": "playlistId",
-							"value": null
-						},
-						{
-							"key": "trackId",
-							"value": null
+							"key": "name",
+							"value": "bananinha"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeTrackFromPlaylist",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "raquel-martins-vaughan",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/bada6a6e-905b-49b7-975f-47f6d176817f/tracks/9fcd6245-ad49-4440-a820-7ea1ab319f02",
+					"protocol": "https",
+					"host": [
+						"us-central1-labenu-apis",
+						"cloudfunctions",
+						"net"
+					],
+					"path": [
+						"labefy",
+						"playlists",
+						"bada6a6e-905b-49b7-975f-47f6d176817f",
+						"tracks",
+						"9fcd6245-ad49-4440-a820-7ea1ab319f02"
 					]
 				}
 			},
@@ -125,7 +230,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/:playlistId",
+					"raw": "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/d919f7fc-c8ca-4d08-9aa1-8527151e582a",
 					"protocol": "https",
 					"host": [
 						"us-central1-labenu-apis",
@@ -135,13 +240,7 @@
 					"path": [
 						"labefy",
 						"playlists",
-						":playlistId"
-					],
-					"variable": [
-						{
-							"key": "playlistId",
-							"value": null
-						}
+						"d919f7fc-c8ca-4d08-9aa1-8527151e582a"
 					]
 				}
 			},
