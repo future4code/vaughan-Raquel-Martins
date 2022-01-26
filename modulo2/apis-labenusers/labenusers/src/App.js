@@ -1,164 +1,56 @@
 import React from "react";
 import "./App.css";
-import axios from "axios";
-import { UsersList } from "./components/UsersList";
-import { CreateUsers } from "./components/CreateUsers";
-import { SearchUser } from "./components/SearchUser";
+import UsersList from "./components/UsersList";
+import CreateUsers from "./components/CreateUsers";
 import styled from "styled-components";
+import MoreInfoUser from "./components/MoreInfoUser";
+
+
 
 
 const Container = styled.div`
-
-background-color: #f5f5f5;
-padding:1rem;
-
-
-`
+  padding: 1rem;
+  
+  
+`;
 
 class App extends React.Component {
   state = {
-    users: [],
-    nameInput: "",
-    emailInput: "",
-    showUsers: false,
     query: "",
+
+    currentScreen: "register",
   };
 
-  updateQuery = (event) => {
-    this.setState({
-      query: event.target.value,
-    });
+  chooseScreen = () => {
+    switch (this.state.currentScreen) {
+      case "register":
+        return <CreateUsers goToList={this.goList} />;
+      case "list":
+        return <UsersList goToRegister={this.goRegister} 
+       moreInfo={this.goInfo} />;
+      case "info":
+        return <MoreInfoUser goToList={this.goList} />
+      default:
+        return <div>Erro! Página não encontrada</div>
+    }
   };
 
-  componentDidMount = () => {
-    this.getAllUsers();
+  goRegister = () => {
+    this.setState({ currentScreen: "register" });
   };
 
-  getAllUsers = () => {
-    axios
-      .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users",
-        {
-          headers: {
-            Authorization: "raquel-martins-vaughan",
-          },
-        }
-      )
-      .then((response) => {
-        this.setState({
-          users: response.data,
-          showUsers: !this.state.showUsers,
-        });
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  goList = () => {
+    this.setState({ currentScreen: "list" });
   };
 
-  deleteUser = (id) => {
-    axios
-      .delete(
-        `https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`,
-        {
-          headers: {
-            Authorization: "raquel-martins-vaughan",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-        alert("Usuário deletado");
-        this.getAllUsers();
-      })
-      .catch((error) => {
-        console.log(error.message);
-        alert("Não foi possível deletar");
-      });
-  };
-
-  createUser = () => {
-    const body = {
-      name: this.state.nameInput,
-      email: this.state.emailInput,
-    };
-
-    axios
-      .post(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users",
-        body,
-        {
-          headers: {
-            Authorization: "raquel-martins-vaughan",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-        this.setState({ nameInput: "", emailInput: "" });
-        alert("Usuário foi criado");
-        this.getAllUsers();
-      })
-      .catch((error) => {
-        alert("Erro ao criar usuário");
-        console.log(error.message);
-      });
-  };
-
-  onChangeNameValue = (event) => {
-    this.setState({ nameInput: event.target.value });
-  };
-
-  onChangeEmailValue = (event) => {
-    this.setState({ emailInput: event.target.value });
-  };
+ goInfo = () => {
+   this.setState({currentScreen: "info"})
+ }
 
   render() {
-    let componentAllUsersList;
-
-    const componentCreateUser = (
-      <CreateUsers
-        onClickGetAllUsers={this.getAllUsers}
-        nameUser={this.state.nameInput}
-        onChangeName={this.onChangeNameValue}
-        emailUser={this.state.emailInput}
-        onChangeEmail={this.onChangeEmailValue}
-        onClickCreateUser={this.createUser}
-      />
-    );
-
-    if (this.state.showUsers) {
-      componentAllUsersList = this.state.users
-        .filter((user) => {
-          return user.name
-            .toLowerCase()
-            .includes(this.state.query.toLowerCase());
-        })
-        .map((user) => {
-          return (
-            <UsersList
-              key={user.id}
-              name={user.name}
-              onClickDelete={() => this.deleteUser(user.id)}
-            />
-          );
-        });
-    } else {
-      return componentCreateUser;
-    }
-
     return (
       <Container>
-        <div>
-          <button onClick={this.getAllUsers}>Trocar de tela</button>
-        </div>
-
-        {componentAllUsersList}
-
-        <SearchUser
-          valueSearch={this.state.query}
-          updateSearch={this.updateQuery}
-        />
+        <div>{this.chooseScreen()}</div>
       </Container>
     );
   }
