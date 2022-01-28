@@ -4,7 +4,8 @@ import React from "react";
 
 export default class PlaylistInfo extends React.Component {
 state = {
-    tracks : []
+    tracks : [],
+    idTrack: "",
 }
 
 getPlaylistTracks = (id) => {
@@ -20,15 +21,13 @@ getPlaylistTracks = (id) => {
     })
 }
 render(){
-    const playlistClicked = this.state.tracks.map((music) => {
-        return <div>
-
-            <p>Nome:{music.name}</p>
-        </div>
-    })
+ 
     return(
         <div>
-            {playlistClicked}
+
+<button onClick={this.props.goToPlaylist}>Ver playlists!</button>
+            
+   
         </div>
     )
 }
