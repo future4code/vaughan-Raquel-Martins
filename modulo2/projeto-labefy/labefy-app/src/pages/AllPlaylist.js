@@ -1,12 +1,65 @@
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
+import deleteIcon from "../img/highlight_off_white_24dp.svg";
+
+const ContainerBody = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  background-color: #121212;
+  color: #ff7d0d;
+  min-height: 100vh;
+  padding: 10px;
+`;
+
+const ContentBtnBack = styled.div`
+  display: flex;
+  align-self: flex-start;
+`;
+const ContainerSection = styled.div`
+  display: grid;
+  grid-template-columns: 0.7fr 1fr;
+  column-gap: 8%;
+`;
+
+const InputsBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+const BtnAdd = styled.div`
+  background-color: #ff7d0d;
+  padding: 8px;
+  color: white;
+  border-radius: 1rem;
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #cf6000;
+  }
+`;
 
 const CoitainerBtnTxt = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 20%;
+  margin: 0.3rem;
+  padding: 0.3rem;
+`;
+
+const BtnDelete = styled.div`
+  background-color: #121212;
+  color: white;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const PoiterClick = styled.div`
@@ -14,6 +67,30 @@ const PoiterClick = styled.div`
     cursor: pointer;
   }
 `;
+
+const InputStyle = styled.input`
+  padding: 0.5rem;
+  border-radius: 1rem;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px solid grey;
+  margin-bottom: 2rem;
+  margin-right: 10px;
+  &:focus {
+    outline: none !important;
+    border-color: #ff7d0d;
+    box-shadow: 0 0 10px #ffa355;
+  }
+`;
+
+const AudioStyle = styled.audio`
+&::-webkit-media-controls-panel {
+  background-color: #ff7d0d;
+}
+
+`
+
 export default class AllPlaylist extends React.Component {
   state = {
     playlists: [],
@@ -24,11 +101,13 @@ export default class AllPlaylist extends React.Component {
     nameMusicInput: "",
     nameArtistInput: "",
     urlInput: "",
+
+    urlMusicPlay: [],
   };
 
   componentDidMount = () => {
     this.getAllPlaylists();
-   // this.getPlaylistTracks();
+    // this.getPlaylistTracks();
   };
 
   getAllPlaylists = () => {
@@ -72,7 +151,7 @@ export default class AllPlaylist extends React.Component {
   };
 
   getPlaylistTracks = (id) => {
-      console.log("getplaylisttracks id linha 75", id)
+    console.log("getplaylisttracks id linha 75", id);
     axios
       .get(
         `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`,
@@ -97,7 +176,7 @@ export default class AllPlaylist extends React.Component {
   }
 
   addTrackToPlaylist = (id) => {
-      console.log(id)
+    console.log(id);
     const body = {
       name: this.state.nameMusicInput,
       artist: this.state.nameArtistInput,
@@ -114,11 +193,11 @@ export default class AllPlaylist extends React.Component {
         }
       )
       .then((response) => {
-          this.setState({
-            nameMusicInput: "",
-            nameArtistInput: "",
-            urlInput: "",
-          })
+        this.setState({
+          nameMusicInput: "",
+          nameArtistInput: "",
+          urlInput: "",
+        });
         console.log(response.data);
         this.getPlaylistTracks(id);
       })
@@ -142,21 +221,29 @@ export default class AllPlaylist extends React.Component {
   pegaId = (id) => {
     this.setState({ idPlaylistAdd: id });
   };
+
+  // playMusic(url) {
+  //   console.log(url);
+  //   this.setState({ urlMusicPlay: url });
+  //   console.log("state do urlMusicPlay", this.state.urlMusicPlay);
+  // }
+
   render() {
     const playlistList = this.state.playlists.map((playlist) => {
       return (
         <CoitainerBtnTxt key={playlist.id}>
           <PoiterClick onClick={() => this.getPlaylistTracks(playlist.id)}>
-              <div  onClick={() => this.pegaId(playlist.id)} >
-              <li onClick={() => this.getName(playlist.name)} >
-              {playlist.name}
-            </li>
-              </div>
-            
+            <div onClick={() => this.pegaId(playlist.id)}>
+              <li onClick={() => this.getName(playlist.name)}>
+                {playlist.name}
+              </li>
+            </div>
           </PoiterClick>
 
           <div>
-            <button onClick={() => this.deletePlaylist(playlist.id)}>X</button>
+            <BtnDelete onClick={() => this.deletePlaylist(playlist.id)}>
+              <img src={deleteIcon} alt="ícone de delete" />
+            </BtnDelete>
           </div>
         </CoitainerBtnTxt>
       );
@@ -164,42 +251,67 @@ export default class AllPlaylist extends React.Component {
 
     const playlistClicked = this.state.tracksList.map((track) => {
       return (
-        <div>
-          <p>
-            Música: {track.name}, Artista: {track.artist}
-          </p>
-        </div>
+        <CoitainerBtnTxt>
+          <div>
+            <p>
+              Música: {track.name}, Artista: {track.artist}
+            </p>
+          </div>
+
+          <div>
+            <AudioStyle controls>
+              <source src={track.url} type="audio/mpeg" />
+            </AudioStyle>
+          </div>
+        </CoitainerBtnTxt>
       );
     });
     return (
-      <div>
-        <button onClick={this.props.goToRegister}>Criar Playlist!</button>
-        <h3>Todas as playlist</h3>
-        <ul>{playlistList}</ul>
+      <ContainerBody>
+        <ContainerSection>
+          <div>
+            <ContentBtnBack>
+              <BtnAdd onClick={this.props.goToRegister}>Criar Playlist!</BtnAdd>
+            </ContentBtnBack>
 
-        <div>
-          <h3>Playlist Selecionada: {this.state.nomePlaylistTitulo}</h3>
-          <input
-            placeholder="Nome da música"
-            value={this.state.nameMusicInput}
-            onChange={this.onChangeNameMusic}
-          />
-          <input
-            placeholder="Nome do artista"
-            value={this.state.nameArtistInput}
-            onChange={this.onChangeArtist}
-          />
-          <input
-            placeholder="URL da música"
-            value={this.state.urlInput}
-            onChange={this.onChangeUrl}
-          />
-          <button onClick={() => this.addTrackToPlaylist(this.state.idPlaylistAdd)}>
-            Adicionar Música!
-          </button>
-          <div>{playlistClicked}</div>
-        </div>
-      </div>
+            <h3>Todas as playlist</h3>
+            <ul>{playlistList}</ul>
+          </div>
+
+          <div>
+            <div>
+              <h3>Playlist Selecionada: {this.state.nomePlaylistTitulo}</h3>
+
+              <InputsBtn>
+                <InputStyle
+                  placeholder="Nome da música"
+                  value={this.state.nameMusicInput}
+                  onChange={this.onChangeNameMusic}
+                />
+                <InputStyle
+                  placeholder="Nome do artista"
+                  value={this.state.nameArtistInput}
+                  onChange={this.onChangeArtist}
+                />
+                <InputStyle
+                  placeholder="URL da música"
+                  value={this.state.urlInput}
+                  onChange={this.onChangeUrl}
+                />
+                <BtnAdd
+                  onClick={() =>
+                    this.addTrackToPlaylist(this.state.idPlaylistAdd)
+                  }
+                >
+                  Adicionar
+                </BtnAdd>
+              </InputsBtn>
+            </div>
+
+            <div>{playlistClicked}</div>
+          </div>
+        </ContainerSection>
+      </ContainerBody>
     );
   }
 }
