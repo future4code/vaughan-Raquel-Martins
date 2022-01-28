@@ -2,8 +2,7 @@ import "./App.css";
 import React from "react";
 import CreatePlaylist from "./pages/CreatePlaylist";
 import AllPlaylist from "./pages/AllPlaylist";
-import PlaylistInfo from "./pages/PlaylistInfo";
-import axios from "axios";
+
 
 export default class App extends React.Component {
   state = {
@@ -35,30 +34,12 @@ export default class App extends React.Component {
             moreInfo={this.goToInfo}
           />
         );
-      case "info":
-        return <PlaylistInfo goToPlaylist={this.goToPlaylist} />;
       default:
         return <CreatePlaylist />;
     }
   };
 
-  // showInfo = () => {
-  // this.setState.showDetail({showDetail : !this.state.showDetail})
-  // console.log(this.state.showDetail)
-  // }
 
-  // getPlaylistTracks = (id) => {
-  //   axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/track`, {
-  //       headers: {
-  //           Authorization: "raquel-martins-vaughan"
-  //       }
-  //   }).then((response) => {
-  //       console.log(response)
-  //       this.setState({tracks : response.data.result.list })
-  //   }).catch((error) => {
-  //       console.log(error.message)
-  //   })
-  // }
 
   render() {
     return (

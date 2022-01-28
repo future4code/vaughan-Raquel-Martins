@@ -28,7 +28,7 @@ export default class AllPlaylist extends React.Component {
 
   componentDidMount = () => {
     this.getAllPlaylists();
-    this.getPlaylistTracks();
+   // this.getPlaylistTracks();
   };
 
   getAllPlaylists = () => {
@@ -72,6 +72,7 @@ export default class AllPlaylist extends React.Component {
   };
 
   getPlaylistTracks = (id) => {
+      console.log("getplaylisttracks id linha 75", id)
     axios
       .get(
         `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`,
@@ -96,6 +97,7 @@ export default class AllPlaylist extends React.Component {
   }
 
   addTrackToPlaylist = (id) => {
+      console.log(id)
     const body = {
       name: this.state.nameMusicInput,
       artist: this.state.nameArtistInput,
@@ -112,8 +114,13 @@ export default class AllPlaylist extends React.Component {
         }
       )
       .then((response) => {
-        console.log(response.data.result);
-        this.getPlaylistTracks();
+          this.setState({
+            nameMusicInput: "",
+            nameArtistInput: "",
+            urlInput: "",
+          })
+        console.log(response.data);
+        this.getPlaylistTracks(id);
       })
       .catch((error) => {
         console.log(error.message);
@@ -138,15 +145,17 @@ export default class AllPlaylist extends React.Component {
   render() {
     const playlistList = this.state.playlists.map((playlist) => {
       return (
-        <CoitainerBtnTxt>
+        <CoitainerBtnTxt key={playlist.id}>
           <PoiterClick onClick={() => this.getPlaylistTracks(playlist.id)}>
-            <li onClick={() => this.getName(playlist.name)} key={playlist.id}>
+              <div  onClick={() => this.pegaId(playlist.id)} >
+              <li onClick={() => this.getName(playlist.name)} >
               {playlist.name}
             </li>
+              </div>
+            
           </PoiterClick>
 
           <div>
-            <button onClick={() => this.pegaId(playlist.id)}>+</button>
             <button onClick={() => this.deletePlaylist(playlist.id)}>X</button>
           </div>
         </CoitainerBtnTxt>
@@ -185,7 +194,7 @@ export default class AllPlaylist extends React.Component {
             value={this.state.urlInput}
             onChange={this.onChangeUrl}
           />
-          <button onClick={this.addTrackToPlaylist(this.state.idPlaylistAdd)}>
+          <button onClick={() => this.addTrackToPlaylist(this.state.idPlaylistAdd)}>
             Adicionar Música!
           </button>
           <div>{playlistClicked}</div>
