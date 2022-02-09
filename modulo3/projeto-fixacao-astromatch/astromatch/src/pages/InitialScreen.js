@@ -13,6 +13,11 @@ const PhotoAndActions = styled.div`
   align-items: center;
 `;
 
+const Content = styled.div`
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+`;
+
 function InitialScreen(props) {
   const [profiles, setProfiles] = useState([]);
   const [id, setId] = useState("");
@@ -89,7 +94,7 @@ function InitialScreen(props) {
       });
   };
   return (
-    <div>
+    <Content >
       <Header
         cleanup={() => clearMatches()}
         goToHome={props.goToHome}
@@ -119,7 +124,7 @@ function InitialScreen(props) {
 
       </PhotoAndActions>
 
-    </div>
+    </Content>
   );
 }
 

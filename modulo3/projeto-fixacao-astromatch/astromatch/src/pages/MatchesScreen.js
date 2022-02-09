@@ -4,8 +4,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Content = styled.div`
-  min-height:100vh;
-  width: 100%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
 `;
 
 const ListContent = styled.div`
@@ -20,7 +20,7 @@ const ListContent = styled.div`
 `;
 const Img = styled.img`
   border-radius: 50%;
-  width: 50px;
+  width: 60px;
   height: 50px;
   padding: 0 10px;
 `;
@@ -55,7 +55,7 @@ function MatchesScreen(props) {
   });
 
   return (
-    <div>
+    <Content>
       <HeaderMatches goToHome={props.goToHome} />
       <div>
          <Content>
@@ -63,7 +63,7 @@ function MatchesScreen(props) {
            </Content>
       </div>
      
-    </div>
+    </Content>
   );
 }
 

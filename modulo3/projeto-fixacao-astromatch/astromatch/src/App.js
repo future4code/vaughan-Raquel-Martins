@@ -5,14 +5,13 @@ import MatchesScreen from './pages/MatchesScreen';
 
 
 const DivWrapper = styled.div`
-  width: 300px;
   max-height: 500px;
-  position: absolute;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height: 100vh;
 `;
 
 function App() {
