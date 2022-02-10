@@ -4,8 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
-import Spinner from "../components/Spinner"
-
+//import Spinner from "../components/Spinner";
 
 const PhotoAndActions = styled.div`
   display: flex;
@@ -93,15 +92,17 @@ function InitialScreen(props) {
         console.log(error);
       });
   };
+
+  console.log("PROFILES DPS DAS FUNÇÕES", profiles);
   return (
-    <Content >
+    <Content>
       <Header
         cleanup={() => clearMatches()}
         goToHome={props.goToHome}
         goToMatches={props.goToMatches}
       />
       <PhotoAndActions>
-        {profiles ? (
+        {/* {loading ? (
            <ActionAreaCard
            linkImage={profiles.photo}
            name={profiles.name}
@@ -110,20 +111,17 @@ function InitialScreen(props) {
            dislikeBtn={() => dontChoosePerson(profiles.id)}
            likeBtn={() => choosePerson(profiles.id)}
          />
-        ) : (<Spinner/>)}
+        ) : (<Spinner/>)} */}
 
-
-        {/* // <ActionAreaCard
-        //   linkImage={profiles.photo}
-        //   name={profiles.name}
-        //   age={profiles.age}
-        //   description={profiles.bio}
-        //   dislikeBtn={() => dontChoosePerson(profiles.id)}
-        //   likeBtn={() => choosePerson(profiles.id)}
-        // /> */}
-
+        <ActionAreaCard
+          linkImage={profiles.photo}
+          name={profiles.name}
+          age={profiles.age}
+          description={profiles.bio}
+          dislikeBtn={() => dontChoosePerson(profiles.id)}
+          likeBtn={() => choosePerson(profiles.id)}
+        />
       </PhotoAndActions>
-
     </Content>
   );
 }

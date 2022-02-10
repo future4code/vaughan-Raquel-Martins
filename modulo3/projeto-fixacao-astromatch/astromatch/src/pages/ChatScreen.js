@@ -3,11 +3,13 @@ import styled from "styled-components";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 8px;
   min-height: 400px;
+  max-width: 280px;
 
   display: flex;
   flex-direction: column;
@@ -18,15 +20,69 @@ const Content = styled.div`
 const ContentInputBtn = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items:center;
+  align-items: center;
 `;
 
+const ChatBox = styled.div`
+  border-radius: 8px;
+  background-color: #c9ebd7;
+
+  display: flex;
+  align-self: flex-end;
+  flex-direction: column;
+
+  word-wrap: break-word;
+  max-width: 60%;
+  min-width: 8%;
+  margin-bottom: 1em;
+
+  padding: 0.9em 0.8em;
+  border-radius: 0.5em;
+  font-weight: 450;
+  line-height: 1.3;
+
+  box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
+
+`;
+const ChatContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
 function ChatScreen(props) {
-  const toSendMsg = () => {};
+  const [inputValue, setInputValue] = useState("");
+
+  const [mensagens, setMensagens] = useState([]);
+
+  const onChangeMensagem = (event) => {
+    setInputValue(event.target.value);
+  };
+  const toSendMsg = (mensagem) => {
+    const listMensagens = [...mensagens, mensagem];
+    setMensagens(listMensagens);
+    setInputValue("");
+  };
+
+  const mensagensRenderizadas = mensagens.map((mensagem) => {
+    return (
+      <ChatBox>
+        <p>{mensagem}</p>
+      </ChatBox>
+    );
+  });
+
+  // const renderizarMsg = () => {
+  //     const mensagensRenderizadas = mensagens.map((mensagem)=>{
+  //         return <div>
+  //             <p>{mensagem}</p>
+  //         </div>
+  // }))}
 
   return (
     <Content>
       <HeaderMatches goToHome={props.goToHome} />
+
+      <ChatContainer>{mensagensRenderizadas}</ChatContainer>
 
       <ContentInputBtn>
         <TextField
@@ -35,12 +91,14 @@ function ChatScreen(props) {
           placeholder="Mensagem"
           variant="filled"
           size="small"
+          value={inputValue}
+          onChange={onChangeMensagem}
         />
         <IconButton
           aria-label="dislike"
           color="success"
           size="large"
-          onClick={toSendMsg()}
+          onClick={() => toSendMsg(inputValue)}
         >
           <SendIcon />
         </IconButton>

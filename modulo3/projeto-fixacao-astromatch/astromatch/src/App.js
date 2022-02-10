@@ -25,7 +25,7 @@ function App() {
     setCurrentScreen("matches")
   }
 
-  const goToChat = () => {
+  const goToChat = (id) => {
     setCurrentScreen("chat")
   }
   const chooseScreen = () => {

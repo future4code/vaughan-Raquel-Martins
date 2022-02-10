@@ -15,7 +15,7 @@ const ImgContent = styled.div`
   width: 300px;
   height: 300px;
   background-size: cover;
- 
+  
 `;
 
 const ContentBtns = styled.div`

@@ -48,7 +48,7 @@ function MatchesScreen(props) {
 
   const listaRenderizadaMatches = listaMatches.map((match) => {
     return (
-      <ListContent key={match.name} onClick={()=> props.goToChat(match)}>
+      <ListContent key={match.name} onClick={()=> props.goToChat()}>
         <Img src={match.photo} />
         <p>{match.name}</p>
       </ListContent>
