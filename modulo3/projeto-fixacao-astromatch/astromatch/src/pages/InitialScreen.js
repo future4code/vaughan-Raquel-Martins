@@ -5,13 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
 import BtnsLikeDislike from "../components/BtnsLikeDislike";
-//import Spinner from "../components/Spinner";
 
-// const PhotoAndActions = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
 
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -51,7 +45,6 @@ function InitialScreen(props) {
       .then((response) => {
         setId(profileId);
         setChoice(true);
-        console.log(choice);
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +90,7 @@ function InitialScreen(props) {
         goToHome={props.goToHome}
         goToMatches={props.goToMatches}
       />
-      {/* <PhotoAndActions> */}
+      
         <ActionAreaCard 
           photo={profiles.photo}
           name={profiles.name}
@@ -111,7 +104,7 @@ function InitialScreen(props) {
         likeBtn={() => choosePerson(profiles.id)}
         
         />
-      {/* </PhotoAndActions> */}
+    
     </Content>
   );
 }

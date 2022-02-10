@@ -8,8 +8,8 @@ import { useState } from "react";
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 8px;
-  width: 300px;
-  height: 500px;
+  width: 400px;
+  height: 600px;
 
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ const ChatBox = styled.div`
   word-wrap: break-word;
   max-width: 60%;
   min-width: 8%;
-  margin-bottom: 1em;
+  margin: 0.3rem 0.3rem;
 
   padding: 0.9em 0.8em;
   border-radius: 0.5em;
@@ -49,6 +49,9 @@ const ChatContainer = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  
+  overflow:scroll;
+  overflow-x:hidden;
 `;
 function ChatScreen(props) {
   const [inputValue, setInputValue] = useState("");
@@ -79,12 +82,12 @@ function ChatScreen(props) {
       <ChatContainer>{mensagensRenderizadas}</ChatContainer>
 
       <ContentInputBtn>
+      
         <TextField
-          hiddenLabel
-          id="filled-hidden-label-small"
-          placeholder="Mensagem"
-          variant="filled"
-          size="small"
+          id="fullWidth"
+          fullWidth
+          label="Mensagem" 
+          //placeholder="Mensagem"
           value={inputValue}
           onChange={onChangeMensagem}
         />

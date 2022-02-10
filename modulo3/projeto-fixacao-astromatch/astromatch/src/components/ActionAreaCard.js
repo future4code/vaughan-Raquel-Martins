@@ -26,16 +26,16 @@ const TextContent = styled.div`
   background: rgba( 255,255,255,0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter:blur(10px;)
-  
+
   width:100%;
-  width: 300px;
+  width: 400px;
   text-shadow: 2px 2px 5px #000000;
 `;
 
 const Body = styled.div`
   box-shadow: rgb(117 117 117 / 20%) 0px 2px 10px 0px;
-  width: 300px;
-  height: 430px;
+  width: 400px;
+  height: 500px;
   display: flex;
   max-width: 100vw;
 `;
