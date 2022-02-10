@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import  InitialScreen  from './pages/InitialScreen';
 import MatchesScreen from './pages/MatchesScreen';
-
+import ChatScreen from './pages/ChatScreen'
 
 const DivWrapper = styled.div`
   max-height: 500px;
@@ -25,6 +25,9 @@ function App() {
     setCurrentScreen("matches")
   }
 
+  const goToChat = () => {
+    setCurrentScreen("chat")
+  }
   const chooseScreen = () => {
     switch (currentScreen) {
       case "initial":
@@ -33,8 +36,12 @@ function App() {
         );
       case "matches":
         return (
-         <MatchesScreen goToHome={()=> goToHome()}/> 
-        )
+         <MatchesScreen goToHome={()=> goToHome()} goToChat={()=> goToChat()}/> 
+        );
+        case "chat":
+          return(
+            <ChatScreen goToHome={()=> goToHome()} />
+          )
       default:
         return (
           <InitialScreen />

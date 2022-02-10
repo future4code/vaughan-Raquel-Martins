@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 8px;
+  min-height: 400px;
 `;
 
 const ListContent = styled.div`
@@ -47,7 +48,7 @@ function MatchesScreen(props) {
 
   const listaRenderizadaMatches = listaMatches.map((match) => {
     return (
-      <ListContent key={match.name}>
+      <ListContent key={match.name} onClick={()=> props.goToChat(match)}>
         <Img src={match.photo} />
         <p>{match.name}</p>
       </ListContent>
@@ -59,7 +60,9 @@ function MatchesScreen(props) {
       <HeaderMatches goToHome={props.goToHome} />
       <div>
          <Content>
+
            {listaRenderizadaMatches}
+
            </Content>
       </div>
      
