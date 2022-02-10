@@ -8,8 +8,8 @@ import { useState } from "react";
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 8px;
-  min-height: 400px;
-  max-width: 280px;
+  width: 300px;
+  height: 500px;
 
   display: flex;
   flex-direction: column;
@@ -21,6 +21,7 @@ const ContentInputBtn = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
 `;
 
 const ChatBox = styled.div`
@@ -70,13 +71,6 @@ function ChatScreen(props) {
       </ChatBox>
     );
   });
-
-  // const renderizarMsg = () => {
-  //     const mensagensRenderizadas = mensagens.map((mensagem)=>{
-  //         return <div>
-  //             <p>{mensagem}</p>
-  //         </div>
-  // }))}
 
   return (
     <Content>

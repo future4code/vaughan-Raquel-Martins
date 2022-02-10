@@ -1,71 +1,70 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 import styled from "styled-components";
-import IconButton from "@mui/material/IconButton";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
-const ImgContent = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  width: 300px;
-  height: 300px;
+const BgContent = styled.div`
+  width: 100%;
+  height: 100%;
   background-size: cover;
-  
-`;
 
-const ContentBtns = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
 `;
+
+const TextContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+   align-self:end;
+  -webkit-align-self: end; 
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  color: white;
+  font-weight: 600;
+
+  background: rgba( 255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter:blur(10px;)
+  
+  width:100%;
+  width: 300px;
+  text-shadow: 2px 2px 5px #000000;
+`;
+
+const Body = styled.div`
+  box-shadow: rgb(117 117 117 / 20%) 0px 2px 10px 0px;
+  width: 300px;
+  height: 430px;
+  display: flex;
+  max-width: 100vw;
+`;
+
+// const ImgContent = styled.div`
+// `;
 
 export default function ActionAreaCard(props) {
   return (
-    <Card sx={{ maxWidth: 300 }}>
-      <CardActionArea>
-        <ImgContent
-          style={{ backgroundImage: `url(${props.linkImage})` }}
-          bg={props.linkImage}
-        >
-        </ImgContent>
-
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.name}, {props.age}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <ContentBtns>
-        <div>
-          <IconButton
-            aria-label="dislike"
-            color="error"
-            size="large"
-            onClick={props.dislikeBtn}
-          >
-            <ThumbDownIcon />
-          </IconButton>
+    <Body>
+      {props.photo ? (
+        <BgContent style={{ backgroundImage: `url(${props.photo})` }}>
+          <TextContent>
+            <div>
+              <h2>
+                {props.name}, {props.age}
+              </h2>
+            </div>
+            <div>{props.bio}</div>
+          </TextContent>
+        </BgContent>
+      ) : (
+        <div class="ui active inverted dimmer">
+          <div class="ui small text loader">Buscando...</div>
         </div>
-
-        <div>
-          <IconButton
-            aria-label="like"
-            color="success"
-            size="large"
-            onClick={props.likeBtn}
-          >
-            <ThumbUpIcon />
-          </IconButton>
-        </div>
-      </ContentBtns>
-    </Card>
+      )}
+      {/* <ImgContent>
+          <img src={props.linkImage} />
+        </ImgContent>  */}
+    </Body>
   );
 }

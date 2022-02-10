@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   border-radius: 8px;
-  min-height: 400px;
+  min-height: 500px;
+ // width: 300px;
+  //height: 500px;
 `;
 
 const ListContent = styled.div`
@@ -38,7 +40,6 @@ function MatchesScreen(props) {
         `https://us-central1-missao-newton.cloudfunctions.net/astroMatch/raquel-martins/matches`
       )
       .then((response) => {
-        console.log(response.data.matches);
         setListaMatches(response.data.matches);
       })
       .catch((error) => {

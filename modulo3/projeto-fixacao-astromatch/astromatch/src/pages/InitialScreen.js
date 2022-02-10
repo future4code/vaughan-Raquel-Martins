@@ -4,13 +4,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
+import BtnsLikeDislike from "../components/BtnsLikeDislike";
 //import Spinner from "../components/Spinner";
 
-const PhotoAndActions = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+// const PhotoAndActions = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
 
 const Content = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -30,7 +31,6 @@ function InitialScreen(props) {
         `https://us-central1-missao-newton.cloudfunctions.net/astroMatch/raquel-martins/person`
       )
       .then((response) => {
-        console.log(response);
         setProfiles(response.data.profile);
       })
       .catch((error) => {
@@ -39,7 +39,6 @@ function InitialScreen(props) {
   };
 
   const choosePerson = (profileId) => {
-    console.log(profileId);
     const body = {
       id: id,
       choice: choice,
@@ -60,7 +59,6 @@ function InitialScreen(props) {
   };
 
   const dontChoosePerson = (profileId) => {
-    console.log(profileId);
     const body = {
       id: id,
       choice: choice,
@@ -73,7 +71,6 @@ function InitialScreen(props) {
       .then((response) => {
         setId(profileId);
         setChoice(false);
-        console.log(choice);
       })
       .catch((error) => {
         console.log(error);
@@ -93,7 +90,6 @@ function InitialScreen(props) {
       });
   };
 
-  console.log("PROFILES DPS DAS FUNÇÕES", profiles);
   return (
     <Content>
       <Header
@@ -101,27 +97,21 @@ function InitialScreen(props) {
         goToHome={props.goToHome}
         goToMatches={props.goToMatches}
       />
-      <PhotoAndActions>
-        {/* {loading ? (
-           <ActionAreaCard
-           linkImage={profiles.photo}
-           name={profiles.name}
-           age={profiles.age}
-           description={profiles.bio}
-           dislikeBtn={() => dontChoosePerson(profiles.id)}
-           likeBtn={() => choosePerson(profiles.id)}
-         />
-        ) : (<Spinner/>)} */}
-
-        <ActionAreaCard
-          linkImage={profiles.photo}
+      {/* <PhotoAndActions> */}
+        <ActionAreaCard 
+          photo={profiles.photo}
           name={profiles.name}
           age={profiles.age}
-          description={profiles.bio}
-          dislikeBtn={() => dontChoosePerson(profiles.id)}
-          likeBtn={() => choosePerson(profiles.id)}
+          bio={profiles.bio}
+
         />
-      </PhotoAndActions>
+
+        <BtnsLikeDislike
+        dislikeBtn={() => dontChoosePerson(profiles.id)}
+        likeBtn={() => choosePerson(profiles.id)}
+        
+        />
+      {/* </PhotoAndActions> */}
     </Content>
   );
 }
