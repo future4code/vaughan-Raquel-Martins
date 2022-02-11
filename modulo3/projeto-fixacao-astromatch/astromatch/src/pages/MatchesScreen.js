@@ -24,6 +24,7 @@ const ListContent = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
+  cursor: pointer;
 
   &:hover {
     background-color: #d3d3d3;
@@ -45,6 +46,9 @@ width: 100%;
 align-items: center;
 height: 100%;
 `
+
+
+
 function MatchesScreen(props) {
   const [listaMatches, setListaMatches] = useState([]);
   const [loading, setLoading] = useState(false);
