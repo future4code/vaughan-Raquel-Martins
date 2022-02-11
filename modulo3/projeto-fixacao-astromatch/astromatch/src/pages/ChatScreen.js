@@ -21,6 +21,7 @@ const ContentInputBtn = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding: 0 5px 5px 5px;
 
 `;
 

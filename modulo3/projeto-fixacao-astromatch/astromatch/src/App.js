@@ -15,7 +15,7 @@ const DivBody = styled.div`
 
 const  CardPhone = styled.div`
 width: 400px;
-height: 600px
+height: 600px;
 border-radius: 8px;
 
 `
