@@ -4,6 +4,7 @@ import IconAstromatch from "../img/astromatch.svg";
 import PeopleIcon from "@mui/icons-material/People";
 import IconButton from "@mui/material/IconButton";
 import RefreshIcon from "@mui/icons-material/Refresh";
+
 const Nav = styled.div`
   border-bottom: 1px solid #d3d3d3;
   display: flex;
@@ -12,9 +13,9 @@ const Nav = styled.div`
   padding: 0px 10px;
 
   
-  width: 100%/
-  height: 44px
-`;
+  width: 100%;
+  height: 44px;
+`
 
 export default function Header(props) {
   return (
