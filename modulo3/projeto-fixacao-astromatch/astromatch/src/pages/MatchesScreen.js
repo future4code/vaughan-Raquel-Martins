@@ -2,6 +2,7 @@ import HeaderMatches from "../components/HeaderMatches";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 
 const Content = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.22);
@@ -35,14 +36,32 @@ const Img = styled.img`
   height: 50px;
   padding: 0 10px;
 `;
+
+const PlaceholderContent = styled.div`
+display:flex;
+flex-direction:column;
+justify-content: center;
+width: 100%;
+align-items: center;
+height: 100%;
+`
 function MatchesScreen(props) {
   const [listaMatches, setListaMatches] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [placeholder, setPlaceholder] = useState(false)
 
   useEffect(() => {
-    getMatches();
-  }, []);
+    getMatches()
+    isEmpty()
+  })
 
+  const isEmpty =() =>{
+    if(listaMatches.length > 0){
+      setPlaceholder(false)
+    }else{
+      setPlaceholder(true)
+    }
+  }
   const getMatches = () => {
     axios
       .get(
@@ -69,14 +88,20 @@ function MatchesScreen(props) {
   return (
     <Content>
       <HeaderMatches goToHome={props.goToHome} />
-
+      <ContentMatches>
       {loading ? (
-        <ContentMatches>{listaRenderizadaMatches}</ContentMatches>
+        <div>{listaRenderizadaMatches}</div>
       ) : (
         <div className="ui active inverted dimmer">
           <div className="ui small text loader">Buscando...</div>
         </div>
       )}
+
+      {placeholder ? (<PlaceholderContent>
+        <div><HeartBrokenIcon sx={{ fontSize: 70 }}  color="disabled" /></div> 
+        <div>Você ainda não possui match...</div></PlaceholderContent>)
+         : (<></>)} 
+      </ContentMatches>
     </Content>
   );
 }

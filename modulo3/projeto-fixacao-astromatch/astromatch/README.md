@@ -8,7 +8,7 @@ a animação do card ao clicar em aceitar ou rejeitar match, e background desfoc
 
 ## Link Surge
 
-[Link surget Here](https://receptive-weight.surge.sh/)
+[Link surget Here](https://flat-kitty.surge.sh/)
 
 
 
