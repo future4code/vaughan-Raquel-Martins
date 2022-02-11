@@ -11,8 +11,8 @@ const Nav = styled.div`
   align-items: center;
   padding: 0px 10px;
 
-  width: 100%/
-  height: 44px
+  width: 100%;
+  height: 44px;
 `;
 
 const EspaceBlank = styled.div`

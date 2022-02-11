@@ -37,6 +37,7 @@ const Img = styled.img`
 `;
 function MatchesScreen(props) {
   const [listaMatches, setListaMatches] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getMatches();
@@ -48,6 +49,7 @@ function MatchesScreen(props) {
         `https://us-central1-missao-newton.cloudfunctions.net/astroMatch/raquel-martins/matches`
       )
       .then((response) => {
+        setLoading(true);
         setListaMatches(response.data.matches);
       })
       .catch((error) => {
@@ -68,7 +70,13 @@ function MatchesScreen(props) {
     <Content>
       <HeaderMatches goToHome={props.goToHome} />
 
-      <ContentMatches>{listaRenderizadaMatches}</ContentMatches>
+      {loading ? (
+        <ContentMatches>{listaRenderizadaMatches}</ContentMatches>
+      ) : (
+        <div className="ui active inverted dimmer">
+          <div className="ui small text loader">Buscando...</div>
+        </div>
+      )}
     </Content>
   );
 }

@@ -17,20 +17,20 @@ const TextContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-   align-self:end;
-  -webkit-align-self: end; 
+  align-self: end;
+  -webkit-align-self: end;
   padding: 0 0.5rem 0.5rem 0.5rem;
   color: white;
   font-weight: 600;
 
-  background: rgba( 255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
-  width:100%;
+  width: 100%;
   width: 400px;
   text-shadow: 2px 2px 5px #000000;
-`
+`;
 
 const Body = styled.div`
   box-shadow: rgb(117 117 117 / 20%) 0px 2px 10px 0px;
@@ -39,9 +39,6 @@ const Body = styled.div`
   display: flex;
   max-width: 100vw;
 `;
-
-// const ImgContent = styled.div`
-// `;
 
 export default function ActionAreaCard(props) {
   return (
@@ -58,13 +55,10 @@ export default function ActionAreaCard(props) {
           </TextContent>
         </BgContent>
       ) : (
-        <div class="ui active inverted dimmer">
-          <div class="ui small text loader">Buscando...</div>
+        <div className="ui active inverted dimmer">
+          <div className="ui small text loader">Buscando...</div>
         </div>
       )}
-      {/* <ImgContent>
-          <img src={props.linkImage} />
-        </ImgContent>  */}
     </Body>
   );
 }
