@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+
 import style from "styled-components";
 
 const Nav = style.div`
@@ -29,25 +29,16 @@ grid-template-columns: 1fr 1fr;
 
 `;
 
-function Header(props) {
+function HeaderTextIcon() {
   return (
     <Nav>
       <h1>LabeX 🚀 </h1>
 
       <ContainerBtn>
-        <div>
-          <Button variant="contained" onClick={props.goToListTripsPage}>
-            {props.nomeBtn1}
-          </Button>
-        </div>
-        <div>
-          <Button variant="contained" onClick={props.goToLoginPage}>
-            {props.nomeBtn2}
-          </Button>
-        </div>
+       
       </ContainerBtn>
     </Nav>
   );
 }
 
-export default Header;
+export default HeaderTextIcon;

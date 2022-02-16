@@ -15,6 +15,9 @@ function LoginPage() {
     return (
       <div>
         <p>LoginPage</p>
+
+        <input />
+        <input type="password" />
         <button onClick={goBack}>Voltar</button>
         <button onClick={goToAdminHomePage}>Entrar</button>
       </div>

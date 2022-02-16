@@ -1,15 +1,41 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { URL_BASE } from "../constants/BASE_URL";
-//import { useRequestData } from "../Hooks/useRequestData";
+import { useRequestData } from "../Hooks/useRequestData";
+import style from "styled-components";
+import HeaderTextIcon from '../components/HeaderTextIcon';
+import universeImg from "../assets/universe.png";
+
+const BodyContent = style.div`
+
+background-size: cover;
+min-height: 100vh;
+
+top:0;
+margin: 0;
+padding: 0;
+color: white;
+display:grid;
+grid-template-rows: 150px 1fr;
+flex-grow: 1;
+height: 100%;
+
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+overflow: auto;
+text-shadow: 2px 2px 5px #000000;
+`;
 
 function ListTripsPage() {
-    const [trips , setTrips] = useState([])
+    // const [trips , setTrips] = useState([])
+    // const [isLoading, setLoading] = useState(false)
 
-    useEffect(() => {
-        getTrips()
-    }, [])
+    // useEffect(() => {
+    //     getTrips()
+    // }, [])
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -21,44 +47,47 @@ function ListTripsPage() {
   };
 
 
-  const getTrips = () => {
-      axios.get(`${URL_BASE}/trips`)
-      .then((res)=>{
-          console.log(res.data)
-          setTrips(res.data.trips)
-      }).catch((err) =>{
-          console.log(err)
-      })
-  }
-//   const [trips, isLoadingTrip, errorTrip] = useRequestData(`${URL_BASE}/trips`);
 
-//   const tripList =
-//     trips &&
-//     trips.map((trip) => {
-//       return <p>{trip.name}</p>;
-//     });
+  const [trips, isLoadingTrips, errorTrips] = useRequestData(`${URL_BASE}/trips`);
 
-    console.log(trips)
-    const tripList = trips.map((trip) => {
-       return <p>{trip.name}</p>
-    })
+  const tripList =
+    trips &&
+    trips.map((travel) => {
+      return <p>{travel.name}
+      
+      </p>;
+    });
+
+    console.log("TRIPS no ListTripsPage", trips)
+
+
     
   return (
-    <div>
-      <button onClick={goBack}>Voltar</button>
-      <button onClick={goToApplicationFormPage}>Inscrever-se</button>
+    <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
+
+        <HeaderTextIcon/>
+
+        <div>
+          <button onClick={goBack}>Voltar</button>
+      <button onClick={goToApplicationFormPage}>Inscrever-se</button>   
+        </div>
+     
       <h1>Lista de Viagens</h1>
 
-      {/* {isLoadingTrip && <p>Carregando...</p>}
-      {!isLoadingTrip && errorTrip && <p>Ocorreu um erro na requisição</p>}
-      {!isLoadingTrip && trips && trips.length > 0 && tripList}
-      {!isLoadingTrip && trips && trips.length === 0 && 
-        <p>Não há nenhuma viagem</p>} */}
-
-        {tripList}
+      {isLoadingTrips && <p>Carregando...</p>}
+      {!isLoadingTrips && errorTrips && <p>Ocorreu um erro na requisição</p>}
+      {!isLoadingTrips && trips && tripList}
+      {!isLoadingTrips && trips && trips.length === 0 && 
+        <p>Não há nenhuma viagem</p>}
 
 
-    </div>
+{/* {isLoading ? ( <div class="ui active dimmer">
+    <div class="ui text loader">Carregando</div>
+  </div>) : (<div> {tripList} </div>)}  */}
+       
+
+
+    </BodyContent>
   );
 }
 

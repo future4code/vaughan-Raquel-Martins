@@ -28,6 +28,15 @@ const CardContainer = style.div`
 display: grid;
 justify-content: center;
 grid-template-columns: repeat(4,1fr);
+
+@media(max-width:850px) {
+    grid-template-columns: 2fr;
+  }
+
+
+@media(max-width:600px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 function CardHome(props) {

@@ -14,7 +14,7 @@ function Router() {
       <Routes>
         <Route exact path={"/"} element={<HomePage />} />
 
-        <Route exact path={"/trips/list"} element={<ListTripsPage />} />
+        <Route exact path={"/trips/list"} element={<ListTripsPage/>} />
 
         <Route
           exact

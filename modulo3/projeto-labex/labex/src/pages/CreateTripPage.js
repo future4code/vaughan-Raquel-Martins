@@ -76,6 +76,7 @@ const onChangeDuration = (event) => {
       />
       <input placeholder="Data" value={data}
       onChange={onChangeDate}
+      type="date"
       />
       <input placeholder="Descrição" value={descricao}
       onChange={onChangeDescription}

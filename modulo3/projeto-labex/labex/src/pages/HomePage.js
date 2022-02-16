@@ -1,8 +1,8 @@
 import style from "styled-components";
-import universeImg from "../assets/space-ship.png";
+import universeImg from "../assets/universe.png";
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header'
-import CardHome from '../components/CardHome'
+import Header from '../components/Header';
+import CardHome from '../components/CardHome';
 
 
 const BodyContent = style.div`
@@ -16,7 +16,15 @@ padding: 0;
 color: white;
 display:grid;
 grid-template-rows: 150px 1fr;
+flex-grow: 1;
+height: 100%;
 
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+overflow: auto;
+text-shadow: 2px 2px 5px #000000;
 `;
 
 const SectionContent = style.div`
@@ -41,7 +49,7 @@ function HomePage() {
 
   return (
     <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
-      <Header goToListTripsPage={goToListTripsPage} goToLoginPage={goToLoginPage} />
+      <Header goToListTripsPage={goToListTripsPage} goToLoginPage={goToLoginPage}  nomeBtn1={"Ver Viagens"} nomeBtn2={"Área de Admin"} />
      
       <SectionContent>
       <CardHome  />
