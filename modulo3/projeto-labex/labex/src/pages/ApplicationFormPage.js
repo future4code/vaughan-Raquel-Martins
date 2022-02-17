@@ -10,13 +10,13 @@ function ApplicationFormPage() {
     }
   return (
     <div>
-      <p>
-        Inscreva-se para uma viagem
+      
+        <h1>Inscreva-se para uma viagem</h1>
         <input />
 
         <button onClick={goBack}>Voltar</button>
         <button>Enviar</button>
-      </p>
+      
     </div>
   );
 }

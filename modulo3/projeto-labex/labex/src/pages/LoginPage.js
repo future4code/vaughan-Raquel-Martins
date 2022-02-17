@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import axios from "axios";
 import { URL_BASE } from "../constants/BASE_URL";
 import HeaderTextIcon from "../components/HeaderTextIcon";
 import styled from "styled-components";
+import useFormHook from "../Hooks/useFormHook"
 
 const Body = styled.div`
   display: grid;
@@ -19,23 +19,18 @@ const Container = styled.div`
 `;
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+//   const [form, setForm] = useState({email: "" , password: ""})
+const { form, onChangeForm } = useFormHook({email: "" , password: ""})
 
-  const onSubmitLogin = () => {
-    console.log(email, password);
-
-    const body = {
-      email: email,
-      password: password,
-    };
+  const onSubmitLogin = (event) => {
+    event.preventDefault();
 
     axios
-      .post(`${URL_BASE}/login`, body)
+      .post(`${URL_BASE}/login`, form)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         console.log(response.data);
-        goToAdminHomePage();
+        navigate("/admin/trips/list");
       })
       .catch((error) => {
         console.log(error.response);
@@ -48,38 +43,46 @@ function LoginPage() {
     navigate("/");
   };
 
-  const goToAdminHomePage = () => {
-    navigate("/admin/trips/list");
-  };
 
-  const onChangeEmail = (event) => {
-    setEmail(event.target.value);
-  };
-  const onChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
+//   const onChangeForm = (event) => {
+//       const {name , value} = event.target
+//    setForm({...form, [name] : value})
+//   }
   return (
     <Body>
       <HeaderTextIcon />
 
       <Container>
         <p>LoginPage</p>
-        <input
-          placeholder="Email"
-          label="Email"
-          type="email"
-          value={email}
-          onChange={onChangeEmail}
-        />
-        <input
-          placeholder="Senha"
-          type="password"
-          value={password}
-          onChange={onChangePassword}
-        />
 
-        <button onClick={goBack}>Voltar</button>
-        <button onClick={onSubmitLogin}>Entrar</button>
+        <form onSubmit={onSubmitLogin}>
+          <div>
+            <input
+              name="email"
+              placeholder="Email"
+              label="Email"
+              type="email"
+              value={form.email}
+              onChange={onChangeForm}
+              required
+            />
+          </div>
+          <div>
+            <input
+              name="password"
+              placeholder="Senha"
+              type="password"
+              value={form.password}
+              onChange={onChangeForm}
+              required
+              pattern={"^.{3,}"}
+              title={"Sua senha deve ter no mínimo 3 caracteres"}
+            />
+          </div>
+
+          <button onClick={goBack}>Voltar</button>
+          <button type={"submit"}>Fazer Login</button>
+        </form>
       </Container>
     </Body>
   );

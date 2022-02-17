@@ -32,7 +32,7 @@ function Router() {
           element={<CreateTripPage />}
         />
 
-        <Route exact path={"/trips/"} element={<TripDetailsPage />} />
+        <Route exact path={"admin/trips/:id"} element={<TripDetailsPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
