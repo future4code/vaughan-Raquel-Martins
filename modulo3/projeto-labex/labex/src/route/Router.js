@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import ErrorPage from "../pages/ErrorPage";
 import AdminHomePage from "../pages/AdminHomePage";
 import CreateTripPage from "../pages/CreateTripPage";
+import TripDetailsPage from "../pages/TripDetailsPage";
 
 function Router() {
   return (
@@ -14,7 +15,7 @@ function Router() {
       <Routes>
         <Route exact path={"/"} element={<HomePage />} />
 
-        <Route exact path={"/trips/list"} element={<ListTripsPage/>} />
+        <Route exact path={"/trips/list"} element={<ListTripsPage />} />
 
         <Route
           exact
@@ -23,9 +24,15 @@ function Router() {
         />
         <Route exact path={"/login"} element={<LoginPage />} />
 
-        <Route exact path={"/admin/trips/list"}  element={<AdminHomePage/>} />
+        <Route exact path={"/admin/trips/list"} element={<AdminHomePage />} />
 
-        <Route exact path={"/admin/trips/create"} element={<CreateTripPage/>} />
+        <Route
+          exact
+          path={"/admin/trips/create"}
+          element={<CreateTripPage />}
+        />
+
+        <Route exact path={"/trips/"} element={<TripDetailsPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

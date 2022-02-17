@@ -3,6 +3,7 @@ import { URL_BASE } from "../constants/BASE_URL";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
+import { useProtectedPage } from "../Hooks/useProtectedPage";
 
 const Content = styled.div`
   display: flex;
@@ -10,14 +11,19 @@ const Content = styled.div`
   width: 70%;
 `;
 
+
+
 function CreateTripPage() {
+  useProtectedPage()
+  const navigate = useNavigate();
+
   const [nome, setNome] = useState("");
   const [planeta, setPlaneta] = useState("");
   const [data, setData] = useState("");
   const [descricao, setDescricao] = useState("");
   const [duracao, setDuracao] = useState(undefined);
 
-  const navigate = useNavigate();
+  
 
   const goBack = () => {
     navigate(-1);
@@ -39,6 +45,11 @@ function CreateTripPage() {
       })
       .then((response) => {
         console.log(response.data);
+        setNome("")
+        setPlaneta("")
+        setData("")
+        setDescricao("")
+        setDuracao(undefined)
       })
       .catch((error) => {
         console.log(error);
