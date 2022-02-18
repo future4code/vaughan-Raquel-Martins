@@ -52,6 +52,8 @@ function ApplicationFormPage() {
     navigate(-1);
   };
 
+  
+
   return (
     <div>
       <h1>Inscreva-se para uma viagem</h1>
@@ -101,6 +103,9 @@ function ApplicationFormPage() {
           value={form.applicationText}
           placeholder="Texto de Candidatura"
           required
+          pattern={"^.{30,}"}
+          title={"O texto deve ter no mínimo 30 caracteres"}
+          
         />
         <input
           onChange={onChangeForm}
@@ -108,6 +113,8 @@ function ApplicationFormPage() {
           value={form.profession}
           placeholder="Profissão"
           required
+          pattern={"^.{10,}"}
+          title={"A profissão deve ter no mínimo 10 caracteres"}
         />
         <input
           onChange={onChangeForm}
