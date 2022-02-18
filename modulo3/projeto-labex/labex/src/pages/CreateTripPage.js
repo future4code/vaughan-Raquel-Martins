@@ -50,7 +50,7 @@ function CreateTripPage() {
         setPlaneta("");
         setData("");
         setDescricao("");
-        setDuracao(undefined);
+        setDuracao("");
       })
       .catch((error) => {
         console.log(error);

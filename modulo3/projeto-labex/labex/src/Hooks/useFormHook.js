@@ -8,7 +8,12 @@ import { useState } from "react";
     setForm({ ...form, [name]: value });
   };
 
-  return { form, onChangeForm };
+
+  const cleanFields = () => {
+   setForm(initialState)
+  }
+
+  return { form, onChangeForm, cleanFields };
 };
 
 export default useFormHook;
