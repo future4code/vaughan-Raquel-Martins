@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useProtectedPage } from "../Hooks/useProtectedPage";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-//import FormControl from "@mui/material/FormControl";
+import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { AUTH_TOKEN } from "../constants/TOKEN_AUTH";
 import useFormHook from "../Hooks/useFormHook";
@@ -32,7 +32,7 @@ function CreateTripPage() {
     planet: "",
     date: "",
     description: "",
-    durationInDays: Number("") ,
+    durationInDays: "" ,
   });
 
   const goBack = () => {
@@ -41,9 +41,12 @@ function CreateTripPage() {
 
   const createTrip = (event) => {
     event.preventDefault();
-  
+    const body ={
+      ...form,
+      durationInDays: Number(form.durationInDays)
+}
     axios
-      .post(`${URL_BASE}/trips`, form, {
+      .post(`${URL_BASE}/trips`, body, {
         headers: {
           auth: `${AUTH_TOKEN}`,
         },
@@ -88,12 +91,12 @@ function CreateTripPage() {
           value={form.name}
           onChange={onChangeForm}
           pattern={"^.{5,}"}
-          // inputProps={{ pattern: "[a-z]" }}
+          // inputProps={{ pattern: "^.{5,}" }}
           title={"O nome deve ter no mínimo 5 caracteres"}
           required
           name={"name"}
         />
-
+<FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-standard-label">Planeta</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -121,7 +124,7 @@ function CreateTripPage() {
           {/* <MenuItem value={"XO-4"}>XO-4</MenuItem>
           <MenuItem value={"HD 107146"}>HD 107146</MenuItem> */}
         </Select>
-
+        </FormControl>
         <input
           placeholder="Data"
           value={form.date}
@@ -145,9 +148,9 @@ function CreateTripPage() {
           placeholder="Duração em dias"
           value={form.durationInDays}
           onChange={onChangeForm}
-          type={"number"}
           required
-          min={50}
+          type={"number"}
+          max={50}
           title={"O número de dias deve ser no mínimo 50"}
           name={"durationInDays"}
 

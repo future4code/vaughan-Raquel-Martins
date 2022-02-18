@@ -1,5 +1,5 @@
 import style from "styled-components";
-import universeImg from "../assets/universe.png";
+import universeImg from "../assets/universe-img.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import CardHome from "../components/CardHome";

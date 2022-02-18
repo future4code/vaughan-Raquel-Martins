@@ -1,43 +1,53 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { URL_BASE } from "../constants/BASE_URL";
 import { useProtectedPage } from "../Hooks/useProtectedPage";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { AUTH_TOKEN } from "../constants/TOKEN_AUTH"
+
+//import Button from "@mui/material/Button";
 
 
 function TripDetailsPage() {
-    const [trip ,setTrip] = useState({})
+    const [trips ,setTrip] = useState([])
     const [candidate , setCandidates] = useState([])
+    const [ aprove, setAprove] = useState([])
     useProtectedPage()
     const pathParams = useParams()
     const navigate = useNavigate()
+ 
+    // const [trips, isLoadingTrips, errorTrips, getTrips] = useRequestDataAuth(
+    //   `${URL_BASE}/trip/${pathParams.id}`
+    // );
 
-    console.log(candidate)
-
+  
 console.log("CANDIDATOOOS", candidate)
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
+    
+    getTripDetail()
+  }, []);
+
+const getTripDetail = () => {
+  axios
       .get(`${URL_BASE}/trip/${pathParams.id}`, {
         headers: {
-          auth: token,
+          auth: `${AUTH_TOKEN}`,
         },
       })
       .then((response) => {
         console.log(response.data.trip);
-
         setTrip(response.data.trip)
         setCandidates(response.data.trip.candidates)
+        setAprove(response.data.trip.approved)
       })
       .catch((error) => {
         console.log(error.response);
       });
-  }, []);
+}
 
   const decideCandidate = (candidateId) => {
-    const token = localStorage.getItem("token");
 const body =
     {
       approve: true
@@ -45,12 +55,12 @@ const body =
 
     axios.put(`${URL_BASE}/trips/${pathParams.id}/candidates/${candidateId}/decide`, body ,{
       headers : {
-        auth: token,
+        auth: `${AUTH_TOKEN}`,
       },
     })
     .then((response)=>{
      console.log(response)
-     
+     getTripDetail()
     }).catch((error)=>{
       console.log(error)
     })
@@ -71,23 +81,36 @@ const body =
     });
 
 
+
+ 
+
+    const aprovedList = aprove.map((candidate)=>{
+      return(
+        <div>
+          <p>{candidate.name}</p>
+        </div>
+      )
+    })
+
   return (
     <div>
 
 
       <p>Detalhes da viagem!!!</p>
       <button onClick={goBack}>Voltar</button>
-      <h1>{trip.name}</h1>
-      <p>Nome: {trip.name}</p>
-      <p>Descrição: {trip.description}</p>
-      <p>Planeta: {trip.planet}</p>
-      <p>Data: {trip.date}</p>
+      
+      <h1>{trips.name}</h1>
+      <p>Nome: {trips.name}</p>
+      <p>Descrição: {trips.description}</p>
+      <p>Planeta: {trips.planet}</p>
+      <p>Data: {trips.date}</p>
 
 
 <h1>Candidatos </h1>
-{candidate ? (<div>{candidatesList}</div>) : <p>Não há candidatos</p>}
+{candidate.length !== 0 ? (<div>{candidatesList}</div>) : <p>Não há candidatos</p>}
 
-
+<h1>Aprovados</h1>
+{aprove.length !== 0 ? (<div>{aprovedList}</div>) : <p>Não há candidatos aprovados</p>}
     </div>
   );
 }
