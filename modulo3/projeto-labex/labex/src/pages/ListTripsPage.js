@@ -3,7 +3,7 @@ import { URL_BASE } from "../constants/BASE_URL";
 import { useRequestData } from "../Hooks/useRequestData";
 import styled from "styled-components";
 import HeaderTextIcon from "../components/HeaderTextIcon";
-import universeImg from "../assets/universe-img.svg";
+import universeImg from "../assets/Preview.svg";
 import  CardTrips  from  "../components/CardTrips"
 import Button from "@mui/material/Button";
 

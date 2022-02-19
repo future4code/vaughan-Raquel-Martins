@@ -4,7 +4,7 @@ import { URL_BASE } from "../constants/BASE_URL";
 import HeaderTextIcon from "../components/HeaderTextIcon";
 import styled from "styled-components";
 import useFormHook from "../Hooks/useFormHook";
-import universeImg from "../assets/universe-img.svg";
+import universeImg from "../assets/Preview.svg";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
@@ -16,6 +16,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   align-items: center;
+  
 `;
 
 const Content = styled.div`
@@ -39,6 +40,7 @@ const BodyContent = styled.div`
   top: 0;
   margin: 0;
   padding: 0;
+  left:0;
   color: white;
   display: grid;
   grid-template-rows: 150px 1fr;
@@ -82,10 +84,12 @@ function LoginPage() {
   return (
     <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
       <HeaderTextIcon />
-
+ 
       <Container>
+
+      <h1>LoginPage</h1>
         <Content>
-          <p>LoginPage</p>
+         
 
           <form onSubmit={onSubmitLogin}>
             <ContentInputs>

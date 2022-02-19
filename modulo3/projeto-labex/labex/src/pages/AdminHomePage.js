@@ -1,10 +1,49 @@
 import { useNavigate } from "react-router-dom";
 import { useProtectedPage } from "../Hooks/useProtectedPage";
-//import { useEffect, useState } from "react";
 import { URL_BASE } from "../constants/BASE_URL";
 import { AUTH_TOKEN } from "../constants/TOKEN_AUTH";
 import { useRequestData } from "../Hooks/useRequestData";
 import axios from "axios";
+import CardTripsBtn from "../components/CardTripsBtn";
+import HeaderTextIcon from "../components/HeaderTextIcon";
+import styled from "styled-components";
+import universeImg from "../assets/Preview.svg";
+import Button from "@mui/material/Button";
+
+const BodyContent = styled.div`
+
+background-size: cover;
+min-height: 100vh;
+
+top:0;
+margin: 0;
+padding: 0;
+color: white;
+display:grid;
+grid-template-rows: 150px 1fr;
+flex-grow: 1;
+height: 100%;
+
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+overflow: auto;
+`;
+
+const CenterList = styled.div`
+display: grid;
+justify-items: center;
+
+`
+
+const Btns = styled.div`
+display: flex;
+grid-template-columns: 1fr 1fr 1fr;
+column-gap: 1rem;
+
+`
+
 
 function AdminHomePage() {
   useProtectedPage();
@@ -22,18 +61,17 @@ function AdminHomePage() {
     trips &&
     trips.trips.map((travel) => {
       return (
-        <div>
-          <div>
-            <div onClick={() => goToTripDetailsPage(travel.id)}>
-              {travel.name}
-            </div>{" "}
-            <div>
-              <button onClick={() => deleteTrip(travel)}>X</button>
-            </div>
-          </div>
-        </div>
-      );
-    });
+              <CardTripsBtn
+                name={travel.name}
+                description={travel.description}
+                planet={travel.planet}
+                period={travel.durationInDays}
+                date={travel.date}
+                viewMore={() => goToTripDetailsPage(travel.id)}
+                toDelete={()=> deleteTrip(travel)}
+              />
+      )
+    })
 
   const deleteTrip = (travel) => {
     console.log(travel);
@@ -71,12 +109,17 @@ function AdminHomePage() {
   };
 
   return (
-    <div>
+    <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
+      <HeaderTextIcon/>
+      <CenterList>
       <h1>Painel Administrativo</h1>
-      <button onClick={goBack}>Voltar</button>
-      <button onClick={goToCreateTripPage}>Criar Viagem</button>
-      <button onClick={logoutUser}>Logout</button>
+      <Btns>
+      <Button variant="contained" onClick={goBack}>Voltar</Button>
+      <Button variant="contained" onClick={goToCreateTripPage}>Criar Viagem</Button>
+      <Button variant="contained" onClick={logoutUser}>Logout</Button>
 
+      </Btns>
+   
       {isLoadingTrips && (
         <div className="ui active dimmer">
           <div className="ui text loader">Carregando...</div>
@@ -87,7 +130,8 @@ function AdminHomePage() {
       {!isLoadingTrips && trips && trips.length === 0 && (
         <p>Não há nenhuma viagem</p>
       )}
-    </div>
+      </CenterList>
+    </BodyContent>
   );
 }
 

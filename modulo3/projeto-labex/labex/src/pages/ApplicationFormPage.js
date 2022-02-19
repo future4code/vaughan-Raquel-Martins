@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useRequestData } from "../Hooks/useRequestData";
 import { URL_BASE } from "../constants/BASE_URL";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import useFormHook from "../Hooks/useFormHook";
 import axios from "axios";
 import styled from "styled-components";
-import universeImg from "../assets/universe-img.svg";
+import universeImg from "../assets/Preview.svg";
 import HeaderTextIcon from "../components/HeaderTextIcon";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import SelectMui from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
+
 
 const BodyContent = styled.div`
   -webkit-background-size: cover;
@@ -43,6 +46,9 @@ const Content = styled.div`
   box-shadow: rgba(240, 46, 170, 0.4) -5px 5px,
     rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px;
     padding: 2rem;
+
+
+    color: black;
   
 `;
 
@@ -67,9 +73,29 @@ const Container = styled.div`
     `
 function ApplicationFormPage() {
   const [id, setId] = useState("");
+  const [value, setValue] = useState("")
+  //const [selectTrips , setSelectTrips] = useState("")
+
   const [trips, isLoadingTrips, errorTrips] = useRequestData(
     `${URL_BASE}/trips`
   );
+
+  //Função dos seletores de countries
+  const CountrySelector = () => {
+    const options = useMemo(() => countryList().getData(), []);
+    const changeHandler = (value) => {
+      setValue(value)
+    }
+
+    return <Select 
+    options={options}
+    value={value}
+    onChange={changeHandler}
+    required />
+
+  }
+
+ 
 
   const { form, onChangeForm, cleanFields } = useFormHook({
     name: "",
@@ -84,6 +110,7 @@ function ApplicationFormPage() {
     const body = {
       ...form,
       age: Number(form.age),
+      country: value,
     };
     axios
       .post(`${URL_BASE}/trips/${id}/apply`, body)
@@ -130,7 +157,7 @@ function ApplicationFormPage() {
               <InputLabel id="demo-simple-select-standard-label">
                 Escolha uma viagem
               </InputLabel>
-              <Select
+              <SelectMui
                 label="Escolha uma viagem"
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
@@ -152,7 +179,7 @@ function ApplicationFormPage() {
                 {!isLoadingTrips && trips && trips.length === 0 && (
                   <p>Não há nenhuma viagem</p>
                 )}
-              </Select>
+              </SelectMui>
             </FormControl>
             </CtnInput>
             <CtnInput>
@@ -212,7 +239,7 @@ function ApplicationFormPage() {
             <CtnInput>
 
            
-            <TextField
+            {/* <TextField
               id="standard-basic"
               label="País"
               variant="standard"
@@ -221,7 +248,10 @@ function ApplicationFormPage() {
               value={form.country}
               placeholder="País"
               required
-            />
+            /> */}
+            {CountrySelector()}
+
+
              </CtnInput>
 <Btns>
 
