@@ -15,7 +15,6 @@ min-height: 100vh;
 top:0;
 margin: 0;
 padding: 0;
-color: white;
 display:grid;
 grid-template-rows: 150px 1fr;
 flex-grow: 1;
@@ -26,7 +25,6 @@ height: 100%;
 -o-background-size: cover;
 background-size: cover;
 overflow: auto;
-text-shadow: 2px 2px 5px #000000;
 `;
 
 const CenterList = styled.div`
@@ -39,6 +37,11 @@ const Btns = styled.div`
     display:grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
+    `
+
+    const Title = styled.h1`
+    color:white;
+    text-shadow: 2px 2px 5px #000000;
     `
 
 function ListTripsPage() {
@@ -80,7 +83,7 @@ function ListTripsPage() {
         <Button variant="contained" onClick={goBack}>Voltar</Button>
         <Button variant="contained" onClick={goToApplicationFormPage}>Inscrever-se</Button>
       </Btns>
-<h1>Lista de Viagens</h1>
+<Title>Lista de Viagens</Title>
 
       {isLoadingTrips && (
         <div className="ui active dimmer">

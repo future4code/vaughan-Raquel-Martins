@@ -14,7 +14,7 @@ align-items: center;
 justify-content: space-between;
 padding: 2% 2%;
 height: 50px;
-
+color:white;
 grid-column: 1/-1;
 
 margin-bottom: 1rem;

@@ -44,6 +44,11 @@ column-gap: 1rem;
 
 `
 
+const Title = styled.h1`
+color:white;
+text-shadow: 2px 2px 5px #000000;
+`
+
 
 function AdminHomePage() {
   useProtectedPage();
@@ -74,7 +79,6 @@ function AdminHomePage() {
     })
 
   const deleteTrip = (travel) => {
-    console.log(travel);
     if (
       window.confirm(`Tem certeza que deseja deletar a viagem ${travel.name}`)
     ) {
@@ -85,7 +89,6 @@ function AdminHomePage() {
           },
         })
         .then((response) => {
-          console.log(response);
           alert("Viagem deletada com sucesso!");
           getTrips(`${URL_BASE}/trips`);
         })
@@ -112,7 +115,7 @@ function AdminHomePage() {
     <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
       <HeaderTextIcon/>
       <CenterList>
-      <h1>Painel Administrativo</h1>
+      <Title>Painel Administrativo</Title>
       <Btns>
       <Button variant="contained" onClick={goBack}>Voltar</Button>
       <Button variant="contained" onClick={goToCreateTripPage}>Criar Viagem</Button>

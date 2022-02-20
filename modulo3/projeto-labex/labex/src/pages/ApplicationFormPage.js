@@ -13,9 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import SelectMui from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import Select from 'react-select'
-import countryList from 'react-select-country-list'
-
+import Select from "react-select";
+import countryList from "react-select-country-list";
 
 const BodyContent = styled.div`
   -webkit-background-size: cover;
@@ -45,11 +44,9 @@ const Content = styled.div`
 
   box-shadow: rgba(240, 46, 170, 0.4) -5px 5px,
     rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px;
-    padding: 2rem;
+  padding: 2rem;
 
-
-    color: black;
-  
+  color: black;
 `;
 
 const Container = styled.div`
@@ -59,22 +56,20 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   align-items: center;
-  
 `;
 
- const CtnInput = styled.div`
-    margin-bottom: 1rem;
-    `
+const CtnInput = styled.div`
+  margin-bottom: 1rem;
+`;
 
-    const Btns = styled.div`
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1rem;
-    `
+const Btns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+`;
 function ApplicationFormPage() {
   const [id, setId] = useState("");
-  const [value, setValue] = useState("")
-  //const [selectTrips , setSelectTrips] = useState("")
+  const [value, setValue] = useState("");
 
   const [trips, isLoadingTrips, errorTrips] = useRequestData(
     `${URL_BASE}/trips`
@@ -84,18 +79,18 @@ function ApplicationFormPage() {
   const CountrySelector = () => {
     const options = useMemo(() => countryList().getData(), []);
     const changeHandler = (value) => {
-      setValue(value)
-    }
+      setValue(value);
+    };
 
-    return <Select 
-    options={options}
-    value={value}
-    onChange={changeHandler}
-    required />
-
-  }
-
- 
+    return (
+      <Select
+        options={options}
+        value={value}
+        onChange={changeHandler}
+        required
+      />
+    );
+  };
 
   const { form, onChangeForm, cleanFields } = useFormHook({
     name: "",
@@ -116,7 +111,11 @@ function ApplicationFormPage() {
       .post(`${URL_BASE}/trips/${id}/apply`, body)
       .then((res) => {
         console.log(res);
+        setValue("");
         cleanFields();
+        alert(
+          "Você conseguiu se inscrever na viagem selecionada, em breve entraremos em contato!"
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -134,8 +133,6 @@ function ApplicationFormPage() {
       return <MenuItem value={travel.id}>{travel.name}</MenuItem>;
     });
 
-   
-
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -146,118 +143,99 @@ function ApplicationFormPage() {
     <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
       <HeaderTextIcon />
       <Container>
-      <h1>Inscreva-se para uma viagem</h1>
+        <h1>Inscreva-se para uma viagem</h1>
         <Content>
-         
-          
-
           <form onSubmit={applyToTrip}>
             <CtnInput>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-standard-label">
-                Escolha uma viagem
-              </InputLabel>
-              <SelectMui
-                label="Escolha uma viagem"
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={id}
-                onChange={onChangeId}
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-standard-label">
+                  Escolha uma viagem
+                </InputLabel>
+                <SelectMui
+                  label="Escolha uma viagem"
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={id}
+                  onChange={onChangeId}
+                  required
+                >
+                  {!isLoadingTrips && trips && tripList}
+
+                  {isLoadingTrips && (
+                    <div className="ui active dimmer">
+                      <div className="ui text loader">Carregando...</div>
+                    </div>
+                  )}
+                  {!isLoadingTrips && errorTrips && (
+                    <p>Ocorreu um erro na requisição</p>
+                  )}
+
+                  {!isLoadingTrips && trips && trips.length === 0 && (
+                    <p>Não há nenhuma viagem</p>
+                  )}
+                </SelectMui>
+              </FormControl>
+            </CtnInput>
+            <CtnInput>
+              <TextField
+                id="standard-basic"
+                label="Nome"
+                variant="standard"
+                onChange={onChangeForm}
+                name={"name"}
+                value={form.name}
                 required
-              >
-                {!isLoadingTrips && trips && tripList}
-
-                {isLoadingTrips && (
-                  <div className="ui active dimmer">
-                    <div className="ui text loader">Carregando...</div>
-                  </div>
-                )}
-                {!isLoadingTrips && errorTrips && (
-                  <p>Ocorreu um erro na requisição</p>
-                )}
-
-                {!isLoadingTrips && trips && trips.length === 0 && (
-                  <p>Não há nenhuma viagem</p>
-                )}
-              </SelectMui>
-            </FormControl>
+                inputProps={{ pattern: "^.{3,}" }}
+                title={"O nome deve ter no mínimo 3 caracteres"}
+              />
             </CtnInput>
             <CtnInput>
-            <TextField
-              id="standard-basic"
-              label="Nome"
-              variant="standard"
-              onChange={onChangeForm}
-              name={"name"}
-              value={form.name}
-              required
-              inputProps={{ pattern: "^.{3,}" }}
-              title={"O nome deve ter no mínimo 3 caracteres"}
-            />
+              <TextField
+                id="standard-basic"
+                label="Idade"
+                variant="standard"
+                onChange={onChangeForm}
+                name={"age"}
+                value={form.age}
+                required
+                type={"number"}
+                min={18}
+              />
             </CtnInput>
             <CtnInput>
-            <TextField
-              id="standard-basic"
-              label="Idade"
-              variant="standard"
-              onChange={onChangeForm}
-              name={"age"}
-              value={form.age}
-              required
-              type={"number"}
-              min={18}
-            />
+              <TextField
+                id="standard-basic"
+                label="Texto de Candidatura"
+                variant="standard"
+                onChange={onChangeForm}
+                name={"applicationText"}
+                value={form.applicationText}
+                required
+                inputProps={{ pattern: "^.{30,}" }}
+                title={"O texto deve ter no mínimo 30 caracteres"}
+              />
             </CtnInput>
             <CtnInput>
-            
-            <TextField
-              id="standard-basic"
-              label="Texto de Candidatura"
-              variant="standard"
-              onChange={onChangeForm}
-              name={"applicationText"}
-              value={form.applicationText}
-              required
-              inputProps={{ pattern: "^.{30,}" }}
-              title={"O texto deve ter no mínimo 30 caracteres"}
-            />
-              
-              </CtnInput>
-              <CtnInput>
-            <TextField
-              id="standard-basic"
-              label="Profissão"
-              variant="standard"
-              onChange={onChangeForm}
-              name={"profession"}
-              value={form.profession}
-              required
-              inputProps={{ pattern: "^.{10,}" }}
-              title={"A profissão deve ter no mínimo 10 caracteres"}
-            />
+              <TextField
+                id="standard-basic"
+                label="Profissão"
+                variant="standard"
+                onChange={onChangeForm}
+                name={"profession"}
+                value={form.profession}
+                required
+                inputProps={{ pattern: "^.{10,}" }}
+                title={"A profissão deve ter no mínimo 10 caracteres"}
+              />
             </CtnInput>
-            <CtnInput>
-
-           
-            {/* <TextField
-              id="standard-basic"
-              label="País"
-              variant="standard"
-              onChange={onChangeForm}
-              name={"country"}
-              value={form.country}
-              placeholder="País"
-              required
-            /> */}
-            {CountrySelector()}
-
-
-             </CtnInput>
-<Btns>
-
-
-            <Button variant="contained" onClick={goBack}>Voltar</Button>
-            <Button variant="contained" type={"submit"}>Enviar</Button>
+            <CtnInput>{CountrySelector()}</CtnInput>
+            <Btns>
+              <Button variant="contained" onClick={goBack}>
+                Voltar
+              </Button>
+              <Button variant="contained" type={"submit"}>
+                Enviar
+              </Button>
             </Btns>
           </form>
         </Content>

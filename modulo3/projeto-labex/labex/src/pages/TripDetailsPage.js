@@ -5,8 +5,48 @@ import { useProtectedPage } from "../Hooks/useProtectedPage";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AUTH_TOKEN } from "../constants/TOKEN_AUTH";
+import CardHomeTrips from "../components/CardTrips";
+import HeaderTextIcon from "../components/HeaderTextIcon";
+import styled from "styled-components";
+import Button from "@mui/material/Button";
+import universeImg from "../assets/Preview.svg";
+import CardCandidates from "../components/CardCandidates";
+import CardListApproved from "../components/CardListApproved";
 
-//import Button from "@mui/material/Button";
+const BodyContent = styled.div`
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: auto;
+
+  min-height: 100vh;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  display: grid;
+  grid-template-rows: 150px 1fr;
+  flex-grow: 1;
+  height: 100%;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
+`;
+const Title = styled.h1`
+  color: white;
+  text-shadow: 2px 2px 5px #000000;
+`;
+const SubTitle = styled.h3`
+  color: white;
+  text-shadow: 2px 2px 5px #000000;
+`;
 
 function TripDetailsPage() {
   const [trips, setTrip] = useState([]);
@@ -15,11 +55,11 @@ function TripDetailsPage() {
   useProtectedPage();
   const pathParams = useParams();
   const navigate = useNavigate();
-
+  console.log(candidate);
 
   useEffect(() => {
     getTripDetail();
-  }, []);
+  }, []); 
 
   const getTripDetail = () => {
     axios
@@ -68,47 +108,57 @@ function TripDetailsPage() {
 
   const candidatesList = candidate.map((candidate) => {
     return (
-      <div>
-        <p>Nome:{candidate.name}</p>
-        <button onClick={() => decideCandidate(candidate.id, true)}>Aprovar</button>
-        <button onClick={() => decideCandidate(candidate.id, false)}>Rejeitar</button>
-      </div>
+      <CardCandidates
+        key={candidate.id}
+        name={candidate.name}
+        age={candidate.age}
+        applicationText={candidate.applicationText}
+        country={candidate.country.label}
+        profession={candidate.profession}
+        decideCandidateApprove={() => decideCandidate(candidate.id, true)}
+        decideCandidateReject={() => decideCandidate(candidate.id, false)}
+      />
     );
   });
 
   const aprovedList = aprove.map((candidate) => {
     return (
-      <div>
-        <p>{candidate.name}</p>
-      </div>
+      <CardListApproved name={candidate.name}/>
     );
   });
 
   return (
-    <div>
-      <p>Detalhes da viagem!!!</p>
-      <button onClick={goBack}>Voltar</button>
+    <BodyContent style={{ backgroundImage: `url(${universeImg})` }}>
+      <HeaderTextIcon />
 
-      <h1>{trips.name}</h1>
-      <p>Nome: {trips.name}</p>
-      <p>Descrição: {trips.description}</p>
-      <p>Planeta: {trips.planet}</p>
-      <p>Data: {trips.date}</p>
+      <Container>
+        <Button variant="contained" onClick={goBack}>
+          Voltar
+        </Button>
+        <Title>{trips.name}</Title>
+        <CardHomeTrips
+          name={trips.name}
+          description={trips.description}
+          planet={trips.planet}
+          period={trips.durationInDays}
+          date={trips.date}
+        />
 
-      <h1>Candidatos </h1>
-      {candidate.length !== 0 ? (
-        <div>{candidatesList}</div>
-      ) : (
-        <p>Não há candidatos</p>
-      )}
+        <Title>Candidatos </Title>
+        {candidate.length !== 0 ? (
+          <div>{candidatesList}</div>
+        ) : (
+          <SubTitle>Não há candidatos 😞 </SubTitle>
+        )}
 
-      <h1>Aprovados</h1>
-      {aprove.length !== 0 ? (
-        <div>{aprovedList}</div>
-      ) : (
-        <p>Não há candidatos aprovados</p>
-      )}
-    </div>
+        <Title>Aprovados 🎉</Title>
+        {aprove.length !== 0 ? (
+          <div>{aprovedList}</div>
+        ) : (
+          <SubTitle>Não há candidatos aprovados</SubTitle>
+        )}
+      </Container>
+    </BodyContent>
   );
 }
 
