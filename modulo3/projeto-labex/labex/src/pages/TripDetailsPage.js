@@ -146,7 +146,7 @@ function TripDetailsPage() {
 
         <Title>Candidatos </Title>
         {candidate.length !== 0 ? (
-          <div>{candidatesList}</div>
+          <Container>{candidatesList}</Container>
         ) : (
           <SubTitle>Não há candidatos 😞 </SubTitle>
         )}
