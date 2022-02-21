@@ -110,7 +110,6 @@ function ApplicationFormPage() {
     axios
       .post(`${URL_BASE}/trips/${id}/apply`, body)
       .then((res) => {
-        console.log(res);
         setValue("");
         cleanFields();
         alert(
@@ -124,13 +123,12 @@ function ApplicationFormPage() {
 
   const onChangeId = (event) => {
     setId(event.target.value);
-    console.log("ID", event.target.value);
   };
 
   const tripList =
     trips &&
     trips.trips.map((travel) => {
-      return <MenuItem value={travel.id}>{travel.name}</MenuItem>;
+      return <MenuItem key={travel.id} value={travel.id}>{travel.name}</MenuItem>;
     });
 
   const navigate = useNavigate();

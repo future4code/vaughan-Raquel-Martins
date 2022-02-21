@@ -59,7 +59,6 @@ function AdminHomePage() {
   );
 
   const goToTripDetailsPage = (id) => {
-    console.log(id);
     navigate(`/admin/trips/${id}`);
   };
   const tripList =
@@ -67,6 +66,7 @@ function AdminHomePage() {
     trips.trips.map((travel) => {
       return (
               <CardTripsBtn
+                key={travel.id}
                 name={travel.name}
                 description={travel.description}
                 planet={travel.planet}

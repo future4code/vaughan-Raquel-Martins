@@ -20,7 +20,7 @@ Formulário de inscrição da viagem, logar e deslogar, criar viagens, deletar v
 ### O que não funciona
 
 ### Link Surge 
-[Link Surge](https://ripe-prose.surge.sh/)
+[Link Surge](https://outstanding-drum.surge.sh/)
 
 ### Imagens
 ![image](https://user-images.githubusercontent.com/85976494/154865031-f60900a7-89b2-482d-b3b3-d86972d286f5.png)

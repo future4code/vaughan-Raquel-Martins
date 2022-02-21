@@ -59,13 +59,12 @@ function ListTripsPage() {
     `${URL_BASE}/trips`
   );
 
-  console.log(trips)
 
   const tripList =
     trips &&
     trips.trips.map((travel) => {
       return (
-      <CardTrips name={travel.name} description={travel.description}
+      <CardTrips key={travel.id} name={travel.name} description={travel.description}
       planet={travel.planet} period={travel.durationInDays} 
       date={travel.date}
       />)

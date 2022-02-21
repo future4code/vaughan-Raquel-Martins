@@ -65,7 +65,6 @@ function LoginPage() {
       .post(`${URL_BASE}/login`, form)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
-        console.log(response.data);
         navigate("/admin/trips/list");
       })
       .catch((error) => {

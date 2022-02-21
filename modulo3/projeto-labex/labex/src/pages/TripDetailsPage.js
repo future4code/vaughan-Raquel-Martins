@@ -55,7 +55,6 @@ function TripDetailsPage() {
   useProtectedPage();
   const pathParams = useParams();
   const navigate = useNavigate();
-  console.log(candidate);
 
   useEffect(() => {
     getTripDetail();
@@ -94,7 +93,6 @@ function TripDetailsPage() {
         }
       )
       .then((response) => {
-        console.log(response);
         getTripDetail();
       })
       .catch((error) => {
