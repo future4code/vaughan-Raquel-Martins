@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+### LabeX
+O objetivo desse projeto é a realização de uma página de web de uma companhia de viagens espaciais, onde é possível ver as viagens disponíveis e se candidatar para essas  viagens espaciais na área livre do site.
+Na área do restrita do site onde só é possível fazer login na conta e ter acesso a todas as viagens, podendo deletar e aprovar ou rejeitas candidatos para as viagens.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tela inicial: Na tela inicial tem um breve texto explicando sobre o que é o site com ilustrações, acima possui dois buttons, "Ver viagens" e "Área de Admin".
 
-## Available Scripts
+Ver viagens: Nessa tela é possível ver todas as viagens com as informações e tem dois buttons, um que leva para tela inicial e outro que leva para a página do formulário de inscrição.
 
-In the project directory, you can run:
+Inscrição: Nessa tela o usuário poderá se candidatar para alguma viagem.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+área de admin: tela em que é possível efetuar o login.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+área do admin logado: após logado na conta de acesso, o usuário poderá editar as viagens e criar novas viagens e também aceitar ou rejeitar os candidatos.
 
-### `npm test`
+### O que funciona
+Formulário de inscrição da viagem, logar e deslogar, criar viagens, deletar viagens, aprovar candidatos ou reprovar.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### O que não funciona
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Link Surge 
+[Link Surge](https://ripe-prose.surge.sh/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Imagens
+![image](https://user-images.githubusercontent.com/85976494/154865031-f60900a7-89b2-482d-b3b3-d86972d286f5.png)
+![image](https://user-images.githubusercontent.com/85976494/154865040-0bc9fea8-dd02-4f84-9eae-5c8ca9980778.png)
+![image](https://user-images.githubusercontent.com/85976494/154865064-bb01201d-4564-4eed-80e2-41eb95deb03e.png)
+![image](https://user-images.githubusercontent.com/85976494/154865068-46e0cf69-08d8-489e-bfe7-3285190e72f7.png)
+![image](https://user-images.githubusercontent.com/85976494/154865080-f93bd30b-3760-42a1-9857-4c9f42c1d4dc.png)
+![image](https://user-images.githubusercontent.com/85976494/154865093-4f60364e-2470-47cd-821d-3bd5c0fd24de.png)
+![image](https://user-images.githubusercontent.com/85976494/154865103-4bc93a34-f627-48f2-8307-290138280bd2.png)
+![image](https://user-images.githubusercontent.com/85976494/154865204-1843a563-7c24-4d0c-aa08-c2691401dc52.png)
+![image](https://user-images.githubusercontent.com/85976494/154865467-97ffe4cc-95ac-4417-891b-ddb35e05ee33.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
