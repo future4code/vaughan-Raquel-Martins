@@ -1,0 +1,1 @@
+export const TOKEN_AUTH = window.localStorage.getItem("token")
