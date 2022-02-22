@@ -16,7 +16,7 @@ const FeedPage = () => {
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
   );
-
+//   .replaceAll("T", " - ").slice(0, 18)
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
     body: "",
@@ -31,7 +31,7 @@ const FeedPage = () => {
         <div className="ui container comments" key={post.id}>
           <CommentDetail
             name={post.username}
-            timeAgo={post.createdAt.replaceAll("T", " - ").slice(0, 18)}
+            timeAgo={post.createdAt}
             title={post.title}
             message={post.body}
             avatar={faker.image.avatar()}

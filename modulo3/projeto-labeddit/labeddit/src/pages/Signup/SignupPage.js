@@ -6,10 +6,13 @@ import useForm from "../../hooks/useForm";
 import {StyledContainer, Content,BtnContent} from "./styled"
 import axios from "axios";
 import AlertSuccess from "../../components/AlertSuccess/AlertSuccess";
+import { useUnProtectedPage } from "../../hooks/useUnProtectedPage";
+import { useNavigate } from "react-router-dom";
+import { goToFeed } from "../../routes/coordinator";
 
-
-const SignupPage = () => {
-
+const SignupPage = ({setRightButtonText}) => {
+    useUnProtectedPage()
+    const navigate = useNavigate()
     const [alertSuccess, setAlertSuccess] = useState(false)
 
     const { form, onChangeForm, cleanFields } = useForm({
@@ -26,7 +29,9 @@ const SignupPage = () => {
             console.log(res)
             cleanFields()
             setAlertSuccess(true)
-    
+            localStorage.setItem("token", res.data.token)
+            goToFeed(navigate)
+            setRightButtonText("Logout")
         })
         .catch((err)=>{
             console.log(err)

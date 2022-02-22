@@ -2,13 +2,15 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { StyledContainer, Content, SignupButtonContainer, BtnContent } from "./styled";
-import { goToSignup, goToFeed } from "../../routes/coordinator";
+import { goToSignup } from "../../routes/coordinator";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import { login } from "../../services/users";
+import { useUnProtectedPage } from "../../hooks/useUnProtectedPage";
 
 
-const LoginPage = () => {
+const LoginPage = ({setRightButtonText}) => {
+   useUnProtectedPage()
   const navigate = useNavigate();
 
   const { form, onChangeForm } = useForm({
@@ -18,7 +20,7 @@ const LoginPage = () => {
 
  const onSubmitLogin = (event) => {
     event.preventDefault()
-    login(form, navigate)
+    login(form, navigate, setRightButtonText)
  }
 
   return (

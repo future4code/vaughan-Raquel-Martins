@@ -1,5 +1,8 @@
 import React from "react";
+//import VotesAndCount from "../VotesAndCount/VotesAndCount";
 import { Container } from  "./styled"
+//import { useState } from "react";
+
 
 const CommentDetail = (props) => {
     return (
@@ -19,6 +22,8 @@ const CommentDetail = (props) => {
         <div className="text">{props.message}</div>
       </div>
     </div> 
+
+ 
     </Container>
     )
 }

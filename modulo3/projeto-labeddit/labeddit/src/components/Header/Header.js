@@ -1,21 +1,37 @@
-import React from 'react'
+//import React, { useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import { StyledToolBar } from  "./styled"
 import { useNavigate } from 'react-router-dom'
-import { goToLogin } from '../../routes/coordinator'
+import { goToLogin, goToFeed } from '../../routes/coordinator'
 
-const Header = () => {
+const Header = ({rightButtonText, setRightButtonText}) => {
     const navigate = useNavigate()
+    const token = localStorage.getItem("token")
+
+    
+    const logout = () => {
+        localStorage.removeItem("token")
+    }
+
+    const rightButtonAction = () => {
+        if(token){
+            logout()
+            setRightButtonText("Login")
+            goToLogin(navigate)
+        }else{
+            goToLogin(navigate)
+        }
+    }
 
   return (
 
       <AppBar position="static">
         <StyledToolBar>
-          <Button color="inherit" >
+          <Button onClick={()=> goToFeed(navigate)} color="inherit" >
             LabEddit
           </Button>
-          <Button onClick={() => goToLogin(navigate)} color="inherit">Login</Button>
+          <Button onClick={rightButtonAction} color="inherit">{rightButtonText}</Button>
         </StyledToolBar>
       </AppBar>
   
