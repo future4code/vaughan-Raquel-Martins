@@ -3,19 +3,25 @@ import styled from "styled-components"
 
 export const StyledContainer = styled.div`
 display: flex;
-justify-content: center;
-min-height: 100vh;
-
+flex-direction: column;
+align-items: center;
+width: 100vw;
+margin-top: 6.25rem;
 `
 
 export const Content = styled.div`
-padding: 2rem;
 display: flex;
 flex-direction: column;
-justify-content: center;
-
+width: 80vw;
+max-width: 450px;
+margin-bottom: 2rem;
 `
 
-export const ContentInput = styled.div`
-margin-bottom: 1rem;
+export const SignupButtonContainer = styled.div`
+width: 80vw;
+max-width: 450px
+`
+
+export const BtnContent = styled.div`
+margin-top: 2rem;
 `

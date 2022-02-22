@@ -13,7 +13,7 @@ const Header = () => {
       <AppBar position="static">
         <StyledToolBar>
           <Button color="inherit" >
-            LabeEddit
+            LabEddit
           </Button>
           <Button onClick={() => goToLogin(navigate)} color="inherit">Login</Button>
         </StyledToolBar>

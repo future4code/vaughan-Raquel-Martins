@@ -9,3 +9,7 @@ export const goToSignup = (navigate) => {
 export const goToFeed = (navigate) => {
   navigate("/feed");
 };
+
+export const goToPost = (navigate) => {
+    navigate("/feed");
+  };
