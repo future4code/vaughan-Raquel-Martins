@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TOKEN_AUTH } from "../constants/token"
+import { TOKEN_AUTH } from "../constants/token";
+
 export function useRequestData(url) {
   const [data, setData] = useState(undefined);
   const [isLoading, setLoading] = useState(false);

@@ -10,7 +10,7 @@ const VotesAndCount = (props) => {
 //   const [colorLiked, setColorLiked] = useState("grey");
 //   const [colorDisliked, setColorDisliked] = useState("grey");
 
- console.log("VOTES AND COUTN",props)
+ //console.log("VOTES AND COUTN",props)
  
 //   const isLiked = () => {
 //     setLikeBtn(!likeBtn);
@@ -38,7 +38,7 @@ const VotesAndCount = (props) => {
       <DownVote onClick={props.onClickDown} color={props.colorDisliked} />
             </ContainerArrows>
       <div>
-          {props.numberVotes} Comentários
+          {props.numberComments} {props.commentText}
       </div>
     </ContainerVotes>
   );

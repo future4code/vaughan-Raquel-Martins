@@ -27,22 +27,14 @@ const FeedPage = () => {
     `${BASE_URL}/posts`
   );
 
-  //   const [comments, isLoadingComments, errorComments, getComments] = useRequestData(
-  //     `${BASE_URL}/posts/${pathParams.id}/comments`
-  //   );
+  console.log("POSTS na FeedPage", posts)
 
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
     body: "",
   });
 
-  console.log("POSTS", posts);
-
-  //   const goToPostId = (idPost) => {
-  //       console.log(idPost)
-  //     navigate(`post/${pathParams.idPost}`)
-  //   }
-
+ 
   const createPostVote = (idVote, valueVote) => {
     const body = {
       direction: directionVote,
@@ -71,7 +63,6 @@ const goToPostDetail = (postId) =>{
   const postsList =
     posts &&
     posts.map((post) => {
-      console.log(post.createdAt);
       return (
         <div key={post.id}>
           <div className="ui container comments">
@@ -87,6 +78,8 @@ const goToPostDetail = (postId) =>{
               colorLiked={colorLiked}
               // colorDisliked={colorDisliked}
               numberVotes={post.voteSum}
+              numberComments={post.commentCount}
+              commentText={"Comentários"}
             />
           </div>
         </div>

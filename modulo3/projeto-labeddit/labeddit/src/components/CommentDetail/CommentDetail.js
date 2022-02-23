@@ -28,6 +28,8 @@ const CommentDetail = (props) => {
         colorLiked={props.colorLiked}
         colorDisliked={props.colorDisliked}
         numberVotes={props.numberVotes}
+        numberComments={props.numberComments}
+        commentText={props.commentText}
       />
       </div>
     </Container>
