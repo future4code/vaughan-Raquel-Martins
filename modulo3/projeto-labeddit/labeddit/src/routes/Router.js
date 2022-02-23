@@ -17,7 +17,7 @@ const Router = ({rightButtonText, setRightButtonText}) => {
 
         <Route exact path={"/feed"} element={<FeedPage />} />
 
-        <Route exact path={"/post"} element={<PostPage />} />
+        <Route exact path={"/post/:id"} element={<PostPage />} />
 
         <Route exact path={"*"} element={<ErrorPage/>} />
       </Routes>

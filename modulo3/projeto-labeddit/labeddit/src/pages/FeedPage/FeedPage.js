@@ -9,14 +9,28 @@ import useForm from "../../hooks/useForm";
 import axios from "axios";
 import { TOKEN_AUTH } from "../../constants/token";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
+// import {  useParams } from "react-router-dom";
+import { useState } from "react";
+//import { goToPost } from "../../routes/coordinator"
+import { useNavigate } from "react-router-dom";
 
 const FeedPage = () => {
   useProtectedPage();
+  //    const pathParams = useParams();
+  const navigate = useNavigate()
+  const [colorLiked, setColorLiked] = useState("grey");
+  //const [colorDisliked, setColorDisliked] = useState("grey");
+  const [directionVote, setDirection] = useState(0);
+
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
   );
-//   .replaceAll("T", " - ").slice(0, 18)
+
+  //   const [comments, isLoadingComments, errorComments, getComments] = useRequestData(
+  //     `${BASE_URL}/posts/${pathParams.id}/comments`
+  //   );
+
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
     body: "",
@@ -24,18 +38,56 @@ const FeedPage = () => {
 
   console.log("POSTS", posts);
 
+  //   const goToPostId = (idPost) => {
+  //       console.log(idPost)
+  //     navigate(`post/${pathParams.idPost}`)
+  //   }
+
+  const createPostVote = (idVote, valueVote) => {
+    const body = {
+      direction: directionVote,
+    };
+
+    if (valueVote) {
+      setDirection(directionVote + 1);
+    } else {
+      setDirection(directionVote - 1);
+    }
+    axios
+      .post(`${BASE_URL}/posts/${idVote}/votes`, body, {
+        headers: {
+          Authorization: `${TOKEN_AUTH}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setColorLiked("green");
+        getPost(`${BASE_URL}/posts`);
+      });
+  };
+const goToPostDetail = (postId) =>{
+    navigate(`/post/${postId}`);
+}
   const postsList =
     posts &&
     posts.map((post) => {
+      console.log(post.createdAt);
       return (
-        <div className="ui container comments" key={post.id}>
-          <CommentDetail
-            name={post.username}
-            timeAgo={post.createdAt}
-            title={post.title}
-            message={post.body}
-            avatar={faker.image.avatar()}
-          />
+        <div key={post.id} onClick={() => goToPostDetail(post.id)}>
+          <div className="ui container comments">
+            <CommentDetail
+              name={post.username}
+              timeAgo={new Date(post.createdAt).toString().slice(0, 21)}
+              title={post.title}
+              message={post.body}
+              avatar={faker.image.avatar()}
+              onClickUp={() => createPostVote(post.id, true)}
+              onClickDown={() => createPostVote(post.id, false)}
+              colorLiked={colorLiked}
+              // colorDisliked={colorDisliked}
+              numberVotes={post.voteSum}
+            />
+          </div>
         </div>
       );
     });
@@ -50,8 +102,8 @@ const FeedPage = () => {
       })
       .then((res) => {
         console.log(res);
-        getPost(`${BASE_URL}/posts`)
-        cleanFields()
+        getPost(`${BASE_URL}/posts`);
+        cleanFields();
       })
       .catch((err) => {
         console.log(err);
@@ -59,7 +111,6 @@ const FeedPage = () => {
   };
   return (
     <ContainerBody>
-
       <form onSubmit={createPost}>
         <TextField
           name={"title"}

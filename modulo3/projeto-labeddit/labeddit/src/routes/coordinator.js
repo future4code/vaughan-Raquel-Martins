@@ -11,5 +11,5 @@ export const goToFeed = (navigate) => {
 };
 
 export const goToPost = (navigate) => {
-    navigate("/feed");
+    navigate("/post")
   };
