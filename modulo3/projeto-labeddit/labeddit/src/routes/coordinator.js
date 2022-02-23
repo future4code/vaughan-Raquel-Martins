@@ -7,7 +7,7 @@ export const goToSignup = (navigate) => {
 };
 
 export const goToFeed = (navigate) => {
-  navigate("/feed");
+  navigate("/posts");
 };
 
 export const goToPost = (navigate) => {

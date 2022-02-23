@@ -12,40 +12,37 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 //import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UpVoteGrey  from "../../assets/VotesImg/UpVoteGrey.svg";
-import  UpVoteGreen  from "../../assets/VotesImg/UpVoteGreen.svg";
-import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg"
-import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg"
+import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
+import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
+import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
+import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
 
 const FeedPage = () => {
   useProtectedPage();
   //    const pathParams = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
- 
-
-//   let iconeCurtida 
-//   if(like){
-//       iconeCurtida = UpVoteGreen
-//   }else{
-//       iconeCurtida = UpVoteGrey
-//   }
+  //   let iconeCurtida
+  //   if(like){
+  //       iconeCurtida = UpVoteGreen
+  //   }else{
+  //       iconeCurtida = UpVoteGrey
+  //   }
 
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
   );
 
-  console.log("POSTS na FeedPage", posts)
+  console.log("POSTS na FeedPage", posts);
 
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
     body: "",
   });
 
- 
-  const createPostVote = (idVote) => {
+  const createPostVote = (idVote, num) => {
     const body = {
-      direction: 1,
+      direction: num,
     };
 
     axios
@@ -57,51 +54,84 @@ const FeedPage = () => {
       .then((response) => {
         console.log(response);
         getPost(`${BASE_URL}/posts`);
-      }).catch((error)=>{
-          console.log(error)
       })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-const goToPostDetail = (postId) =>{
+  const goToPostDetail = (postId) => {
     navigate(`/post/${postId}`);
-}
+  };
 
+  const changePostVote = (idVote, num) => {
+    console.log("CHANGEPOSTVOTE FUNCTION", num);
+const isDisliked = () => {
+if(num < 0){
+    return 0
+}else{
+    return -1
+}
+}
+    const body = {
+      direction: isDisliked(),
+    };
+    axios
+      .put(`${BASE_URL}/posts/${idVote}/votes`, body, {
+        headers: {
+          Authorization: `${TOKEN_AUTH}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const postsList =
     posts &&
     posts.map((post) => {
+      const selectedColorVoteLike = () => {
+        if (post.userVote < 0 || post.userVote === null) {
+          return UpVoteGrey;
+        } else {
+          return UpVoteGreen;
+        }
+      };
 
-const selectedColorVoteLike = () => {
-    if(post.userVote < 0 || post.userVote === null){
-       return UpVoteGrey
-     }else{
-      return UpVoteGreen
-     }
-}
+      const selectedColorVoteDislike = () => {
+        if (post.userVote > 0 || post.userVote === null) {
+          return DownVoteGrey;
+        } else {
+          return DownVoteRed;
+        }
+      };
 
-const selectedColorVoteDislike = () => {
-    if(post.userVote < 0 || post.userVote === null){
-       return DownVoteGrey
-     }else{
-      return DownVoteRed
-     }
-}
-      
+    //   const changeValueVoteDislike = () => {
+    //       if(post.userVote < 0 ){
+    //           return 0
+    //   }if(post.userVote === 0){
+    //       return -1
+    //   }
+    // }
+
       return (
         <div key={post.id}>
           <div className="ui container comments">
             <CommentDetail
-              clickToPostDetail={()=>goToPostDetail(post.id)}
+              clickToPostDetail={() => goToPostDetail(post.id)}
               name={post.username}
               timeAgo={new Date(post.createdAt).toString().slice(0, 21)}
               title={post.title}
               message={post.body}
               avatar={faker.image.avatar()}
-              onClickUp={() => createPostVote(post.id)}
-              onClickDown={() => createPostVote(post.id)}
-              //colorLiked={colorLiked}
-              // colorDisliked={colorDisliked}
+              onClickUp={() => createPostVote(post.id, 1)}
+              onClickDown={() => createPostVote(post.id, -1)}
               imgVoteUp={selectedColorVoteLike()}
               imgVoteDown={selectedColorVoteDislike()}
+             onCliclChangeUpVote={null}
+              onClickChangeDownVote={() => changePostVote(post.id, post.userVote)}
               numberVotes={post.voteSum}
               numberComments={post.commentCount}
               commentText={"Comentários"}
@@ -173,5 +203,3 @@ const selectedColorVoteDislike = () => {
 };
 
 export default FeedPage;
-
-

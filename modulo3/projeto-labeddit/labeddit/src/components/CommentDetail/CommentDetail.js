@@ -25,6 +25,9 @@ const CommentDetail = (props) => {
       <VotesAndCount
         onClickUp={props.onClickUp}
         onClickDown={props.onClickDown}
+
+        onCliclChangeUpVote={props.onCliclChangeUpVote}
+        onClickChangeDownVote={props.onClickChangeDownVote}
         //colorLiked={props.colorLiked}
         imgVoteUp={props.imgVoteUp}
         imgVoteDown={props.imgVoteDown}

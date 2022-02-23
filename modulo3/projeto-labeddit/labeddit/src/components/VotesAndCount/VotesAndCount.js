@@ -32,11 +32,11 @@ const VotesAndCount = (props) => {
     <ContainerVotes>
         <ContainerArrows>
             <div onClick={props.onClickUp}>
-        <img src={props.imgVoteUp} alt={"like"} />
+        <img onClick={props.onCliclChangeUpVote} src={props.imgVoteUp} alt={"like"} />
            </div>
         {props.numberVotes}
         <div onClick={props.onClickDown}>
-        <img src= {props.imgVoteDown} alt={"dislike"} />
+        <img onClick={props.onClickChangeDownVote} src= {props.imgVoteDown} alt={"dislike"} />
         </div>
         
        
