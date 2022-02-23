@@ -9,3 +9,7 @@ padding: 1rem;
 margin-bottom:1rem;
 margin-top: 1rem;
 `
+
+export const DivPointer = styled.div`
+cursor:pointer;
+`

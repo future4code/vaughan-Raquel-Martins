@@ -1,6 +1,6 @@
 import React from "react";
 import VotesAndCount from "../VotesAndCount/VotesAndCount";
-import { Container } from "./styled";
+import { Container, DivPointer } from "./styled";
 //import { useState } from "react";
 
 const CommentDetail = (props) => {
@@ -10,7 +10,7 @@ const CommentDetail = (props) => {
         <a className="avatar">
           <img alt="avatar" src={props.avatar} />
         </a>
-        <div className="content">
+        <DivPointer className="content" onClick={props.clickToPostDetail}>
           <a className="author">{props.name}</a>
           <div className="metadata">
             <span className="date">{props.timeAgo}</span>
@@ -19,8 +19,9 @@ const CommentDetail = (props) => {
             <h5>{props.title}</h5>
           </div>
           <div className="text">{props.message}</div>
-        </div>
+        </DivPointer>
       </div>
+      <div>
       <VotesAndCount
         onClickUp={props.onClickUp}
         onClickDown={props.onClickDown}
@@ -28,6 +29,7 @@ const CommentDetail = (props) => {
         colorDisliked={props.colorDisliked}
         numberVotes={props.numberVotes}
       />
+      </div>
     </Container>
   );
 };

@@ -73,9 +73,10 @@ const goToPostDetail = (postId) =>{
     posts.map((post) => {
       console.log(post.createdAt);
       return (
-        <div key={post.id} onClick={() => goToPostDetail(post.id)}>
+        <div key={post.id}>
           <div className="ui container comments">
             <CommentDetail
+              clickToPostDetail={()=>goToPostDetail(post.id)}
               name={post.username}
               timeAgo={new Date(post.createdAt).toString().slice(0, 21)}
               title={post.title}
