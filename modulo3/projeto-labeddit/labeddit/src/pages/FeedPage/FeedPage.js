@@ -19,15 +19,8 @@ import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
 
 const FeedPage = () => {
   useProtectedPage();
-  //    const pathParams = useParams();
   const navigate = useNavigate();
 
-  //   let iconeCurtida
-  //   if(like){
-  //       iconeCurtida = UpVoteGreen
-  //   }else{
-  //       iconeCurtida = UpVoteGrey
-  //   }
 
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
@@ -63,29 +56,20 @@ const FeedPage = () => {
     navigate(`/post/${postId}`);
   };
 
-  const changePostVote = (idVote, num) => {
-    console.log("CHANGEPOSTVOTE FUNCTION", num);
-const isDisliked = () => {
-if(num < 0){
-    return 0
-}else{
-    return -1
-}
-}
-    const body = {
-      direction: isDisliked(),
-    };
+  const deletePostVote = (idVote) => {
+  
+
     axios
-      .put(`${BASE_URL}/posts/${idVote}/votes`, body, {
+      .delete(`${BASE_URL}/posts/${idVote}/votes`, {
         headers: {
-          Authorization: `${TOKEN_AUTH}`,
+         Authorization: `${TOKEN_AUTH}`,
         },
       })
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -130,8 +114,10 @@ if(num < 0){
               onClickDown={() => createPostVote(post.id, -1)}
               imgVoteUp={selectedColorVoteLike()}
               imgVoteDown={selectedColorVoteDislike()}
-             onCliclChangeUpVote={null}
-              onClickChangeDownVote={() => changePostVote(post.id, post.userVote)}
+
+              onClickChangeUpVote={() => deletePostVote(post.id)}
+              onClickChangeDownVote={() => deletePostVote(post.id)}
+
               numberVotes={post.voteSum}
               numberComments={post.commentCount}
               commentText={"Comentários"}

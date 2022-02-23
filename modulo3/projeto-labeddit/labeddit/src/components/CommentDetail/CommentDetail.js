@@ -26,7 +26,7 @@ const CommentDetail = (props) => {
         onClickUp={props.onClickUp}
         onClickDown={props.onClickDown}
 
-        onCliclChangeUpVote={props.onCliclChangeUpVote}
+        onClickChangeUpVote={props.onClickChangeUpVote}
         onClickChangeDownVote={props.onClickChangeDownVote}
         //colorLiked={props.colorLiked}
         imgVoteUp={props.imgVoteUp}
