@@ -1,7 +1,5 @@
 import React from "react";
 import { ContainerVotes, ContainerArrows } from "./styled";
-import { DownVote } from "./VotesImg/DownVote";
-import { UpVote } from "./VotesImg/UpVote";
 //import { useState } from "react";
 
 const VotesAndCount = (props) => {
@@ -33,9 +31,16 @@ const VotesAndCount = (props) => {
   return (
     <ContainerVotes>
         <ContainerArrows>
-        <UpVote onClick={props.onClickUp} color={props.colorLiked} />
+            <div onClick={props.onClickUp}>
+        <img src={props.imgVoteUp} alt={"like"} />
+           </div>
         {props.numberVotes}
-      <DownVote onClick={props.onClickDown} color={props.colorDisliked} />
+        <div onClick={props.onClickDown}>
+        <img src= {props.imgVoteDown} alt={"dislike"} />
+        </div>
+        
+       
+
             </ContainerArrows>
       <div>
           {props.numberComments} {props.commentText}
