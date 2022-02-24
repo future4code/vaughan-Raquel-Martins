@@ -4,7 +4,7 @@ import { BASE_URL } from "../../constants/urls";
 import { useRequestData } from "../../hooks/useRequestData";
 import faker from "@faker-js/faker";
 import { useProtectedPage } from "../../hooks/useProtectedPage";
-import { ContainerBody } from "./styled";
+import { ContainerBody, ContainerImg, Img } from "./styled";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
 import { TOKEN_AUTH } from "../../constants/token";
@@ -15,8 +15,7 @@ import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
 import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
 import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
-//import Pagination from '@mui/material/Pagination';
-
+import ImgWaiting from "../../assets/waiting-requisition.webp"
 
 const FeedPage = () => {
   useProtectedPage();
@@ -57,7 +56,6 @@ const FeedPage = () => {
 
   const deletePostVote = (idVote) => {
   
-
     axios
       .delete(`${BASE_URL}/posts/${idVote}/votes`, {
         headers: {
@@ -66,6 +64,7 @@ const FeedPage = () => {
       })
       .then((response) => {
         console.log(response);
+        getPost(`${BASE_URL}/posts`);
       })
       .catch((error) => {
         console.log(error.response);
@@ -172,7 +171,11 @@ const FeedPage = () => {
             <div className="ui text loader">Carregando...</div>
           </div>
         )}
-        {!isLoadingPosts && errorPosts && <p>Ocorreu um erro na requisição</p>}
+        {!isLoadingPosts && errorPosts && (
+        <ContainerImg>
+             <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
+              <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
+            </ContainerImg>)}
         {!isLoadingPosts && posts && postsList}
         {!isLoadingPosts && posts && postsList.length === 0 && (
           <p>Não há nenhuma postagem</p>

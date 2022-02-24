@@ -1,8 +1,11 @@
+import ImgError from "../../assets/error404.webp"
+import {ContainerBody , ImgE } from "./styled"
+
 const ErrorPage = () => {
     return(
-        <div>
-            Error 404
-        </div>
+        <ContainerBody>
+            <ImgE src={ImgError} alt="ilustração de erro 404"/>
+        </ContainerBody>
     )
 }
 

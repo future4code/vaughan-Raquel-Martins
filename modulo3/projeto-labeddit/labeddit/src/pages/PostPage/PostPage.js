@@ -9,12 +9,13 @@ import { TOKEN_AUTH } from "../../constants/token";
 import CreateComment from "../../components/CreateComment/CreateComment";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
-import {ContainerBody} from "./styled"
+import { ContainerBody, Img, ContainerImg } from "./styled";
 import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
 import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
 import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
-
+import ImgWaiting from "../../assets/waiting-requisition.webp"
+import ImgComments from "../../assets/comments-empty.webp"
 
 const PostPage = () => {
   const pathParams = useParams();
@@ -26,7 +27,7 @@ const PostPage = () => {
   const [allComments, isLoadingComment, errorComment, getAllComments] =
     useRequestData(`${BASE_URL}/posts/${idPostPath}/comments`);
 
-    console.log("COMENTARIOS", allComments)
+  console.log("COMENTARIOS", allComments);
 
   const { form, onChangeForm, cleanFields } = useForm({
     body: "",
@@ -45,53 +46,106 @@ const PostPage = () => {
         console.log(res);
         cleanFields();
         getPost(`${BASE_URL}/posts`);
-        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
+        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  
-
   const postSelected =
     posts &&
     posts.find((post) => {
       return post.id === idPostPath;
     });
-    
-    console.log(postSelected);
 
-const isVotedLiked = () => {
-    if(postSelected.userVote === 1){
-      return UpVoteGreen
-    }else{
-        return UpVoteGrey
+  console.log(postSelected);
+
+  const isVotedLiked = () => {
+    if (postSelected.userVote === 1) {
+      return UpVoteGreen;
+    } else {
+      return UpVoteGrey;
     }
-}
+  };
 
-const isVotedDisliked = () => {
-    if(postSelected.userVote < 0){
-        return DownVoteRed
-      }else{
-          return DownVoteGrey
+  const isVotedDisliked = () => {
+    if (postSelected.userVote < 0) {
+      return DownVoteRed;
+    } else {
+      return DownVoteGrey;
+    }
+  };
+
+  const createCommentVote = (idComment, num) => {
+      const body = {
+            direction: num
       }
+
+      axios.post(`${BASE_URL}/comments/${idComment}/votes`, body, {
+        headers: {
+            Authorization: `${TOKEN_AUTH}`,
+          },
+      })
+      .then((res)=>{
+          console.log(res)
+        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
+      }).catch((err)=>{
+          console.log(err.response)
+      })
   }
 
-
+  const deleteCommentVote = (idComment) => {
+      axios.delete(`${BASE_URL}/comments/${idComment}/votes`, {
+          headers :{
+            Authorization: `${TOKEN_AUTH}`,
+          }
+      }).then((res)=>{
+          console.log(res)
+          getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
+      }).catch((err)=>{
+          console.log(err)
+      })
+  }
 
   const commentsList =
-  allComments &&
-  allComments.map((comment) => {
-      return <CommentDetail  avatar={faker.image.avatar()} 
-      name={comment.username}
-      timeAgo={new Date(comment.createdAt).toString().slice(0, 21)}
-     title={comment.title}
-      message={comment.body}
-      numberVotes={comment.voteSum}
-      />
-    });
+    allComments &&
+    allComments.map((comment) => {
 
+        const selectedColorVoteLike = () => {
+            if (comment.userVote < 0 || comment.userVote === null) {
+              return UpVoteGrey;
+            } else {
+              return UpVoteGreen;
+            }
+          };
+    
+          const selectedColorVoteDislike = () => {
+            if (comment.userVote > 0 || comment.userVote === null) {
+              return DownVoteGrey;
+            } else {
+              return DownVoteRed;
+            }
+          };
+      return (
+        <CommentDetail
+          avatar={faker.image.avatar()}
+          name={comment.username}
+          timeAgo={new Date(comment.createdAt).toString().slice(0, 21)}
+          title={comment.title}
+          message={comment.body}
+          numberVotes={comment.voteSum}
+          
+          onClickUp={() => createCommentVote(comment.id, 1)}
+          onClickDown={() => createCommentVote(comment.id, -1)}
+          imgVoteUp={selectedColorVoteLike()}
+          imgVoteDown={selectedColorVoteDislike()}
+
+          onClickChangeUpVote={() => deleteCommentVote(comment.id)}
+          onClickChangeDownVote={() => deleteCommentVote(comment.id)}
+        />
+      );
+    });
 
   return (
     <ContainerBody>
@@ -101,23 +155,26 @@ const isVotedDisliked = () => {
         </div>
       )}
       {postSelected && (
-          <div className="ui container comments">
-        <CommentDetail
-          name={postSelected.username}
-          timeAgo={new Date(postSelected.createdAt).toString().slice(0, 21)}
-          title={postSelected.title}
-          message={postSelected.body}
-          avatar={faker.image.avatar()}
-          numberVotes={postSelected.voteSum}
-          numberComments={postSelected.commentCount}
-          commentText={"Comentários"}
-          imgVoteUp={isVotedLiked()}
-        imgVoteDown={isVotedDisliked()}
-        
-        />
+        <div className="ui container comments">
+          <CommentDetail
+            name={postSelected.username}
+            timeAgo={new Date(postSelected.createdAt).toString().slice(0, 21)}
+            title={postSelected.title}
+            message={postSelected.body}
+            avatar={faker.image.avatar()}
+            numberVotes={postSelected.voteSum}
+            numberComments={postSelected.commentCount}
+            commentText={"Comentários"}
+            imgVoteUp={isVotedLiked()}
+            imgVoteDown={isVotedDisliked()}
+
+          />
         </div>
       )}
-      {!isLoadingPosts && errorPost && <p>Ocorreu um erro</p>}
+      {!isLoadingPosts && errorPost && (<ContainerImg>
+              <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
+              <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
+              </ContainerImg>)}
 
       <CreateComment
         onSubmitComment={onSubmitComment}
@@ -126,19 +183,26 @@ const isVotedDisliked = () => {
         onChangeComment={onChangeForm}
       />
 
-<div className="ui container comments">
-      {isLoadingComment && (
-        <div className="ui active dimmer">
-          <div className="ui text loader">Carregando...</div>
-        </div>
-      )}
-      {!isLoadingComment && errorComment && (
-        <p>Ocorreu um erro na requisição</p>
-      )}
-      {!isLoadingComment && allComments && commentsList}
-      {!isLoadingComment && allComments && commentsList.length === 0 && (
-        <p>Não há nenhuma comentário </p>
-      )}
+      <div className="ui container comments">
+        {isLoadingComment && (
+          <div className="ui active dimmer">
+            <div className="ui text loader">Carregando...</div>
+          </div>
+        )}
+        {!isLoadingComment && errorComment && (
+          <ContainerImg>
+              <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
+              <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
+              </ContainerImg>
+        )}
+        {!isLoadingComment && allComments && commentsList}
+        {!isLoadingComment && allComments && commentsList.length === 0 && (
+            <ContainerImg>
+                 <Img src={ImgComments} alt="Ilustração post sem comentários"/>
+                 <p>Não há nenhum comentários nesse post, deseja comentar?</p>
+            </ContainerImg>
+         
+        )}
       </div>
     </ContainerBody>
   );

@@ -10,4 +10,5 @@ align-items:center;
 export const ContainerArrows = styled.div`
 display:flex;
 align-items:center;
+cursor:pointer;
 `
