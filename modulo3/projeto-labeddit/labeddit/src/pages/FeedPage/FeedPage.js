@@ -10,23 +10,22 @@ import axios from "axios";
 import { TOKEN_AUTH } from "../../constants/token";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-//import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
 import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
 import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
+//import Pagination from '@mui/material/Pagination';
+
 
 const FeedPage = () => {
   useProtectedPage();
   const navigate = useNavigate();
 
-
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
   );
-
-  console.log("POSTS na FeedPage", posts);
+ console.log(posts)
 
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
@@ -92,14 +91,6 @@ const FeedPage = () => {
         }
       };
 
-    //   const changeValueVoteDislike = () => {
-    //       if(post.userVote < 0 ){
-    //           return 0
-    //   }if(post.userVote === 0){
-    //       return -1
-    //   }
-    // }
-
       return (
         <div key={post.id}>
           <div className="ui container comments">
@@ -160,6 +151,9 @@ const FeedPage = () => {
 
         <TextField
           placeholder="Compartilhe algo com a comunidade LabEddit!"
+          id="outlined-multiline-static"
+          multiline
+          rows={4}
           fullWidth
           name={"body"}
           value={form.body}
@@ -184,6 +178,8 @@ const FeedPage = () => {
           <p>Não há nenhuma postagem</p>
         )}
       </div>
+
+      {/* <Pagination count={10} /> */}
     </ContainerBody>
   );
 };

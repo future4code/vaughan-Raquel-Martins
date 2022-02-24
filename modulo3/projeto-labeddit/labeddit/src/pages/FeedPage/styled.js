@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 
 export const ContainerBody  = styled.div`
-
-margin-top: 2rem;
+display:flex;
+justify-content:center;
+flex-direction:column;
+padding: 1rem;
+margin: 2rem 1rem;
 `

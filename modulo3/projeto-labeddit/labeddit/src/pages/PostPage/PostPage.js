@@ -9,6 +9,12 @@ import { TOKEN_AUTH } from "../../constants/token";
 import CreateComment from "../../components/CreateComment/CreateComment";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
+import {ContainerBody} from "./styled"
+import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
+import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
+import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
+import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
+
 
 const PostPage = () => {
   const pathParams = useParams();
@@ -46,13 +52,33 @@ const PostPage = () => {
       });
   };
 
-  console.log(posts);
+  
 
   const postSelected =
     posts &&
     posts.find((post) => {
       return post.id === idPostPath;
     });
+    
+    console.log(postSelected);
+
+const isVotedLiked = () => {
+    if(postSelected.userVote === 1){
+      return UpVoteGreen
+    }else{
+        return UpVoteGrey
+    }
+}
+
+const isVotedDisliked = () => {
+    if(postSelected.userVote < 0){
+        return DownVoteRed
+      }else{
+          return DownVoteGrey
+      }
+  }
+
+
 
   const commentsList =
   allComments &&
@@ -66,14 +92,16 @@ const PostPage = () => {
       />
     });
 
+
   return (
-    <div>
+    <ContainerBody>
       {isLoadingPosts && (
         <div className="ui active dimmer">
           <div className="ui text loader">Carregando...</div>
         </div>
       )}
       {postSelected && (
+          <div className="ui container comments">
         <CommentDetail
           name={postSelected.username}
           timeAgo={new Date(postSelected.createdAt).toString().slice(0, 21)}
@@ -83,7 +111,11 @@ const PostPage = () => {
           numberVotes={postSelected.voteSum}
           numberComments={postSelected.commentCount}
           commentText={"Comentários"}
+          imgVoteUp={isVotedLiked()}
+        imgVoteDown={isVotedDisliked()}
+        
         />
+        </div>
       )}
       {!isLoadingPosts && errorPost && <p>Ocorreu um erro</p>}
 
@@ -94,6 +126,7 @@ const PostPage = () => {
         onChangeComment={onChangeForm}
       />
 
+<div className="ui container comments">
       {isLoadingComment && (
         <div className="ui active dimmer">
           <div className="ui text loader">Carregando...</div>
@@ -106,7 +139,8 @@ const PostPage = () => {
       {!isLoadingComment && allComments && commentsList.length === 0 && (
         <p>Não há nenhuma comentário </p>
       )}
-    </div>
+      </div>
+    </ContainerBody>
   );
 };
 
