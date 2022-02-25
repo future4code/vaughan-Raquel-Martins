@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TOKEN_AUTH } from "../constants/token";
 
 export function useRequestData(url) {
   const [data, setData] = useState(undefined);
@@ -13,11 +12,12 @@ export function useRequestData(url) {
 
 
   const getData = (url) => {
+
     setLoading(true);
     axios
       .get(url, {
           headers: {
-            Authorization: `${TOKEN_AUTH}` 
+            Authorization: window.localStorage.getItem("token")
           }
       })
       .then((res) => {
@@ -25,6 +25,7 @@ export function useRequestData(url) {
         setLoading(false);
       })
       .catch((error) => {
+        alert(error.response.data.message)
         setError(error);
         setLoading(false);
       });

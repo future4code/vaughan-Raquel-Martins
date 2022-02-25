@@ -40,7 +40,7 @@ Paginação
 
 ## 🔗 Link Surge - link para visualização do site
 
-[LabEddit](https://momentous-humor.surge.sh/login)
+[LabEddit](https://abnormal-coal.surge.sh/)
 
 
 ## 💻 Imagens

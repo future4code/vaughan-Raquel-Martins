@@ -6,7 +6,7 @@ import { useProtectedPage } from "../../hooks/useProtectedPage";
 import { ContainerBody, ContainerImg, Img, SearchField} from "./styled";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
-import { TOKEN_AUTH } from "../../constants/token";
+import { getAuthToken } from "../../constants/token";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -43,14 +43,14 @@ const FeedPage = () => {
     axios
       .post(`${BASE_URL}/posts/${idVote}/votes`, body, {
         headers: {
-          Authorization: `${TOKEN_AUTH}`,
+          Authorization: getAuthToken(),
         },
       })
       .then((response) => {
         getPost(`${BASE_URL}/posts`);
       })
       .catch((error) => {
-        alert(error.response.message);
+        alert(error.response.data.message);
       });
   };
   const goToPostDetail = (postId) => {
@@ -62,14 +62,14 @@ const FeedPage = () => {
     axios
       .delete(`${BASE_URL}/posts/${idVote}/votes`, {
         headers: {
-         Authorization: `${TOKEN_AUTH}`,
+         Authorization: getAuthToken(),
         },
       })
       .then((response) => {
         getPost(`${BASE_URL}/posts`);
       })
       .catch((error) => {
-        alert(error.response.message);
+        alert(error.response.data.message);
       });
   };
 
@@ -126,7 +126,7 @@ const FeedPage = () => {
     axios
       .post(`${BASE_URL}/posts`, form, {
         headers: {
-          Authorization: `${TOKEN_AUTH}`,
+          Authorization: getAuthToken(),
         },
       })
       .then((res) => {
@@ -135,7 +135,7 @@ const FeedPage = () => {
         cleanFields();
       })
       .catch((err) => {
-        alert(err.response.message);
+        alert(err.response.data.message);
       });
   };
 

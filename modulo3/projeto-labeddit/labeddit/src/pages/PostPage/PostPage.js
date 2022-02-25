@@ -5,7 +5,7 @@ import { useRequestData } from "../../hooks/useRequestData";
 import CommentDetail from "../../components/CommentDetail/CommentDetail";
 import faker from "@faker-js/faker";
 import { BASE_URL } from "../../constants/urls";
-import { TOKEN_AUTH } from "../../constants/token";
+import { getAuthToken } from "../../constants/token";
 import CreateComment from "../../components/CreateComment/CreateComment";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
@@ -41,7 +41,7 @@ const PostPage = () => {
     axios
       .post(`${BASE_URL}/posts/${idPostPath}/comments`, form, {
         headers: {
-          Authorization: `${TOKEN_AUTH}`,
+          Authorization: getAuthToken(),
         },
       })
       .then((res) => {
@@ -51,7 +51,7 @@ const PostPage = () => {
         getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
       })
       .catch((err) => {
-        alert(err);
+        alert(err.response.data.message);
       });
   };
 
@@ -84,7 +84,7 @@ const PostPage = () => {
 
       axios.post(`${BASE_URL}/comments/${idComment}/votes`, body, {
         headers: {
-            Authorization: `${TOKEN_AUTH}`,
+            Authorization: getAuthToken(),
           },
       })
       .then((res)=>{
@@ -98,7 +98,7 @@ const PostPage = () => {
   const deleteCommentVote = (idComment) => {
       axios.delete(`${BASE_URL}/comments/${idComment}/votes`, {
           headers :{
-            Authorization: `${TOKEN_AUTH}`,
+            Authorization: getAuthToken(),
           }
       }).then((res)=>{
           getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
@@ -128,6 +128,7 @@ const PostPage = () => {
           };
       return (
         <CommentDetail
+          key={comment.id}
           avatar={faker.image.avatar()}
           name={comment.username}
           timeAgo={new Date(comment.createdAt).toString().slice(0, 21)}

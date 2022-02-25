@@ -9,7 +9,7 @@ import SignupPage from "../pages/Signup/SignupPage";
 const Router = ({rightButtonText, setRightButtonText}) => {
   return (
       <Routes>
-        <Route exact path={"/"} element={<FeedPage />} />
+        <Route exact path={"/"} element={<LoginPage />} />
 
         <Route exact path={"/login"} element={<LoginPage rightButtonText={rightButtonText} setRightButtonText={setRightButtonText} />} />
 

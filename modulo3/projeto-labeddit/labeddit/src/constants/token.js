@@ -1,1 +1,1 @@
-export const TOKEN_AUTH = window.localStorage.getItem("token")
+export const getAuthToken= () =>  window.localStorage.getItem("token")
