@@ -11,7 +11,7 @@ const PostComponent = (props) => {
         </a>
   
         <DivPointer className="content" onClick={props.clickToPostDetail}>
-          
+        <a className="author">{props.name}</a>
           <div className="metadata">
             <span className="date">{props.timeAgo}</span>
           </div>

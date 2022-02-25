@@ -40,7 +40,7 @@ Paginação
 
 ## 🔗 Link Surge - link para visualização do site
 
-[LabEddit](https://female-joke.surge.sh/login)
+[LabEddit](https://momentous-humor.surge.sh/login)
 
 
 ## 💻 Imagens
