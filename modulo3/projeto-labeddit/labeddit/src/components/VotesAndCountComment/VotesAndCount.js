@@ -1,6 +1,5 @@
 import React from "react";
-import { ContainerVotes, ContainerArrows, CommentCtn } from "./styled";
-import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import { ContainerVotes, ContainerArrows } from "./styled";
 
 
 const VotesAndCount = (props) => {
@@ -19,10 +18,8 @@ const VotesAndCount = (props) => {
        
 
             </ContainerArrows>
-      <CommentCtn>
-      <ModeCommentIcon color="primary" />
+   
           {props.numberComments} {props.commentText}
-      </CommentCtn>
     </ContainerVotes>
   );
 };

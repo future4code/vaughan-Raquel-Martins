@@ -13,7 +13,3 @@ align-items:center;
 cursor:pointer;
 `
 
-export const CommentCtn = styled.div`
-display: flex;
-align-items:center
-` 

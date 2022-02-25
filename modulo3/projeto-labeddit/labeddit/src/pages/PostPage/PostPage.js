@@ -16,8 +16,13 @@ import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
 import ImgWaiting from "../../assets/waiting-requisition.webp"
 import ImgComments from "../../assets/comments-empty.webp"
+import { useState } from "react";
+import AlertSuccess from "../../components/AlertSuccess/AlertSuccess";
+import PostComponent from "../../components/PostComponent/PostComponent"
+
 
 const PostPage = () => {
+    const [alertSuccess, setAlertSuccess] = useState(false)
   const pathParams = useParams();
   const idPostPath = pathParams.id;
   useProtectedPage();
@@ -26,9 +31,6 @@ const PostPage = () => {
   );
   const [allComments, isLoadingComment, errorComment, getAllComments] =
     useRequestData(`${BASE_URL}/posts/${idPostPath}/comments`);
-
-  console.log("COMENTARIOS", allComments);
-
   const { form, onChangeForm, cleanFields } = useForm({
     body: "",
   });
@@ -43,13 +45,13 @@ const PostPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        setAlertSuccess(true)
         cleanFields();
         getPost(`${BASE_URL}/posts`);
         getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 
@@ -58,8 +60,6 @@ const PostPage = () => {
     posts.find((post) => {
       return post.id === idPostPath;
     });
-
-  console.log(postSelected);
 
   const isVotedLiked = () => {
     if (postSelected.userVote === 1) {
@@ -88,10 +88,10 @@ const PostPage = () => {
           },
       })
       .then((res)=>{
-          console.log(res)
+        
         getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
       }).catch((err)=>{
-          console.log(err.response)
+          alert(err.response)
       })
   }
 
@@ -101,10 +101,9 @@ const PostPage = () => {
             Authorization: `${TOKEN_AUTH}`,
           }
       }).then((res)=>{
-          console.log(res)
           getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
       }).catch((err)=>{
-          console.log(err)
+          alert(err.response)
       })
   }
 
@@ -147,8 +146,14 @@ const PostPage = () => {
       );
     });
 
+    const onCloseAlert = () => {
+        setAlertSuccess(false)
+    }
+
   return (
     <ContainerBody>
+              {alertSuccess && <AlertSuccess alertText={"Parabéns, você comentou em um post!"} onClose={onCloseAlert} /> }
+
       {isLoadingPosts && (
         <div className="ui active dimmer">
           <div className="ui text loader">Carregando...</div>
@@ -156,7 +161,7 @@ const PostPage = () => {
       )}
       {postSelected && (
         <div className="ui container comments">
-          <CommentDetail
+          <PostComponent
             name={postSelected.username}
             timeAgo={new Date(postSelected.createdAt).toString().slice(0, 21)}
             title={postSelected.title}
@@ -198,8 +203,9 @@ const PostPage = () => {
         {!isLoadingComment && allComments && commentsList}
         {!isLoadingComment && allComments && commentsList.length === 0 && (
             <ContainerImg>
-                 <Img src={ImgComments} alt="Ilustração post sem comentários"/>
                  <p>Não há nenhum comentários nesse post, deseja comentar?</p>
+                 <Img src={ImgComments} alt="Ilustração post sem comentários"/>
+                
             </ContainerImg>
          
         )}

@@ -1,10 +1,9 @@
 import React from "react";
-import CommentDetail from "../../components/CommentDetail/CommentDetail";
 import { BASE_URL } from "../../constants/urls";
 import { useRequestData } from "../../hooks/useRequestData";
 import faker from "@faker-js/faker";
 import { useProtectedPage } from "../../hooks/useProtectedPage";
-import { ContainerBody, ContainerImg, Img } from "./styled";
+import { ContainerBody, ContainerImg, Img, SearchField} from "./styled";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
 import { TOKEN_AUTH } from "../../constants/token";
@@ -16,15 +15,20 @@ import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
 import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
 import ImgWaiting from "../../assets/waiting-requisition.webp"
+import { useState } from "react";
+import AlertSuccess from "../../components/AlertSuccess/AlertSuccess";
+import PostComponent from "../../components/PostComponent/PostComponent"
+import Typography from '@mui/material/Typography';
 
 const FeedPage = () => {
+    const [alertSuccess, setAlertSuccess] = useState(false)
+    const [query, setQuery] = useState("")
   useProtectedPage();
   const navigate = useNavigate();
 
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
     `${BASE_URL}/posts`
   );
- console.log(posts)
 
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
@@ -43,11 +47,10 @@ const FeedPage = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         getPost(`${BASE_URL}/posts`);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.response.message);
       });
   };
   const goToPostDetail = (postId) => {
@@ -63,17 +66,18 @@ const FeedPage = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         getPost(`${BASE_URL}/posts`);
       })
       .catch((error) => {
-        console.log(error.response);
+        alert(error.response.message);
       });
   };
 
   const postsList =
     posts &&
-    posts.map((post) => {
+    posts.filter((post) => {
+        return post.title.toLowerCase().includes(query.toLowerCase()) || post.body.toLowerCase().includes(query.toLowerCase())
+    }).map((post) => {
       const selectedColorVoteLike = () => {
         if (post.userVote < 0 || post.userVote === null) {
           return UpVoteGrey;
@@ -93,7 +97,7 @@ const FeedPage = () => {
       return (
         <div key={post.id}>
           <div className="ui container comments">
-            <CommentDetail
+            <PostComponent
               clickToPostDetail={() => goToPostDetail(post.id)}
               name={post.username}
               timeAgo={new Date(post.createdAt).toString().slice(0, 21)}
@@ -126,16 +130,36 @@ const FeedPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        setAlertSuccess(true)
         getPost(`${BASE_URL}/posts`);
         cleanFields();
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.message);
       });
   };
+
+  const onCloseAlert = () => {
+    setAlertSuccess(false)
+}
+
+const updateQuery = (event) => {
+    setQuery(event.target.value)
+}
   return (
     <ContainerBody>
+          {alertSuccess && <AlertSuccess alertText={"Parabéns, você criou um post!"} onClose={onCloseAlert} /> }
+<SearchField>
+<TextField
+placeholder="Procurar"
+color="secondary"
+fullWidth
+value={query}
+onChange={updateQuery}
+/>
+</SearchField>
+
+<Typography variant="h4" color="primary"> Crie um post</Typography>
       <form onSubmit={createPost}>
         <TextField
           name={"title"}
@@ -160,7 +184,7 @@ const FeedPage = () => {
           margin={"dense"}
           required
         />
-        <Button type={"submit"} variant="contained" color="primary" fullWidth>
+        <Button type={"submit"} variant="contained" color="primary" fullWidth margin={"dense"}>
           Postar!
         </Button>
       </form>

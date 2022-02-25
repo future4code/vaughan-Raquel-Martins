@@ -6,7 +6,7 @@ display:flex;
 justify-content:center;
 flex-direction:column;
 padding: 1rem;
-margin: 2rem 1rem;
+//margin: 2rem 1rem;
 `
 
 export const Img = styled.img`
@@ -22,4 +22,8 @@ padding: 1rem;
 flex-direction: column;
 align-items: center;
 
+`
+
+export const SearchField = styled.div`
+margin: 3rem 3rem;
 `

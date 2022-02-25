@@ -1,22 +1,22 @@
 import React from "react";
-import VotesAndCount from "../VotesAndCountComment/VotesAndCount";
+import VotesAndCount from "../VotesAndCount/VotesAndCount";
 import { Container, DivPointer } from "./styled";
-//import { useState } from "react";
 
-const CommentDetail = (props) => {
+const PostComponent = (props) => {
   return (
     <Container>
       <div className="comment">
         <a className="avatar">
           <img alt="avatar" src={props.avatar} />
         </a>
+  
         <DivPointer className="content" onClick={props.clickToPostDetail}>
-          <a className="author">{props.name}</a>
+          
           <div className="metadata">
             <span className="date">{props.timeAgo}</span>
           </div>
           <div>
-            <h5>{props.title}</h5>
+            <h3>{props.title}</h3>
           </div>
           <div className="text">{props.message}</div>
         </DivPointer>
@@ -41,4 +41,4 @@ const CommentDetail = (props) => {
   );
 };
 
-export default CommentDetail;
+export default PostComponent;

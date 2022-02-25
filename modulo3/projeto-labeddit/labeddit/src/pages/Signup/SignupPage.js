@@ -26,7 +26,6 @@ const SignupPage = ({setRightButtonText}) => {
         event.preventDefault()
         axios.post(`${BASE_URL}/users/signup`, form)
         .then((res)=>{
-            console.log(res)
             cleanFields()
             setAlertSuccess(true)
             localStorage.setItem("token", res.data.token)
@@ -34,7 +33,7 @@ const SignupPage = ({setRightButtonText}) => {
             setRightButtonText("Logout")
         })
         .catch((err)=>{
-            console.log(err)
+            alert(err.response)
         })
       }
 
@@ -45,7 +44,7 @@ const SignupPage = ({setRightButtonText}) => {
 
   return (
     <StyledContainer>
-      {alertSuccess && <AlertSuccess onClose={onCloseAlert} /> }
+      {alertSuccess && <AlertSuccess alertText={"Parabéns, você conseguiu criar sua conta no LabEddit!"} onClose={onCloseAlert} /> }
 
         <Content>
       <form onSubmit={signup}>

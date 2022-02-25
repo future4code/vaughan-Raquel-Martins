@@ -6,7 +6,7 @@ display:flex;
 justify-content:center;
 flex-direction:column;
 padding: 1rem;
-margin: 2rem 1rem;
+margin: 0 1rem;
 `
 
 export const Img = styled.img`
