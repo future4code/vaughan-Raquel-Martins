@@ -3,7 +3,7 @@ import { BASE_URL } from "../../constants/urls";
 import { useRequestData } from "../../hooks/useRequestData";
 import faker from "@faker-js/faker";
 import { useProtectedPage } from "../../hooks/useProtectedPage";
-import { ContainerBody, ContainerImg, Img, SearchField} from "./styled";
+import { ContainerBody, ContainerImg, Img, SearchField, CreatePostCtn} from "./styled";
 import useForm from "../../hooks/useForm";
 import axios from "axios";
 import { getAuthToken } from "../../constants/token";
@@ -19,16 +19,32 @@ import { useState } from "react";
 import AlertSuccess from "../../components/AlertSuccess/AlertSuccess";
 import PostComponent from "../../components/PostComponent/PostComponent"
 import Typography from '@mui/material/Typography';
+import IconBtnPages from "../../components/IconBtnPage/IconBtnPages"
+
+
 
 const FeedPage = () => {
     const [alertSuccess, setAlertSuccess] = useState(false)
     const [query, setQuery] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    
   useProtectedPage();
   const navigate = useNavigate();
 
   const [posts, isLoadingPosts, errorPosts, getPost] = useRequestData(
-    `${BASE_URL}/posts`
+    `${BASE_URL}/posts?page=${currentPage}&size=10`
   );
+
+  const getNextPage = () => {
+    setCurrentPage(currentPage + 1)
+  }
+
+  const getPreviewPage = () => {
+    if(currentPage === 1){
+      setCurrentPage(currentPage -1)
+    }
+    
+  }
 
   const { form, onChangeForm, cleanFields } = useForm({
     title: "",
@@ -149,16 +165,8 @@ const updateQuery = (event) => {
   return (
     <ContainerBody>
           {alertSuccess && <AlertSuccess alertText={"Parabéns, você criou um post!"} onClose={onCloseAlert} /> }
-<SearchField>
-<TextField
-placeholder="Procurar"
-color="secondary"
-fullWidth
-value={query}
-onChange={updateQuery}
-/>
-</SearchField>
 
+<CreatePostCtn>
 <Typography variant="h4" color="primary"> Crie um post</Typography>
       <form onSubmit={createPost}>
         <TextField
@@ -188,6 +196,17 @@ onChange={updateQuery}
           Postar!
         </Button>
       </form>
+      </CreatePostCtn>
+      <SearchField>
+<Typography variant="h6" color="secondary"> Procurar Post</Typography>
+<TextField
+placeholder="Procurar"
+color="secondary"
+fullWidth
+value={query}
+onChange={updateQuery}
+/>
+</SearchField>
 
       <div>
         {isLoadingPosts && (
@@ -206,7 +225,12 @@ onChange={updateQuery}
         )}
       </div>
 
-      {/* <Pagination count={10} /> */}
+     
+      
+     <IconBtnPages
+     getNextPage={getNextPage}
+     getPreviewPage={getPreviewPage}
+     />
     </ContainerBody>
   );
 };

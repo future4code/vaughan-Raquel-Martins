@@ -5,7 +5,7 @@ export function useRequestData(url) {
   const [data, setData] = useState(undefined);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+ 
   useEffect(() => {
     getData(url);
     },[url]);

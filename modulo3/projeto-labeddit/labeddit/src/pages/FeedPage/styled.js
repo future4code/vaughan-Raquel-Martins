@@ -26,4 +26,21 @@ align-items: center;
 
 export const SearchField = styled.div`
 margin: 3rem 3rem;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+padding: 3rem;
+display:flex;
+justify-content:center;
+flex-direction:column;
+border-radius: 1rem;
+`
+
+export const CreatePostCtn = styled.div`
+margin: 3rem 3rem;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+padding: 3rem;
+display:flex;
+justify-content:center;
+flex-direction:column;
+border-radius: 1rem;
+
 `

@@ -8,6 +8,7 @@ border: solid 1px grey;
 padding: 1rem;
 margin-bottom:1rem;
 margin-top: 1rem;
+word-wrap: break-word;
 `
 
 export const DivPointer = styled.div`
