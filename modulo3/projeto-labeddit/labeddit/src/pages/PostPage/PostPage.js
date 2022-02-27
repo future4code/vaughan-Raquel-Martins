@@ -14,15 +14,14 @@ import UpVoteGrey from "../../assets/VotesImg/UpVoteGrey.svg";
 import UpVoteGreen from "../../assets/VotesImg/UpVoteGreen.svg";
 import DownVoteGrey from "../../assets/VotesImg/DownVoteGrey.svg";
 import DownVoteRed from "../../assets/VotesImg/DownVoteRed.svg";
-import ImgWaiting from "../../assets/waiting-requisition.webp"
-import ImgComments from "../../assets/comments-empty.webp"
+import ImgWaiting from "../../assets/waiting-requisition.webp";
+import ImgComments from "../../assets/comments-empty.webp";
 import { useState } from "react";
 import AlertSuccess from "../../components/AlertSuccess/AlertSuccess";
-import PostComponent from "../../components/PostComponent/PostComponent"
-
+import PostComponent from "../../components/PostComponent/PostComponent";
 
 const PostPage = () => {
-    const [alertSuccess, setAlertSuccess] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState(false);
   const pathParams = useParams();
   const idPostPath = pathParams.id;
   useProtectedPage();
@@ -45,7 +44,7 @@ const PostPage = () => {
         },
       })
       .then((res) => {
-        setAlertSuccess(true)
+        setAlertSuccess(true);
         cleanFields();
         getPost(`${BASE_URL}/posts`);
         getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
@@ -78,54 +77,57 @@ const PostPage = () => {
   };
 
   const createCommentVote = (idComment, num) => {
-      const body = {
-            direction: num
-      }
+    const body = {
+      direction: num,
+    };
 
-      axios.post(`${BASE_URL}/comments/${idComment}/votes`, body, {
+    axios
+      .post(`${BASE_URL}/comments/${idComment}/votes`, body, {
         headers: {
-            Authorization: getAuthToken(),
-          },
+          Authorization: getAuthToken(),
+        },
       })
-      .then((res)=>{
-        
-        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
-      }).catch((err)=>{
-          alert(err.response)
+      .then((res) => {
+        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
       })
-  }
+      .catch((err) => {
+        alert(err.response);
+      });
+  };
 
   const deleteCommentVote = (idComment) => {
-      axios.delete(`${BASE_URL}/comments/${idComment}/votes`, {
-          headers :{
-            Authorization: getAuthToken(),
-          }
-      }).then((res)=>{
-          getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`)
-      }).catch((err)=>{
-          alert(err.response)
+    axios
+      .delete(`${BASE_URL}/comments/${idComment}/votes`, {
+        headers: {
+          Authorization: getAuthToken(),
+        },
       })
-  }
+      .then((res) => {
+        getAllComments(`${BASE_URL}/posts/${idPostPath}/comments`);
+      })
+      .catch((err) => {
+        alert(err.response);
+      });
+  };
 
   const commentsList =
     allComments &&
     allComments.map((comment) => {
+      const selectedColorVoteLike = () => {
+        if (comment.userVote < 0 || comment.userVote === null) {
+          return UpVoteGrey;
+        } else {
+          return UpVoteGreen;
+        }
+      };
 
-        const selectedColorVoteLike = () => {
-            if (comment.userVote < 0 || comment.userVote === null) {
-              return UpVoteGrey;
-            } else {
-              return UpVoteGreen;
-            }
-          };
-    
-          const selectedColorVoteDislike = () => {
-            if (comment.userVote > 0 || comment.userVote === null) {
-              return DownVoteGrey;
-            } else {
-              return DownVoteRed;
-            }
-          };
+      const selectedColorVoteDislike = () => {
+        if (comment.userVote > 0 || comment.userVote === null) {
+          return DownVoteGrey;
+        } else {
+          return DownVoteRed;
+        }
+      };
       return (
         <CommentDetail
           key={comment.id}
@@ -135,25 +137,28 @@ const PostPage = () => {
           title={comment.title}
           message={comment.body}
           numberVotes={comment.voteSum}
-          
           onClickUp={() => createCommentVote(comment.id, 1)}
           onClickDown={() => createCommentVote(comment.id, -1)}
           imgVoteUp={selectedColorVoteLike()}
           imgVoteDown={selectedColorVoteDislike()}
-
           onClickChangeUpVote={() => deleteCommentVote(comment.id)}
           onClickChangeDownVote={() => deleteCommentVote(comment.id)}
         />
       );
     });
 
-    const onCloseAlert = () => {
-        setAlertSuccess(false)
-    }
+  const onCloseAlert = () => {
+    setAlertSuccess(false);
+  };
 
   return (
     <ContainerBody>
-              {alertSuccess && <AlertSuccess alertText={"Parabéns, você comentou em um post!"} onClose={onCloseAlert} /> }
+      {alertSuccess && (
+        <AlertSuccess
+          alertText={"Parabéns, você comentou em um post!"}
+          onClose={onCloseAlert}
+        />
+      )}
 
       {isLoadingPosts && (
         <div className="ui active dimmer">
@@ -173,14 +178,15 @@ const PostPage = () => {
             commentText={"Comentários"}
             imgVoteUp={isVotedLiked()}
             imgVoteDown={isVotedDisliked()}
-
           />
         </div>
       )}
-      {!isLoadingPosts && errorPost && (<ContainerImg>
-              <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
-              <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
-              </ContainerImg>)}
+      {!isLoadingPosts && errorPost && (
+        <ContainerImg>
+          <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
+          <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
+        </ContainerImg>
+      )}
 
       <CreateComment
         onSubmitComment={onSubmitComment}
@@ -197,18 +203,16 @@ const PostPage = () => {
         )}
         {!isLoadingComment && errorComment && (
           <ContainerImg>
-              <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
-              <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
-              </ContainerImg>
+            <Img src={ImgWaiting} alt="Ilustração de erro na requisição" />
+            <p>Ocorreu um erro na requisição, tente novamente mais tarde.</p>
+          </ContainerImg>
         )}
         {!isLoadingComment && allComments && commentsList}
         {!isLoadingComment && allComments && commentsList.length === 0 && (
-            <ContainerImg>
-                 <p>Não há nenhum comentários nesse post, deseja comentar?</p>
-                 <Img src={ImgComments} alt="Ilustração post sem comentários"/>
-                
-            </ContainerImg>
-         
+          <ContainerImg>
+            <p>Não há nenhum comentários nesse post, deseja comentar?</p>
+            <Img src={ImgComments} alt="Ilustração post sem comentários" />
+          </ContainerImg>
         )}
       </div>
     </ContainerBody>
