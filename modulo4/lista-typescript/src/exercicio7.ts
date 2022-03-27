@@ -1,4 +1,4 @@
-export const exercicio7 = () => {
+ export const exercicio7 = () => {
 
   
 
@@ -15,11 +15,13 @@ export const exercicio7 = () => {
   type Produtos = {
     nome: string,
     quantidade: number,
-    valorUnitario: number | string,
+    valorUnitario: number,
   }
 
   const ajustaPreco = (produtos : Produtos[]): string => {
-    const valorAjustado: string = produtos.valorUnitario.toFixed(2).replace('.', ',')
+    const valorAjustado: string[] =  produtos.map((produto) => {
+      return produto.valorUnitario.toFixed(2).replace('.', ',')
+    })
     
     console.log(`R$ ${valorAjustado}`)
     return "R$ "+valorAjustado
@@ -34,4 +36,4 @@ export const exercicio7 = () => {
     { nome: "Plumbus", quantidade: 13, valorUnitario: 140.44},
     { nome: "Pokebola", quantidade: 200, valorUnitario: 99.9915}
   ])
-}
+ }

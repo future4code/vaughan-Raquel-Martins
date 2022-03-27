@@ -11,7 +11,7 @@ export const exercicio6 = () => {
   type Cliente = {
     cliente: string;
     saldoTotal: number;
-    debitos: number[];
+    debitos: number[] | any[];
   };
 
   const clientesNegativados = (clientes: Cliente[]): Cliente[] => {
@@ -24,8 +24,9 @@ export const exercicio6 = () => {
     const clienteSaldoNegativo = clientes
       .map((cliente, i) => {
         const novoCliente = {
-          ...cliente,
+          cliente : cliente.cliente,
           saldoTotal: cliente.saldoTotal - soma[i],
+          debitos: [] as number[]
         };
         return novoCliente;
       })

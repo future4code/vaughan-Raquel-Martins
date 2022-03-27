@@ -15,6 +15,6 @@ import {exercicio7} from './exercicio7'
 
 //exercicio5()
 
-// exercicio6()
+ //exercicio6()
 
 exercicio7()
