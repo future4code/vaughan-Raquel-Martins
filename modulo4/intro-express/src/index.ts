@@ -32,17 +32,41 @@ app.get('/posts', (req, res) => {
   res.status(200).send(allPosts);
 });
 
-app.get('/posts/:userId' ,(req, res) => {
-    const userId = req.params.userId;
-    const getPostByUserId = posts
-      .filter((post) => {
-        return post.usuarioId === Number(userId)
-      })
-      
-   console.log(typeof userId)
-    
-    res.status(200).send(getPostByUserId);
-  })
+app.get('/posts/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const getPostByUserId = posts.filter((post) => {
+    return post.userId === Number(userId);
+  });
+
+  console.log(typeof userId);
+
+  res.status(200).send(getPostByUserId);
+});
+
+//DESAFIOS
+
+app.delete('/posts/:id', (req, res) => {
+  const idPost = req.params.id;
+
+  const postsUpdated = posts.filter((post) => {
+    return post.id !== Number(idPost);
+  });
+  res.status(200).send(postsUpdated);
+});
+
+
+app.delete('/users/:id', (req, res) => {
+const userId = req.params.id
+
+const usersUpdated = usuarios.filter((users) => {
+  return users.id !== Number(userId)
+})
+
+res.status(200).send(usersUpdated)
+})
+
+
+// https://documenter.getpostman.com/view/19295220/UVyoVxSD
 
 app.listen(3003, () => {
   console.log('Server is running in http://localhost:3003/');

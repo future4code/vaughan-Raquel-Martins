@@ -38,7 +38,7 @@ type User = {
 };
 
 type Post = {
-  usuarioId: number | string;
+  userId: number | string;
   id: number;
   title: string;
   body: string;
@@ -51,25 +51,25 @@ type Post = {
 
 export const posts: Post[] = [
   {
-    usuarioId: 1,
+    userId: 1,
     id: 1,
     title: 'reunião',
     body: 'Bom dia, pessoal, passando aqui pra lembrar que temos nossa reunião marcada as 15hrs',
   },
   {
-    usuarioId: 2,
+    userId: 2,
     id: 2,
     title: 'reunião',
     body: 'Certo, estarei presente',
   },
   {
-    usuarioId: 3,
+    userId: 3,
     id: 3,
     title: 'reunião',
     body: 'Certo, estarei presente',
   },
   {
-    usuarioId: 4,
+    userId: 4,
     id: 4,
     title: 'reunião',
     body: 'Surgiu um imprevisto aqui, não poderei participar da reunião. abraços',
