@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { produtos } from './data';
+import { send } from 'process';
 const app = express();
 
 app.use(express.json());
@@ -97,6 +98,39 @@ app.put('/products/:id', (req, res) => {
       case 'valor de preço é negativo':
         res.status(422).send(e.message);
         break;
+      case 'Id não encontrado':
+        res.status(404).send(e.message);
+        break;
+      default:
+        res.status(500).send(e.message);
+        break;
+    }
+  }
+});
+
+//Exercício 6  deleta um determinado produto
+app.delete('/products/:id', (req, res) => {
+  const productId = req.params.id;
+  try {
+    const index: number = produtos.findIndex(
+      (produto) => produto.id === productId
+    );
+
+    let idFound = false;
+    for (let i = 0; i < produtos.length; i++) {
+      if (productId === produtos[i].id) {
+        produtos.splice(index, 1);
+        idFound = true;
+      }
+    }
+
+    if (!idFound) {
+      throw new Error('Id não encontrado');
+    }
+
+    res.status(200).send(produtos);
+  } catch (e: any) {
+    switch (e.message) {
       case 'Id não encontrado':
         res.status(404).send(e.message);
         break;
