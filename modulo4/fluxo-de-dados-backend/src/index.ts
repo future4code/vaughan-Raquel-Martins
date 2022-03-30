@@ -56,7 +56,11 @@ app.post('/products', (req, res) => {
 
 //Exercício 4 Retorna todos os produtos
 app.get('/products' , (req, res) => {
-  
+  const allProducts = produtos.map((produtos)=>{
+    return produtos
+  })
+
+  res.status(200).send(allProducts)
 })
 
 
