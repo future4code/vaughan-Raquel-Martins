@@ -141,9 +141,10 @@ app.delete('/products/:id', (req, res) => {
   const productId = req.params.id;
   try {
     let idFound = false;
+    let index = 0
     for (let i = 0; i < produtos.length; i++) {
       if (productId === produtos[i].id) {
-        produtos.splice(i, 1);
+        index = i
         idFound = true;
       }
     }
@@ -151,7 +152,7 @@ app.delete('/products/:id', (req, res) => {
     if (!idFound) {
       throw new Error('Id não encontrado');
     }
-
+    produtos.splice(index, 1);
     res.status(200).send(produtos);
   } catch (e: any) {
     switch (e.message) {
