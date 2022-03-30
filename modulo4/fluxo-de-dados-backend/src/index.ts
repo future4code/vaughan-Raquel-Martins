@@ -29,6 +29,19 @@ app.post('/products', (req, res) => {
   // produtos.push(novoProduto)
   // res.status(201).send(produtos)
   try {
+ 
+    if (typeof novoProduto.price !== 'number') {
+      throw new Error('valor de preço inválido');
+    }
+
+    if (novoProduto.price <= 0) {
+      throw new Error('valor de preço é negativo');
+    }
+
+    if(typeof novoProduto.name !== 'string'){
+      throw new Error('valor de nome inválido');
+    }
+
     for (let i = 0; i < produtos.length; i++) {
       if (produtos[i].name === req.body.name) {
         throw new Error('Produto já adicionado');
@@ -47,6 +60,15 @@ app.post('/products', (req, res) => {
       case 'Algum campo do produto está vazio':
         res.status(422).send(e.message);
         break;
+        case 'valor de preço inválido':
+          res.status(422).send(e.message);
+          break;
+        case 'valor de preço é negativo':
+          res.status(422).send(e.message);
+          break;
+          case 'valor de nome inválido':
+            res.status(422).send(e.message)
+            break
       default:
         res.status(500).send(e.message);
         break;
@@ -69,6 +91,10 @@ app.put('/products/:id', (req, res) => {
   const newPrice: number = req.body.price;
 
   try {
+   if(req.body.price === ''){
+    throw new Error('preço não foi encontrado')
+   }
+
     if (typeof req.body.price !== 'number') {
       throw new Error('valor de preço inválido');
     }
@@ -101,6 +127,9 @@ app.put('/products/:id', (req, res) => {
       case 'Id não encontrado':
         res.status(404).send(e.message);
         break;
+        case 'preço não foi encontrado':
+          res.status(404).send(e.message);
+          break
       default:
         res.status(500).send(e.message);
         break;
