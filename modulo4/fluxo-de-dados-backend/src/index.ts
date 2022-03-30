@@ -170,6 +170,8 @@ app.delete('/products/:id', (req, res) => {
   }
 });
 
+//https://documenter.getpostman.com/view/19295220/UVyq1HR7
+
 app.listen(3003, () => {
   console.log('Server está funcionando em localhost3003');
 });
