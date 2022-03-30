@@ -25,9 +25,8 @@ app.post('/products', (req, res) => {
     price: req.body.price,
   };
 
-
-// produtos.push(novoProduto)
-// res.status(201).send(produtos)
+  // produtos.push(novoProduto)
+  // res.status(201).send(produtos)
   try {
     for (let i = 0; i < produtos.length; i++) {
       if (produtos[i].name === req.body.name) {
@@ -55,14 +54,58 @@ app.post('/products', (req, res) => {
 });
 
 //Exercício 4 Retorna todos os produtos
-app.get('/products' , (req, res) => {
-  const allProducts = produtos.map((produtos)=>{
-    return produtos
-  })
+app.get('/products', (req, res) => {
+  const allProducts = produtos.map((produtos) => {
+    return produtos;
+  });
 
-  res.status(200).send(allProducts)
-})
+  res.status(200).send(allProducts);
+});
 
+//Exercício 5 Edita o preço de um determinado produto
+app.put('/products/:id', (req, res) => {
+  const productId = req.params.id;
+  const newPrice: number = req.body.price;
+
+  try {
+    if (typeof req.body.price !== 'number') {
+      throw new Error('valor de preço inválido');
+    }
+
+    if (req.body.price <= 0) {
+      throw new Error('valor de preço é negativo');
+    }
+
+    let idFound = false;
+
+    for (let i = 0; i < produtos.length; i++) {
+      if (productId === produtos[i].id) {
+        produtos[i].price = newPrice;
+        idFound = true;
+      }
+    }
+    if (!idFound) {
+      throw new Error('Id não encontrado');
+    }
+
+    res.status(200).send(produtos);
+  } catch (e: any) {
+    switch (e.message) {
+      case 'valor de preço inválido':
+        res.status(422).send(e.message);
+        break;
+      case 'valor de preço é negativo':
+        res.status(422).send(e.message);
+        break;
+      case 'Id não encontrado':
+        res.status(404).send(e.message);
+        break;
+      default:
+        res.status(500).send(e.message);
+        break;
+    }
+  }
+});
 
 app.listen(3003, () => {
   console.log('Server está funcionando em localhost3003');
