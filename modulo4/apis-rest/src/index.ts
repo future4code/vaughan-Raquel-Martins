@@ -40,7 +40,12 @@ enum UserType {
 app.get('/users/search', (req: Request, res: Response) => {
   let errorCode = 400;
   try {
-    const type: string = req.query.type as string;
+    const type: UserType = req.query.type as UserType;
+
+    const typeValidation: any = {
+      [UserType.ADMIN]: true,
+      [UserType.NORMAL]: true,
+    };
 
     const user: User[] | undefined = users.filter((user) => {
       return user.type.toLowerCase() === type.toLowerCase();
@@ -50,10 +55,14 @@ app.get('/users/search', (req: Request, res: Response) => {
       throw new Error('User type not found');
     }
 
-    if (type.toLowerCase() === 'admin' || type.toLowerCase() === 'normal') {
+    // if (type.toLowerCase() === UserType.ADMIN.toLowerCase() || type.toLowerCase() === UserType.NORMAL.toLowerCase()) {
+    //
+    // }
+
+    if (typeValidation[type.toUpperCase()]) {
       res.status(200).send(user);
     } else {
-      errorCode = 422
+      errorCode = 422;
       throw new Error('User type not exist');
     }
   } catch (e: any) {
@@ -61,68 +70,69 @@ app.get('/users/search', (req: Request, res: Response) => {
   }
 });
 
-//Exercício 3 
+//Exercício 3
 //a. Qual é o tipo de envio de parâmetro que costuma ser utilizado por aqui?*
 //Path parameter
 //b. Altere este endpoint para que ele devolva uma mensagem de erro caso nenhum usuário tenha sido encontrado.
 
 app.get('/users/:name', (req: Request, res: Response) => {
-  let errorCode = 400
-  try{
-    const name:string = req.params.name
-    const user = users.find((user) =>{
-      return user.name === name
-    })
+  let errorCode = 400;
+  try {
+    const name: string = req.params.name;
+    const user = users.find((user) => {
+      return user.name === name;
+    });
 
-    if(!user){
-    errorCode = 404
-    throw new Error('User not found')
+    if (!user) {
+      errorCode = 404;
+      throw new Error('User not found');
     }
-    res.status(200).send(user)
-  }catch(e:any){
-    res.status(errorCode).send({message: e.message})
+    res.status(200).send(user);
+  } catch (e: any) {
+    res.status(errorCode).send({ message: e.message });
   }
 });
-
 
 //Exercício 4
 //a. Mude o método do endpoint para `PUT`. O que mudou?
 //Nada
 // b. Você considera o método `PUT` apropriado para esta transação? Por quê?
-//Não, 
+//Não,
 
-app.post('/users', (req:Request, res: Response)=>{
-  let errorCode = 400
-  try{
-    const {name, email, type, age} = req.body
-    if(!name || !email || !type || !age){
-      errorCode = 422
-      throw new Error('Plese check the fields!')
+app.post('/users', (req: Request, res: Response) => {
+  let errorCode = 400;
+  try {
+    const { name, email, type, age } = req.body;
+    if (!name || !email || !type || !age) {
+      errorCode = 422;
+      throw new Error('Plese check the fields!');
     }
-  
-    const newUser : User = {
+
+    const typeValidation: any = {
+      [UserType.ADMIN]: true,
+      [UserType.NORMAL]: true,
+    };
+
+    const newUser: User = {
       id: Date.now(),
       name,
       email,
       type,
-      age
-    }
+      age,
+    };
 
-    users.push(newUser)
-    if(type.toLowerCase() === "normal" || type.toLowerCase() === "admin"){
-      res.status(201).send(users)
-    }else{
-      errorCode = 422
-      throw new Error('Type is invalid')
-    }
+    users.push(newUser);
 
-   
-    
-  }catch(e:any){
-res.status(errorCode).send({message: e.message})
+    if (typeValidation[type.toUpperCase()]) {
+      res.status(200).send(users);
+    } else {
+      errorCode = 422;
+      throw new Error('User type not exist');
+    }
+  } catch (e: any) {
+    res.status(errorCode).send({ message: e.message });
   }
-
-})
+});
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
