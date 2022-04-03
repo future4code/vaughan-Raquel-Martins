@@ -63,6 +63,80 @@ app.post('/client', (req: Request, res: Response) => {
   }
 });
 
+// Pegar Saldo 
+app.get('/client/:cpf', (req:Request, res:Response) => {
+let errorCode = 400
+let balanceUser : number = 0
+let userFounded = false
+try{
+  const cpf :number = Number(req.params.cpf)
+  for(let i = 0; i < users.length; i++){
+    if(cpf === users[i].cpf){
+      userFounded = true
+     balanceUser = users[i].balance
+    }
+  }
+
+if(!userFounded){
+  errorCode = 404
+  throw new Error('Cpf not found')
+}
+
+res.status(200).send({balance: balanceUser})
+
+}catch(error: any){
+  res.status(errorCode).send({message: error.message})
+}
+})
+
+// Adicionar saldo
+// O usuário deve conseguir adicionar saldo à sua conta, passando seu nome, o CPF e o valor que desejar.
+ app.put('/client', (req:Request, res:Response) => {
+   let errorCode : number = 400
+   let user : any = undefined
+   let userFounded : boolean = false
+   try{
+   const {name,cpf, value} = req.body
+   if(!name || !cpf || !value){
+     errorCode = 422
+     throw new Error('Please check the fields!')
+   }
+
+   if(typeof cpf !== 'number'){
+     errorCode = 422
+     throw new Error('Invalid value for cpf')
+   }
+
+   if(typeof value !== 'number'){
+    errorCode = 422
+    throw new Error('Invalid value for value')
+  }
+
+  if(typeof name !== 'string'){
+    errorCode = 422
+    throw new Error('Invalid value for name')
+  }
+
+   for(let i = 0; i < users.length; i++){
+     if(name === users[i].name && cpf === users[i].cpf){
+       userFounded = true
+       users[i].balance = users[i].balance + value
+       user = users[i]
+     }
+   }
+  if(!userFounded){
+    errorCode = 404
+  throw new Error('Client not found')
+  }
+  res.status(200).send(user)
+   }catch(error:any){
+     res.status(errorCode).send({message: error.message})
+   }
+ })
+
+
+
+
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
     const address = server.address() as AddressInfo;
