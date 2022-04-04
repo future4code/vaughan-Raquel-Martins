@@ -51,7 +51,7 @@ app.post('/client', (req: Request, res: Response) => {
       cpf,
       birthDate,
       balance: 0,
-      extract: undefined,
+      extract: [],
     };
     if (cpf.toString().length !== 11) {
       errorCode = 422;
@@ -199,7 +199,7 @@ app.put('/bills', (req: Request, res: Response) => {
     for (let i = 0; i < users.length; i++) {
       if (cpf === users[i].cpf && value < users[i].balance) {
         userFounded = true;
-        users[i]['extract'] = billsToPay;
+        users[i]['extract'].push(billsToPay)
         users[i].balance = users[i].balance - value;
         user = users[i];
       }
@@ -210,12 +210,20 @@ app.put('/bills', (req: Request, res: Response) => {
       throw new Error('Client not found');
     }
 
-    console.log(user);
+    
     res.status(200).send(user);
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
   }
 });
+
+//Transferência Interna
+//     A transferência entre contas é muito mais interessante ao banco do que aos clientes em si, porque, com esta funcionalidade, 
+//     ela consegue influenciar seus clientes a convencerem conhecidos a migrarem para o banco. Para realizar esta transferência, 
+//     o usuário deve informar o seu nome, o seu CPF, o nome do destinatário, 
+//     o CPF do destinatário e o valor em si. Transferências não podem ser agendadas e devem respeitar o saldo do usuário remetente.
+
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

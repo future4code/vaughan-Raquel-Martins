@@ -5,7 +5,7 @@ type User = {
   cpf: number,
   birthDate: string,
   balance: number,
-  extract: any,
+  extract: any[],
 }
 
 export const users: User[] = [
@@ -14,20 +14,20 @@ export const users: User[] = [
     cpf: 12098312399,
     birthDate: "09/01/2000",
     balance: 200,
-    extract: undefined
+    extract: []
   },
   {
     name: "Amanda",
     cpf: 12098712392,
     birthDate: "30/08/1992",
     balance: 300,
-    extract: undefined
+    extract: []
   },
   {
     name: "Fernando",
     cpf: 12398712321,
     birthDate: "23/02/1986",
     balance: 1000,
-    extract: undefined
+    extract: []
   }
 ]
