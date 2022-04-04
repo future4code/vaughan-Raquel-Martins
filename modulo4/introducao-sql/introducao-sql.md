@@ -1,7 +1,4 @@
 ```
-
-USE `vaughan-21712985-raquel-martins`;
-
 CREATE TABLE Actor (
     id VARCHAR(255) PRIMARY KEY,
     name VARCHAR (255) NOT NULL,
