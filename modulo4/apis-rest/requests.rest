@@ -1,0 +1,9 @@
+GET http://localhost:3003/users
+Content-Type: : application/json
+###
+GET http://localhost:3003/users/search?type=normal
+Content-Type: application/json
+###
+
+GET http://localhost:3003/users/Coragem
+Content-Type: application/json
