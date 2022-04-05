@@ -155,4 +155,10 @@ VALUES("002",
 );
 
 SELECT * FROM Films;
+
+
+SELECT * from Films 
+WHERE (title like "%vida%");
+
+
 ```
