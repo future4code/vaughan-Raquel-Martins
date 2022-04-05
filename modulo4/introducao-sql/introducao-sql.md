@@ -156,6 +156,14 @@ VALUES("002",
 
 SELECT * FROM Films;
 
+SELECT id, title, score from Films 
+WHERE id = "001";
+
+SELECT * from Films 
+WHERE title = "O Auto da Compadecida";
+
+SELECT id, title, synopsis from Films 
+WHERE (score >= 7);
 
 SELECT * from Films 
 WHERE (title like "%vida%");
