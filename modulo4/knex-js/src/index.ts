@@ -231,6 +231,69 @@ res.status(200).send({
 
 //Exercício 5
 
+const createMovie = async (
+  id: string,
+  title: string,
+  synopsis: string,
+  releaseDate: Date,
+  playingLimitDate: Date
+) => {
+  await connection
+    .insert({
+      id: id,
+      title: title,
+      synopsis: synopsis,
+      releas_date: releaseDate,
+      playing_limit_date: playingLimitDate,
+    })
+    .into("Movie");
+};
+
+
+app.post("/movie", async (req: Request, res: Response) => {
+  try {
+    const {id, title, synopsis, releaseDate, playingLimitDate} = req.body
+    await createMovie(
+      id,
+      title,
+      synopsis,
+      releaseDate,
+      playingLimitDate
+    );
+
+    res.status(200).send({
+      message: "Success"
+    });
+  } catch (err:any) {
+    res.status(400).send({
+      message: err.message,
+    });
+  }
+});
+
+//Exercício 6
+
+const getAllMovies = async (): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT * FROM Movie LIMIT 15
+  `);
+
+  return result[0];
+};
+
+app.post("/movie/:id", async (req: Request, res: Response) => {
+  try {
+    const movies = await getAllMovies();
+
+    res.status(200).send({
+      movies: movies,
+    });
+  } catch (err: any) {
+    res.status(400).send({
+      message: err.message,
+    });
+  }
+});
 
 
 
