@@ -41,17 +41,18 @@ app.post('/users', async (req: Request, res: Response): Promise<void> => {
 //   let userInfo: any = undefined;
 //   try {
 //     if (isNaN(Number(id))) {
-//       errorCode = 422;
+  //       errorCode = 422;
 //       throw new Error('Invalid value for id');
-//     }
 //     // for (let i = 0; i < users.length; i++) {
 //     // //  if (users[i].id === id) {
-//     //     userFounded = true;
+  //     //     userFounded = true;
 //     //     userInfo = {
-//     //       //name: users[i].name,
+  //     //       //name: users[i].name,
 //     //      // nickname: users[i].nickname,
+//     }
 //     //     };
 //     //   }
+
 //     }
 
 //     // if (!userFounded) {
