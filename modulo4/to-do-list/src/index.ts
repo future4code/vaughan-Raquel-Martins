@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { AddressInfo } from 'net';
-//import connection from './connection';
-import { createUser } from './functions';
+import { createUser, getUserById } from './functions';
 
 const app = express();
 
@@ -34,36 +33,22 @@ app.post('/users', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-// app.get('/user/:id', (req: Request, res: Response) => {
-//   let errorCode = 400;
-//   const id: string = req.params.id;
-//   let userFounded: boolean = false;
-//   let userInfo: any = undefined;
-//   try {
-//     if (isNaN(Number(id))) {
-  //       errorCode = 422;
-//       throw new Error('Invalid value for id');
-//     // for (let i = 0; i < users.length; i++) {
-//     // //  if (users[i].id === id) {
-  //     //     userFounded = true;
-//     //     userInfo = {
-  //     //       //name: users[i].name,
-//     //      // nickname: users[i].nickname,
-//     }
-//     //     };
-//     //   }
+app.get('/users/:id', async (req: Request, res: Response) => {
+  let errorCode = 400;
+  const id: string = req.params.id;
+  try {
+    if (isNaN(Number(id))) {
+      errorCode = 422;
+      throw new Error('Invalid value for id');
+    }
 
-//     }
+    res.status(200).send(await getUserById(id));
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
+  }
+});
 
-//     // if (!userFounded) {
-//     //   errorCode = 404;
-//     //   throw new Error('User not found');
-//     // }
-//     //res.status(200).send(userInfo);
-//   } catch (error: any) {
-//     res.status(errorCode).send({ message: error.message });
-//   }
-// });
+
 
 app.put('/user/edit/:id', (req: Request, res: Response) => {
   let errorCode = 400;

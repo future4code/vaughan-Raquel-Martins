@@ -16,3 +16,12 @@ export const createUser = async (
 };
 
 
+export const getUserById = async (
+  id: string
+):Promise<void> =>{
+  const result = await connection('Users')
+  .select()
+  .where({id: id})
+
+  return result[0]
+}
