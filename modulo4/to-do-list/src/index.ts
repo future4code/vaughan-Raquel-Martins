@@ -1,14 +1,18 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { AddressInfo } from 'net';
-import { createUser, getUserById } from './functions';
+import { createUser, getUserById, updateUserById } from './functions';
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.post('/users', async (req: Request, res: Response): Promise<void> => {
+// Users
+
+//1. Criar usuário
+
+app.post('/user', async (req: Request, res: Response): Promise<void> => {
   let errorCode = 400;
   try {
     const { name, nickname, email } = req.body;
@@ -33,7 +37,9 @@ app.post('/users', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-app.get('/users/:id', async (req: Request, res: Response) => {
+//2.Pegar usuário pelo id
+
+app.get('/user/:id', async (req: Request, res: Response) => {
   let errorCode = 400;
   const id: string = req.params.id;
   try {
@@ -41,19 +47,24 @@ app.get('/users/:id', async (req: Request, res: Response) => {
       errorCode = 422;
       throw new Error('Invalid value for id');
     }
+    const result = await getUserById(id);
 
-    res.status(200).send(await getUserById(id));
+    if (result === undefined) {
+      errorCode = 404;
+      throw new Error('User id not found');
+    }
+    console.log(result);
+    res.status(200).send(result);
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
   }
 });
 
+//3.Editar usuário
 
-
-app.put('/user/edit/:id', (req: Request, res: Response) => {
+app.put('/user/edit/:id', async (req: Request, res: Response) => {
   let errorCode = 400;
   const id: string = req.params.id;
-  let userFounded: boolean = false;
   const { name, nickname } = req.body;
   try {
     if (!name || !nickname) {
@@ -69,25 +80,22 @@ app.put('/user/edit/:id', (req: Request, res: Response) => {
       errorCode = 422;
       throw new Error('Invalid value for id');
     }
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].id === id) {
-    //     userFounded = true;
-    //     users[i].name = name;
-    //     users[i].nickname = nickname;
-    //   }
-    // }
 
-    if (!userFounded) {
+    if ((await getUserById(id)) === undefined) {
       errorCode = 404;
-      throw new Error('User not found');
+      throw new Error('User id not found');
     }
+
+    await updateUserById(id, name, nickname);
+
     res.status(200).send({ message: 'User data successfully changed' });
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
   }
 });
 
-//Criar tarefa
+
+//4.Criar tarefa
 
 app.post('/task', (req: Request, res: Response) => {
   let errorCode = 400;
