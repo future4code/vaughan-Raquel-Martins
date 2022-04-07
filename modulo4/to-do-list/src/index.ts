@@ -1,25 +1,20 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { AddressInfo } from 'net';
-import { users } from './data';
+//import connection from './connection';
+import { createUser } from './functions';
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-type User = {
-  id: string;
-  name: string;
-  nickname: string;
-  email: string;
-};
-
-app.post('/user', (req: Request, res: Response) => {
+app.post('/users', async (req: Request, res: Response): Promise<void> => {
   let errorCode = 400;
-  let userFounded = false;
   try {
     const { name, nickname, email } = req.body;
+    await createUser(name, nickname, email);
+
     if (!name || !nickname || !email) {
       errorCode = 422;
       throw new Error('Please check the fields!');
@@ -33,61 +28,41 @@ app.post('/user', (req: Request, res: Response) => {
       errorCode = 422;
       throw new Error('Invalid values for name, nickname or email');
     }
-
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].nickname === nickname) {
-        userFounded = true;
-      }
-    }
-
-    if (userFounded) {
-      errorCode = 409;
-      throw new Error('Nickname already exists');
-    }
-
-    const newUser: User = {
-      id: Date.now().toString(),
-      name,
-      nickname,
-      email,
-    };
-
-    users.push(newUser);
     res.status(201).send({ message: 'User created successfully' });
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
   }
 });
 
-app.get('/user/:id', (req: Request, res: Response) => {
-  let errorCode = 400;
-  const id: string = req.params.id;
-  let userFounded: boolean = false;
-  let userInfo: any = undefined;
-  try {
-    if (isNaN(Number(id))) {
-      errorCode = 422;
-      throw new Error('Invalid value for id');
-    }
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id === id) {
-        userFounded = true;
-        userInfo = {
-          name: users[i].name,
-          nickname: users[i].nickname,
-        };
-      }
-    }
+// app.get('/user/:id', (req: Request, res: Response) => {
+//   let errorCode = 400;
+//   const id: string = req.params.id;
+//   let userFounded: boolean = false;
+//   let userInfo: any = undefined;
+//   try {
+//     if (isNaN(Number(id))) {
+//       errorCode = 422;
+//       throw new Error('Invalid value for id');
+//     }
+//     // for (let i = 0; i < users.length; i++) {
+//     // //  if (users[i].id === id) {
+//     //     userFounded = true;
+//     //     userInfo = {
+//     //       //name: users[i].name,
+//     //      // nickname: users[i].nickname,
+//     //     };
+//     //   }
+//     }
 
-    if (!userFounded) {
-      errorCode = 404;
-      throw new Error('User not found');
-    }
-    res.status(200).send(userInfo);
-  } catch (error: any) {
-    res.status(errorCode).send({ message: error.message });
-  }
-});
+//     // if (!userFounded) {
+//     //   errorCode = 404;
+//     //   throw new Error('User not found');
+//     // }
+//     //res.status(200).send(userInfo);
+//   } catch (error: any) {
+//     res.status(errorCode).send({ message: error.message });
+//   }
+// });
 
 app.put('/user/edit/:id', (req: Request, res: Response) => {
   let errorCode = 400;
@@ -108,13 +83,13 @@ app.put('/user/edit/:id', (req: Request, res: Response) => {
       errorCode = 422;
       throw new Error('Invalid value for id');
     }
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id === id) {
-        userFounded = true;
-        users[i].name = name;
-        users[i].nickname = nickname;
-      }
-    }
+    // for (let i = 0; i < users.length; i++) {
+    //   if (users[i].id === id) {
+    //     userFounded = true;
+    //     users[i].name = name;
+    //     users[i].nickname = nickname;
+    //   }
+    // }
 
     if (!userFounded) {
       errorCode = 404;
