@@ -7,7 +7,9 @@ import {
   updateUserById,
   getAllUsers,
   createTask,
+  getTaskById,
 } from './functions';
+import { StringLiteralLike } from 'typescript';
 
 const app = express();
 
@@ -73,7 +75,6 @@ app.get('/user/:id', async (req: Request, res: Response) => {
       errorCode = 404;
       throw new Error('User id not found');
     }
-    console.log(result);
     res.status(200).send(result);
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
@@ -190,9 +191,43 @@ app.post('/task', async (req: Request, res: Response): Promise<void> => {
 
 //5.Pegar tarefa pelo id da tarefa
 
-app.get('/task/:id', async(req:Request, res:Response): Promise<void> => {
+app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
+  let errorCode = 500;
+  try {
+    const id: string = req.params.id;
+    const taskById = await getTaskById(id);
+    const formatedResult = async (obj: any): Promise<any> => {
+      const newFormatDate = (date: Date): string => {
+        let dateFormat = date.toISOString().split('T')[0];
+        console.log(dateFormat);
+        let day = dateFormat.slice(-2);
+        let mounth = dateFormat.slice(5, 7);
+        let year = dateFormat.slice(0, 4);
+        let newDate = `${day}/${mounth}/${year}`;
+        return newDate;
+      };
 
-})
+      let userId = obj.creatorUserId;
+      const infoUser = await getUserById(userId);
+
+      let taskInfo = {
+        ...obj,
+        limitDate: newFormatDate(obj.limitDate),
+        creatorUserNickname: infoUser.nickname,
+      };
+      return taskInfo;
+    };
+
+    if (taskById === undefined) {
+      errorCode = 404;
+      throw new Error('Task id not found');
+    }
+
+    res.status(200).send(await formatedResult(taskById));
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
+  }
+});
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
