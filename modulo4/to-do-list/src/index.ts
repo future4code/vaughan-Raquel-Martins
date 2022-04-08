@@ -118,6 +118,7 @@ app.put('/user/edit/:id', async (req: Request, res: Response) => {
 
 app.post('/task', async (req: Request, res: Response): Promise<void> => {
   let errorCode = 500;
+  let currentYear = new Date().getFullYear();
   try {
     const { title, description, limitDate, creatorUserId } = req.body;
     if (!title || !description || !limitDate || !creatorUserId) {
@@ -135,18 +136,63 @@ app.post('/task', async (req: Request, res: Response): Promise<void> => {
       throw new Error('Invalid values');
     }
 
-    if(title.length < 3 || description.length < 3){
-      errorCode = 422
-      throw new Error('title or description too short')
+    if ((await getUserById(creatorUserId)) === undefined) {
+      errorCode = 404;
+      throw new Error('User id not found');
     }
 
-    await createTask(title, description, limitDate, creatorUserId);
+    if (
+      isNaN(Number(limitDate.slice(0, 2))) ||
+      isNaN(Number(limitDate.slice(3, 5))) ||
+      isNaN(Number(limitDate.slice(-4)))
+    ) {
+      errorCode = 422;
+      throw new Error('Invalid value for date, must be DD/MM/YYYY');
+    }
+
+    if (
+      !(
+        Number(limitDate.slice(0, 2)) <= 31 &&
+        limitDate.slice(2, 3) === '/' &&
+        Number(limitDate.slice(3, 5)) <= 12 &&
+        limitDate.slice(5, 6) === '/' &&
+        Number(limitDate.slice(-4)) >= currentYear
+      )
+    ) {
+      errorCode = 422;
+      throw new Error('Invalid format or value for date, must be DD/MM/YYYY');
+    }
+
+    if (title.length < 3 || description.length < 3) {
+      errorCode = 422;
+      throw new Error('title or description too short');
+    }
+
+    const newFormatDate = (date: string): string => {
+      let day = date.slice(0, 2);
+      let mounth = date.slice(3, 5);
+      let year = date.slice(-4);
+      let newDate = `${year}-${mounth}-${day}`;
+      return newDate;
+    };
+    console.log(newFormatDate(limitDate));
+    await createTask(
+      title,
+      description,
+      newFormatDate(limitDate),
+      creatorUserId
+    );
     res.status(201).send({ message: 'Task created successfully' });
   } catch (error: any) {
     res.status(errorCode).send({ message: error.message });
   }
 });
 
+//5.Pegar tarefa pelo id da tarefa
+
+app.get('/task/:id', async(req:Request, res:Response): Promise<void> => {
+
+})
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

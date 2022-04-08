@@ -50,7 +50,7 @@ export const getAllUsers = async (): Promise<any> => {
 export const createTask = async (
   title: string,
   description: string,
-  limitDate: Date,
+  limitDate: string,
   creatorUserId: string
 ): Promise<void> => {
   await connection
