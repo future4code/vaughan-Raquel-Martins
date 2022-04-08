@@ -1,7 +1,13 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { AddressInfo } from 'net';
-import { createUser, getUserById, updateUserById } from './functions';
+import {
+  createUser,
+  getUserById,
+  updateUserById,
+  getAllUsers,
+  createTask,
+} from './functions';
 
 const app = express();
 
@@ -9,6 +15,20 @@ app.use(express.json());
 app.use(cors());
 
 // Users
+
+// 6. Pegar todos os usuários
+
+app.get('/user/all', async (req: Request, res: Response): Promise<void> => {
+  console.log('teste');
+  let errorCode = 500;
+  try {
+    const allUsers = await getAllUsers();
+
+    res.status(200).send({ users: allUsers });
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
+  }
+});
 
 //1. Criar usuário
 
@@ -94,17 +114,39 @@ app.put('/user/edit/:id', async (req: Request, res: Response) => {
   }
 });
 
-
 //4.Criar tarefa
 
-app.post('/task', (req: Request, res: Response) => {
-  let errorCode = 400;
-  const { title, description, limitDate, creatorUserId } = req.body;
-  if (!title || !description || !limitDate || !creatorUserId) {
-    errorCode = 422;
-    throw new Error('Please check the fields!');
+app.post('/task', async (req: Request, res: Response): Promise<void> => {
+  let errorCode = 500;
+  try {
+    const { title, description, limitDate, creatorUserId } = req.body;
+    if (!title || !description || !limitDate || !creatorUserId) {
+      errorCode = 422;
+      throw new Error('Please check the fields!');
+    }
+
+    if (
+      typeof title !== 'string' &&
+      typeof description !== 'string' &&
+      typeof limitDate !== 'string' &&
+      typeof creatorUserId !== 'string'
+    ) {
+      errorCode = 422;
+      throw new Error('Invalid values');
+    }
+
+    if(title.length < 3 || description.length < 3){
+      errorCode = 422
+      throw new Error('title or description too short')
+    }
+
+    await createTask(title, description, limitDate, creatorUserId);
+    res.status(201).send({ message: 'Task created successfully' });
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
   }
 });
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
