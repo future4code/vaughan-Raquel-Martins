@@ -31,6 +31,36 @@ app.get('/user/all', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
+// 8. Pesquisar usuário
+
+app.get('/user', async (req: Request, res: Response): Promise<void> => {
+  let errorCode = 500;
+  try {
+    const query: string = req.query.query as string;
+    if (!query) {
+      errorCode = 422;
+      throw new Error('Please check the fields!');
+    }
+    const allUsers = await getAllUsers();
+
+    const searchUser = await allUsers
+      .filter((user: any) => {
+        return user.nickname.toLowerCase().includes(query.toLowerCase());
+      })
+      .map((user: any) => {
+        const users = {
+          id: user.id,
+          nickname: user.nickname,
+        };
+        return users;
+      });
+
+    res.status(200).send({ users: await searchUser });
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
+  }
+});
+
 //1. Criar usuário
 
 app.post('/user', async (req: Request, res: Response): Promise<void> => {
@@ -249,9 +279,9 @@ app.get('/task', async (req: Request, res: Response): Promise<void> => {
       };
 
       const infoUser = await getUserById(creatorUserId);
-      if(infoUser === undefined){
-        errorCode = 404
-        throw new Error('User not found')
+      if (infoUser === undefined) {
+        errorCode = 404;
+        throw new Error('User not found');
       }
 
       const listTasks = arr.map((task: any) => {
@@ -281,9 +311,6 @@ app.get('/task', async (req: Request, res: Response): Promise<void> => {
     res.status(errorCode).send({ message: error.message });
   }
 });
-
-
-
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
