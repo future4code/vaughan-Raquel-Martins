@@ -8,8 +8,8 @@ import {
   getAllUsers,
   createTask,
   getTaskById,
+  getTaskByCreatorId,
 } from './functions';
-import { StringLiteralLike } from 'typescript';
 
 const app = express();
 
@@ -21,7 +21,6 @@ app.use(cors());
 // 6. Pegar todos os usuários
 
 app.get('/user/all', async (req: Request, res: Response): Promise<void> => {
-  console.log('teste');
   let errorCode = 500;
   try {
     const allUsers = await getAllUsers();
@@ -176,7 +175,7 @@ app.post('/task', async (req: Request, res: Response): Promise<void> => {
       let newDate = `${year}-${mounth}-${day}`;
       return newDate;
     };
-    console.log(newFormatDate(limitDate));
+
     await createTask(
       title,
       description,
@@ -199,7 +198,6 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
     const formatedResult = async (obj: any): Promise<any> => {
       const newFormatDate = (date: Date): string => {
         let dateFormat = date.toISOString().split('T')[0];
-        console.log(dateFormat);
         let day = dateFormat.slice(-2);
         let mounth = dateFormat.slice(5, 7);
         let year = dateFormat.slice(0, 4);
@@ -228,6 +226,64 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
     res.status(errorCode).send({ message: error.message });
   }
 });
+
+// 7. Pegar tarefas criadas por um usuário
+
+app.get('/task', async (req: Request, res: Response): Promise<void> => {
+  let errorCode = 500;
+  try {
+    const creatorUserId: string = req.query.creatorUserId as string;
+    if (!creatorUserId) {
+      errorCode = 422;
+      throw new Error('Check the fields');
+    }
+
+    const formatedResult = async (arr: any): Promise<any> => {
+      const newFormatDate = (date: Date): string => {
+        let dateFormat = date.toISOString().split('T')[0];
+        let day = dateFormat.slice(-2);
+        let mounth = dateFormat.slice(5, 7);
+        let year = dateFormat.slice(0, 4);
+        let newDate = `${day}/${mounth}/${year}`;
+        return newDate;
+      };
+
+      const infoUser = await getUserById(creatorUserId);
+      if(infoUser === undefined){
+        errorCode = 404
+        throw new Error('User not found')
+      }
+
+      const listTasks = arr.map((task: any) => {
+        let taskInfo = {
+          ...task,
+          limitDate: newFormatDate(task.limitDate),
+          creatorUserNickname: infoUser.nickname,
+        };
+        return taskInfo;
+      });
+
+      return listTasks;
+    };
+
+    const result = await getTaskByCreatorId(creatorUserId);
+
+    const wasFound = async () => {
+      if (result === undefined) {
+        return [];
+      } else {
+        return await formatedResult(result);
+      }
+    };
+
+    res.status(200).send({ tasks: await wasFound() });
+  } catch (error: any) {
+    res.status(errorCode).send({ message: error.message });
+  }
+});
+
+
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

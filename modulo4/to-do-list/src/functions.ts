@@ -78,3 +78,18 @@ export const getTaskById = async (id: string): Promise<void> => {
 
   return result[0];
 };
+
+export const getTaskByCreatorId = async (creatorId: string): Promise<void> => {
+  const result:any = await connection('Tasks_user')
+    .select(
+      'id as taskId',
+      'title',
+      'description_task as description',
+      'limit_date as limitDate',
+      'status',
+      'creator_user_id as creatorUserId'
+    )
+    .where({ creator_user_id: creatorId });
+
+  return result
+};
