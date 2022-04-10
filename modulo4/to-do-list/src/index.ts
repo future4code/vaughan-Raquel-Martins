@@ -11,6 +11,7 @@ import {
   getTaskByCreatorId,
   giveResponsibility,
   getResponsibleTask,
+  deleteResponsibleTask,
 } from './functions';
 
 const app = express();
@@ -229,12 +230,10 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
     const id: string = req.params.id;
     const taskById = await getTaskById(id);
 
-   const getResponsible = await getResponsibleTask(id)
+    const getResponsible = await getResponsibleTask(id);
 
     const takeUsersResponsible = async (obj: any) => {
       const arrUsersId = [...obj];
-      console.log(arrUsersId);
-      console.log(obj);
 
       const usersIdList = arrUsersId.map((obj) => {
         return obj.responsible;
@@ -257,7 +256,6 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
       return usersMatch;
     };
 
-
     const formatedResult = async (obj: any): Promise<any> => {
       const newFormatDate = (date: Date): string => {
         let dateFormat = date.toISOString().split('T')[0];
@@ -275,8 +273,7 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
         ...obj,
         limitDate: newFormatDate(obj.limitDate),
         creatorUserNickname: infoUser.nickname,
-        responsibleUsers: await takeUsersResponsible(getResponsible)
-
+        responsibleUsers: await takeUsersResponsible(getResponsible),
       };
       return taskInfo;
     };
@@ -402,8 +399,6 @@ app.get(
 
       const takeUsersResponsible = async (obj: any) => {
         const arrUsersId = [...obj];
-        console.log(arrUsersId);
-        console.log(obj);
 
         const usersIdList = arrUsersId.map((obj) => {
           return obj.responsible;
@@ -435,8 +430,50 @@ app.get(
   }
 );
 
+//15. Retirar um usuário responsável de uma tarefa
+app.delete(
+  '/task/:taskId/responsible/:responsibleUserId',
+  async (req: Request, res: Response) => {
+    let errorCode = 500;
+    try {
+      const { taskId, responsibleUserId } = req.params;
 
+      if (!taskId || !responsibleUserId) {
+        errorCode = 422;
+        throw new Error('Please check the fields!');
+      }
 
+      const searchTaskId = await getTaskById(taskId);
+      if (searchTaskId === undefined) {
+        errorCode = 404;
+        throw new Error('Task not found');
+      }
+
+      const searchUserResponsible = await getResponsibleTask(taskId);
+
+      const getResponsible = async (obj: any): Promise<boolean> => {
+        const responsible = await obj;
+        let result = false;
+        for (let i = 0; i < responsible.length; i++) {
+          if (responsible[i].responsible === responsibleUserId) {
+            result = true;
+          }
+        }
+        return result;
+      };
+
+      if (!(await getResponsible(searchUserResponsible))) {
+        errorCode = 404;
+        throw new Error('Responsible id user not found');
+      }
+
+      await deleteResponsibleTask(taskId, responsibleUserId);
+      res.status(200).send({ message: 'task manager successfully deleted' });
+    } catch (error: any) {
+      res.status(errorCode).send({ message: error.message });
+    }
+  }
+);
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

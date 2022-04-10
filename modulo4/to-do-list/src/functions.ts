@@ -116,3 +116,10 @@ export const getResponsibleTask = async (taskId:string):Promise<any> => {
   .where({task_id: taskId})
   return result
 }
+
+
+export const deleteResponsibleTask = async (taskId:string, responsibleId: string):Promise<void> => {
+  await connection('TodoListResponsibleUserTask')
+  .delete()
+  .where({task_id: taskId, responsible_user_id:responsibleId })
+}
