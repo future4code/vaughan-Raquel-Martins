@@ -221,12 +221,43 @@ app.post('/task', async (req: Request, res: Response): Promise<void> => {
 });
 
 //5.Pegar tarefa pelo id da tarefa
+//11. Pegar tarefa pelo id
 
 app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
   let errorCode = 500;
   try {
     const id: string = req.params.id;
     const taskById = await getTaskById(id);
+
+   const getResponsible = await getResponsibleTask(id)
+
+    const takeUsersResponsible = async (obj: any) => {
+      const arrUsersId = [...obj];
+      console.log(arrUsersId);
+      console.log(obj);
+
+      const usersIdList = arrUsersId.map((obj) => {
+        return obj.responsible;
+      });
+
+      const allUsers = await getAllUsers();
+      let usersMatch: any[] = [];
+
+      for (let i = 0; i < allUsers.length; i++) {
+        for (let j = 0; j < usersIdList.length; j++) {
+          if (allUsers[i].id === usersIdList[j]) {
+            usersMatch.push({
+              id: allUsers[i].id,
+              nickname: allUsers[i].nickname,
+            });
+          }
+        }
+      }
+
+      return usersMatch;
+    };
+
+
     const formatedResult = async (obj: any): Promise<any> => {
       const newFormatDate = (date: Date): string => {
         let dateFormat = date.toISOString().split('T')[0];
@@ -244,6 +275,8 @@ app.get('/task/:id', async (req: Request, res: Response): Promise<void> => {
         ...obj,
         limitDate: newFormatDate(obj.limitDate),
         creatorUserNickname: infoUser.nickname,
+        responsibleUsers: await takeUsersResponsible(getResponsible)
+
       };
       return taskInfo;
     };
@@ -401,6 +434,9 @@ app.get(
     }
   }
 );
+
+
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
