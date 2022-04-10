@@ -9,6 +9,8 @@ import {
   createTask,
   getTaskById,
   getTaskByCreatorId,
+  giveResponsibility,
+  getResponsibleTask,
 } from './functions';
 
 const app = express();
@@ -311,6 +313,94 @@ app.get('/task', async (req: Request, res: Response): Promise<void> => {
     res.status(errorCode).send({ message: error.message });
   }
 });
+
+//9. Atribuir um usuário responsável a uma tarefa
+
+app.post(
+  '/task/responsible',
+  async (req: Request, res: Response): Promise<void> => {
+    let errorCode = 500;
+    try {
+      const { taskId, responsibleUserId } = req.body;
+      if (!taskId || !responsibleUserId) {
+        errorCode = 422;
+        ('Please check the fields!');
+      }
+
+      if (typeof taskId !== 'string' && typeof responsibleUserId !== 'string') {
+        errorCode = 422;
+        throw new Error('Invalid values');
+      }
+
+      const userFound = await getUserById(responsibleUserId);
+      if (userFound === undefined) {
+        errorCode = 404;
+        throw new Error('User id not found');
+      }
+
+      const taskFound = await getTaskById(taskId);
+      if (taskFound === undefined) {
+        errorCode = 404;
+        throw new Error('Task id not found');
+      }
+
+      await giveResponsibility(taskId, responsibleUserId);
+
+      res.status(201).send({ message: 'Task delegated to user successfully!' });
+    } catch (error: any) {
+      res.status(errorCode).send({ message: error.message });
+    }
+  }
+);
+
+//10. Pegar usuários responsáveis por uma tarefa
+
+app.get(
+  '/task/:id/responsible',
+  async (req: Request, res: Response): Promise<void> => {
+    let errorCode = 500;
+    try {
+      const id = req.params.id;
+      const taskFoundList = await getResponsibleTask(id);
+      if (taskFoundList === undefined) {
+        errorCode = 404;
+        throw new Error('Not found');
+      }
+
+      const takeUsersResponsible = async (obj: any) => {
+        const arrUsersId = [...obj];
+        console.log(arrUsersId);
+        console.log(obj);
+
+        const usersIdList = arrUsersId.map((obj) => {
+          return obj.responsible;
+        });
+
+        const allUsers = await getAllUsers();
+        let usersMatch: any[] = [];
+
+        for (let i = 0; i < allUsers.length; i++) {
+          for (let j = 0; j < usersIdList.length; j++) {
+            if (allUsers[i].id === usersIdList[j]) {
+              usersMatch.push({
+                id: allUsers[i].id,
+                nickname: allUsers[i].nickname,
+              });
+            }
+          }
+        }
+
+        return usersMatch;
+      };
+
+      res
+        .status(200)
+        .send({ users: await takeUsersResponsible(taskFoundList) });
+    } catch (error: any) {
+      res.status(errorCode).send({ message: error.message });
+    }
+  }
+);
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

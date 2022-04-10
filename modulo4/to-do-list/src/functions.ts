@@ -95,3 +95,24 @@ export const getTaskByCreatorId = async (creatorId: string): Promise<void> => {
 
   return result
 };
+
+
+
+// Task responsible
+
+export const giveResponsibility = async (taskId:string, userId:string):Promise<void> => {
+  await connection
+  .insert({
+    task_id: taskId,
+    responsible_user_id:  userId
+  })
+  .into('TodoListResponsibleUserTask')
+}
+
+
+export const getResponsibleTask = async (taskId:string):Promise<any> => {
+  const result:any = await connection('TodoListResponsibleUserTask')
+  .select('responsible_user_id as responsible')
+  .where({task_id: taskId})
+  return result
+}
