@@ -1,0 +1,23 @@
+GET http://localhost:3003/users
+Content-Type: : application/json
+###
+
+GET http://localhost:3003/users?name=amanda
+Content-Type: : application/json
+###
+
+
+GET http://localhost:3003/users?name=&type=teac
+Content-Type: : application/json
+###
+
+
+GET http://localhost:3003/users2?type=&ordenation=
+Content-Type: : application/json
+###
+
+GET http://localhost:3003/users3?page=2
+Content-Type: : application/json
+###
+
+
